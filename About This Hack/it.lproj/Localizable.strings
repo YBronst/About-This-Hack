@@ -1,0 +1,132 @@
+/* 
+  Localizable.strings
+  About This Hack
+  
+  Italian localization
+*/
+
+/* Tooltips */
+"tooltip.bootloader" = "BootLoader: %@\nBoot-args: %@";
+"tooltip.sysinfo" = " Dati dettagliati: Hardware, Rete, Software, ecc.";
+"tooltip.softupd" = " Cerca e installa aggiornamenti di sistema e sicurezza";
+
+/* Segmented Control Titles */
+"segment.title.overview" = "Panoramica";
+"segment.title.displays" = "Display";
+"segment.title.storage" = "Archiviazione";
+"segment.title.audio" = "Audio";
+"segment.title.support" = "Supporto";
+
+/* Segmented Control Tooltips */
+"segment.tooltip.overview" = "Presentazione generale delle specifiche del sistema";
+"segment.tooltip.displays" = "Schermi e risoluzioni";
+"segment.tooltip.storage" = "Disco di avvio, tipo di connessione e spazio disponibile";
+"segment.tooltip.audio" = "Informazioni sul codec audio della scheda madre";
+"segment.tooltip.support" = "Presentazione dei link di supporto per il tuo hackintosh o Mac";
+
+/* Storage */
+"storage.available" = "Disponibile";
+
+/* Loading Indicator */
+"loading.data.message" = "Caricamento dati...";
+
+/* Settings Window */
+"settings.title" = "Personalizza logo";
+"settings.logo.info" = "Trascina e rilascia un'immagine PNG (1024x1024 pixel) per\npersonalizzare il logo macOS nella scheda Panoramica";
+"settings.logo.reset" = "Ripristina predefinito";
+"settings.logo.custom_active" = "Logo personalizzato attivo";
+"settings.logo.default_active" = "Logo predefinito attivo";
+"settings.logo.reset_success" = "Logo predefinito ripristinato";
+"settings.logo.error.invalid" = "File immagine non valido";
+"settings.logo.error.not_png" = "L'immagine deve essere in formato PNG";
+"settings.logo.error.no_rep" = "Impossibile leggere le dimensioni dell'immagine";
+"settings.logo.error.wrong_size" = "L'immagine deve essere 1024x1024 px (attuale %dx%d)";
+"settings.logo.success" = "Logo personalizzato applicato con successo";
+
+/* Scheda Panoramica – etichette delle specifiche */
+"spec.processor" = "Processore";
+"spec.memory" = "Memoria";
+"spec.graphics" = "Grafica";
+"spec.display" = "Display";
+"spec.startup_disk" = "Disco di avvio";
+"spec.serial_number" = "Numero di serie";
+"spec.bootloader" = "Bootloader";
+
+/* Scheda Panoramica – pulsanti di azione */
+"button.system_report" = "Rapporto di sistema…";
+"button.software_update" = "Aggiornamento software…";
+
+/* Scheda Panoramica – crediti */
+"credits.text" = "™ e © 2021-2026\nAlexander Skula et al.\nTutti i diritti riservati.";
+
+/* Scheda Display */
+"displays.preferences" = "Preferenze display…";
+"displays.none" = "Nessun display rilevato";
+
+/* Scheda Audio */
+"audio.none" = "Nessuna informazione sul codec audio disponibile";
+"audio.spec.driver" = "Driver";
+"audio.spec.codec" = "Codec";
+"audio.spec.vendor" = "Produttore";
+"audio.spec.device_id" = "ID dispositivo";
+"audio.spec.sub_device_id" = "ID sotto-dispositivo";
+"audio.spec.layout_id" = "Layout ID";
+
+/* Scheda Supporto – titoli dei link */
+"support.macos_user_guide" = "Guida utente macOS";
+"support.whats_new" = "Novità di macOS";
+"support.apple_support" = "Supporto Apple";
+"support.hackintosh_guide" = "Guida Hackintosh";
+"support.mac_basics" = "Nozioni di base del Mac";
+"support.mac_user_guide" = "Guida utente Mac";
+"support.credits" = "Fatto con ❤️ da Alexander Skula, MDNich e matxpa";
+
+/* Menu Lingua */
+"Language menu" = "Lingua";
+"Select Language menu item" = "Seleziona lingua...";
+"Language selector title" = "Lingua";
+"Cancel" = "Annulla";
+"OK" = "OK";
+"Language changed alert title" = "Lingua modificata";
+"Language changed message" = "Riavvia l'applicazione\nper applicare la nuova lingua.";
+
+/* Main menu - App menu */
+"menu.app.title" = "About This Hack";
+"menu.app.about" = "About This Hack";
+"menu.app.preferences" = "Preferenze";
+"menu.app.services" = "Servizi";
+"menu.app.hide" = "Nascondi About This Hack";
+"menu.app.hide_others" = "Nascondi le altre";
+"menu.app.show_all" = "Mostra tutto";
+"menu.app.quit" = "Esci da About This Hack";
+
+/* Main menu - Window menu */
+"menu.window.title" = "Finestra";
+"menu.window.minimize" = "Minimizza";
+"menu.window.close" = "Chiudi";
+"menu.window.zoom" = "Ingrandisci";
+"menu.window.overview" = "Panoramica";
+"menu.window.displays" = "Display";
+"menu.window.storage" = "Archiviazione";
+"menu.window.audio" = "Audio";
+"menu.window.support" = "Supporto";
+"menu.window.bring_all_to_front" = "Porta tutto in primo piano";
+
+/* Main menu - Help menu */
+"menu.help.title" = "Aiuto";
+"menu.help.ath_help" = "Aiuto About This Hack";
+
+/* GitHub updater */
+"Check for Updates..." = "Cerca aggiornamenti...";
+"UpdateAvailable" = "Aggiornamento disponibile";
+"UpdateAvailableInfo" = "About This Hack  %@ è disponibile. Vuoi scaricarla?";
+"DownloadUpdate" = "Scarica";
+"UpdateLater" = "Più tardi";
+"UpToDate" = "Sei aggiornato";
+"UpToDateInfo" = "About This Hack %@ è la versione più recente disponibile.";
+"UpdateCheckError" = "Errore di controllo aggiornamenti";
+"UpdateCheckFailed" = "Impossibile recuperare le informazioni sull'aggiornamento.";
+"UpdateCheckNetworkError" = "Si è verificato un errore di rete. Controlla la connessione internet.";
+
+/* Toolbar */
+"toolbar.toggle_sidebar" = "Mostra/Nascondi barra laterale";
