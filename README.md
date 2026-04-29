@@ -1,8 +1,9 @@
 # About This Hack: Your Mac's Story, Beautifully Told, now in SwiftUI
 
 ![Platform](https://img.shields.io/badge/macOS-13.5+-green.svg)
-![Platform](https://img.shields.io/badge/Xcode-15-lavender.svg)
-![Downloads](https://img.shields.io/github/downloads/2009-Nissan-Cube/About-This-Hack/total?label=Downloads&color=9494ff)
+![Swift](https://img.shields.io/badge/Swift-5+-blue.svg)
+![Xcode](https://img.shields.io/badge/Xcode-15-lavender.svg)
+<!-- ![Downloads](https://img.shields.io/github/downloads/2009-Nissan-Cube/About-This-Hack/total?label=Downloads&color=9494ff) -->
 
 ![Overview](ImagesTMP/Screenshots/Overview.png)
 
@@ -129,18 +130,4 @@ A big thank you to our contributors:
 [Ben216k](https://github.com/Ben216k) for being awesome, providing some of the commands, and helping me debug a lot. <br>
 [Snoopy](https://macosicons.com/#/u/Squid4572) for helping create the new icon. <br>
 The internet for helping me with a lot of the code.
-
-## Support About This Hack
-
-About This Hack is a labor of love, bringing back the classic Mac experience with modern enhancements. If you enjoy using it, consider supporting its development:
-
-<p align="center">
-  <a href="https://opencollective.com/about-this-hack" target="_blank">
-    <img src="https://opencollective.com/about-this-hack/donate/button@2x.png?color=blue" width=300 />
-  </a>
-</p>
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=0xCUB3/About-This-Hack&type=Date)](https://star-history.com/#0xCUB3/About-This-Hack&Date)
 
