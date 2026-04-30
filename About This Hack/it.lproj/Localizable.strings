@@ -71,6 +71,8 @@
 "audio.spec.device_id" = "ID dispositivo";
 "audio.spec.sub_device_id" = "ID sotto-dispositivo";
 "audio.spec.layout_id" = "Layout ID";
+"audio.spec.transport" = "Classe";
+"audio.spec.product" = "Prodotto";
 
 /* Scheda Supporto – titoli dei link */
 "support.macos_user_guide" = "Guida utente macOS";

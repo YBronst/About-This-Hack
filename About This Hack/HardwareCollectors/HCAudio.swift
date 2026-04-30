@@ -4,6 +4,7 @@
 //
 //  Collects audio codec information from the IORegistry.
 //  Retrieves: codec name, vendor name, PCI device name, and layout ID.
+//  For USB audio devices, retrieves product name and manufacturer from system_profiler.
 //
 
 import Foundation
@@ -34,10 +35,18 @@ class HCAudio {
     // MARK: - Compute
 
     private func computeAudioInfo() -> AudioInfo {
-        // 1. Codec data: vendor ID from IOHDACodecDevice (present with AppleALC, absent with VoodooHDA)
+        // 1. USB audio: if the current default output device is connected via USB,
+        //    report it directly (product name, manufacturer, transport = "USB").
+        //    This check takes priority over AppleALC / VoodooHDA so that users who
+        //    have set a USB audio device as their main output see its details.
+        if let usbInfo = computeUSBAudioInfo() {
+            return usbInfo
+        }
+
+        // 2. Codec data: vendor ID from IOHDACodecDevice (present with AppleALC, absent with VoodooHDA)
         let codecOutput = run("ioreg -l -r -c IOHDACodecDevice -w 0 2>/dev/null")
 
-        // 2. PCI controller data: vendor-id, device-id, layout-id.
+        // 3. PCI controller data: vendor-id, device-id, layout-id.
         //    Present with both AppleALC and VoodooHDA (HDEF/HDAS node is always there).
         //    Try common ACPI node names used on Hackintoshes and real Macs,
         //    then fall back to the driver class name.
@@ -60,7 +69,7 @@ class HCAudio {
         let (pciVendor, pciDevice) = parsePciIds(from: pciOutput)
         let deviceName = lookupPciDeviceName(vendorId: pciVendor, deviceId: pciDevice)
 
-        // 3. AppleALC: exposes IOHDACodecDevice nodes → codecOutput is non-empty.
+        // 4. AppleALC: exposes IOHDACodecDevice nodes → codecOutput is non-empty.
         if !codecOutput.isEmpty {
             let vendorIdInt = parseVendorId(from: codecOutput)
             let codecName = vendorIdInt > 0 ? lookupCodecName(vendorId: vendorIdInt) : ""
@@ -80,7 +89,7 @@ class HCAudio {
             )
         }
 
-        // 4. VoodooHDA: does not expose IOHDACodecDevice nodes but registers a
+        // 5. VoodooHDA: does not expose IOHDACodecDevice nodes but registers a
         //    VoodooHDADevice in the IORegistry.  Codec info is obtained via the
         //    `getdump` command-line tool shipped with VoodooHDA.
         let voodooOutput = run("ioreg -l -r -c VoodooHDADevice -w 0 2>/dev/null")
@@ -105,7 +114,7 @@ class HCAudio {
             return emptyAudioInfo
         }
 
-        // 5. No AppleALC, no VoodooHDA.  Fall back to system_profiler for real Macs
+        // 6. No AppleALC, no VoodooHDA.  Fall back to system_profiler for real Macs
         //    whose audio hardware is not exposed via standard IOHDACodecDevice nodes
         //    (e.g. Intel Smart Sound Technology + CS8409).
         if layoutId.isEmpty && deviceName.isEmpty {
@@ -148,6 +157,56 @@ class HCAudio {
             }
         }
         return 0
+    }
+
+    // MARK: - USB Audio Detection
+
+    // Checks whether the current default audio output device is connected via USB.
+    // Parses the plain-text output of `system_profiler SPAudioDataType`, splits it
+    // into per-device blocks, and returns an AudioInfo if a device is found that is
+    // marked as the Default Output Device AND has Transport = USB.
+    private func computeUSBAudioInfo() -> AudioInfo? {
+        let output = run("system_profiler SPAudioDataType 2>/dev/null")
+        guard !output.isEmpty else { return nil }
+
+        var currentName = ""
+        var props: [String: String] = [:]
+
+        func evaluateDevice() -> AudioInfo? {
+            guard !currentName.isEmpty else { return nil }
+            let isDefault = (props["Default Output Device"] ?? "").lowercased() == "yes"
+            let transport = (props["Transport"] ?? "").trimmingCharacters(in: .whitespaces)
+            guard isDefault && transport.lowercased() == "usb" else { return nil }
+            let manufacturer = (props["Manufacturer"] ?? "").trimmingCharacters(in: .whitespaces)
+            return AudioInfo(
+                codecName: currentName,
+                vendorName: manufacturer,
+                deviceName: "",
+                layoutId: "",
+                driver: "USB"
+            )
+        }
+
+        for line in output.components(separatedBy: .newlines) {
+            let leadingSpaces = line.prefix(while: { $0 == " " }).count
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            guard !trimmed.isEmpty else { continue }
+
+            // Device header lines: indented at the device level (>= 6 spaces), end with
+            // ":", and do not contain ": " (which would mark them as property lines).
+            if leadingSpaces >= 6 && trimmed.hasSuffix(":") && !trimmed.contains(": ") {
+                if let result = evaluateDevice() { return result }
+                currentName = String(trimmed.dropLast())  // strip trailing ":"
+                props = [:]
+            } else if !currentName.isEmpty, let colonRange = trimmed.range(of: ": ") {
+                let key = String(trimmed[trimmed.startIndex ..< colonRange.lowerBound])
+                let value = String(trimmed[colonRange.upperBound...])
+                props[key] = value
+            }
+        }
+
+        // Evaluate the last device block.
+        return evaluateDevice()
     }
 
     // MARK: - system_profiler Fallback

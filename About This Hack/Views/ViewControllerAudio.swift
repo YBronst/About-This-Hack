@@ -42,13 +42,17 @@ struct AudioView: View {
         VStack(alignment: .leading, spacing: 7) {
             if !viewModel.driver.isEmpty {
                 AudioSpecRow(
-                    label: NSLocalizedString("audio.spec.driver", comment: "Driver label"),
+                    label: viewModel.driver == "USB"
+                        ? NSLocalizedString("audio.spec.transport", comment: "Transport label")
+                        : NSLocalizedString("audio.spec.driver", comment: "Driver label"),
                     value: viewModel.driver
                 )
             }
             if !viewModel.codecName.isEmpty {
                 AudioSpecRow(
-                    label: NSLocalizedString("audio.spec.codec", comment: "Codec label"),
+                    label: viewModel.driver == "USB"
+                        ? NSLocalizedString("audio.spec.product", comment: "Product label")
+                        : NSLocalizedString("audio.spec.codec", comment: "Codec label"),
                     value: viewModel.codecName
                 )
             }

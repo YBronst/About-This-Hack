@@ -1,10 +1,15 @@
 # Releases Changelog
 
+## 4.2.5 (1613) — USB audio support
+
+- Add USB audio device support to the Audio tab
+- Translucent app build (transparent windows) → `About.This.Hack.glass-4.2.5.zip` in releases
+
 ## 4.2.4 (1610) — Native updater replaces Sparkle
 
 - Sparkle is replaced by a native, lightweight SwiftUI GitHub-based update checker that uses the GitHub versioning API and requires no third-party dependencies
 - Localize updater messages
-- Translucent app (transparent windows) → `About.This.Hack.glass-4.2.4.zip` in releases
+- Translucent app build (transparent windows) → `About.This.Hack.glass-4.2.4.zip` in releases
 
 ## 4.2.2 (1608) — VoodooHDA audio detection
 

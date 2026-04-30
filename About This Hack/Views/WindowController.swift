@@ -88,9 +88,9 @@ class AppState: ObservableObject {
                 // OpenCore + OCLP can mean either a real Mac patched for newer macOS
                 // compatibility, or a Hackintosh that uses OCLP for driver patches
                 // (e.g. audio, WiFi on Sonoma).  Treat as Hackintosh when
-                // AppleALC or VoodooHDA audio injection is detected.
+                // AppleALC, VoodooHDA, or USB audio is detected as the default output.
                 let driver = HCAudio.shared.getAudioInfo().driver
-                return driver == "AppleALC" || driver == "VoodooHDA"
+                return driver == "AppleALC" || driver == "VoodooHDA" || driver == "USB"
             }
             return true
         }
@@ -100,15 +100,16 @@ class AppState: ObservableObject {
     }
 
     /// True when the audio tab should be visible.
-    /// Shown on Hackintoshes running AppleALC or VoodooHDA (with getdump available).
-    /// Hidden on real Macs and on Hackintoshes where neither kext is active
+    /// Shown on Hackintoshes running AppleALC, VoodooHDA (with getdump available),
+    /// or with a USB audio device set as the default output.
+    /// Hidden on real Macs and on Hackintoshes where none of these are active
     /// (or when VoodooHDA is active but getdump is not installed).
     /// Returns true during loading so the tab is not prematurely hidden.
     var shouldShowAudioTab: Bool {
         guard isDataLoaded else { return true }
         guard isHackintosh else { return false }
         let driver = HCAudio.shared.getAudioInfo().driver
-        return driver == "AppleALC" || driver == "VoodooHDA"
+        return driver == "AppleALC" || driver == "VoodooHDA" || driver == "USB"
     }
 
     private let defaults = UserDefaults.standard
