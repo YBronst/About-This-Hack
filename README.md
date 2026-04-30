@@ -28,7 +28,7 @@ Some will like it, some won't, and many others would have done it differently (p
 - Center window content when sidebar is hidden
 - Update displays detection: remove `scr.txt` intermediary file for `SPDisplaysDataType`, `system_profiler SPDisplaysDataType` is written to `scr.txt` and then read back into the cache, the file round-trip is unnecessary
 - Add transparency to window background (`About.This.Hack-glass-4.2.4.zip` in releases)
-- Add a native GitHub updater system (no Sparkle required)
+- Replace the custom updater system by a simple system based on the GitHub versioning API in pursuit of greater simplicity: no appcast.xml, no related keys in the Info.plist file, etc.
 - Add audio tab with motherboard's audio codec information (work in progress)
 
 You can read about the migration process in [AppKit-XIB to SwiftUI](DOCS/AppKit-XIB-to-SwiftUI.md).
