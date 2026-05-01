@@ -50,19 +50,19 @@ A throwback to the (better) About This Mac view from pre-Ventura. Get instant ac
 
 Visualize your connected displays with their respective resolutions.
 
-![Displays](ImagesTMP/Screenshots/Displaysx2.png)
+![Displays](Images/Screenshots/Displaysx2.png)
 
 ## Storage
 
 Get a clear picture of your startup disk, including name, available space, and disk type, all presented with an easy-to-read usage bar.
 
-![Storage](ImagesTMP/Screenshots/Storage.png)
+![Storage](Images/Screenshots/Storage.png)
 
 ## Audio (WIP)
 
 Check the motherboard's audio codec information. This applies only to Hackintosh; original Macs do not have an audio tab. Audio info is displayed when using AppleALC.kext + AppleHDA.kext or VoodooHDA.kext + `getdump`:
 
-![Audio](ImagesTMP/Screenshots/Audio-applealc.png)
+![Audio](Images/Screenshots/Audio-applealc.png)
 
 `getdump` is a tool available in the VoodooHDA repository. The download link is usually found in the resources section of each VoodooHDA release. The latest version is available at this [link](https://github.com/CloverHackyColor/VoodooHDA/releases/download/Release312/getdump.zip). VoodooHDA users must have `getdump` installed to get the audio tab. Simply copy the tool to `/usr/local/bin` and that's all.
 
@@ -70,7 +70,7 @@ Check the motherboard's audio codec information. This applies only to Hackintosh
 
 Access a list of support resources for both Mac and Hackintosh users.
 
-![Support](ImagesTMP/Screenshots/Support.png)
+![Support](Images/Screenshots/Support.png)
 
 ## Tooltips
 
@@ -91,7 +91,7 @@ Want to personalize your About This Hack? You can now replace the macOS logo in 
 
 | Custom | Default |
 |:---:|:---:|
-| ![Custom](ImagesTMP/Screenshots/Custom-logo.png) | ![Custom](ImagesTMP/Screenshots/Default-logo.png) |
+| ![Custom](Images/Screenshots/Custom-logo.png) | ![Custom](Images/Screenshots/Default-logo.png) |
 
 **Note:** The image must be in PNG format and exactly 1024x1024 pixels in size.
 
