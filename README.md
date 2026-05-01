@@ -4,7 +4,7 @@
 ![Swift](https://img.shields.io/badge/Swift-5+-blue.svg)
 ![Xcode](https://img.shields.io/badge/Xcode-15-lavender.svg)
 
-![Overview](ImagesTMP/Screenshots/Overview.png)
+![Overview](Images/Screenshots/Overview.png)
 
 ## Migration to SwiftUI
 
