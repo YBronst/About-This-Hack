@@ -3,7 +3,6 @@
 ![Platform](https://img.shields.io/badge/macOS-13.5+-orange.svg)
 ![Swift](https://img.shields.io/badge/Swift-5+-blue.svg)
 ![Xcode](https://img.shields.io/badge/Xcode-15-lavender.svg)
-<!-- ![Downloads](https://img.shields.io/github/downloads/2009-Nissan-Cube/About-This-Hack/total?label=Downloads&color=9494ff) -->
 
 ![Overview](ImagesTMP/Screenshots/Overview.png)
 
