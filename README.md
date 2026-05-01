@@ -60,7 +60,7 @@ Get a clear picture of your startup disk, including name, available space, and d
 
 ## Audio (WIP)
 
-Check the motherboard's audio codec information. This applies only to Hackintosh; original Macs do not have an audio tab. Audio info is displayed when using AppleALC.kext + AppleHDA.kext or VoodooHDA.kext + `getdump`:
+Check audio information. This applies only to Hackintosh; original Macs do not have an audio tab.  Macs with OpenCore / OCLP are treated as Hackintosh. Motherboard audio info is displayed when using AppleALC.kext + AppleHDA.kext or VoodooHDA.kext + `getdump`:
 
 ![Audio](Images/Screenshots/Audio-applealc.png)
 
