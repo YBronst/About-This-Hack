@@ -28,7 +28,7 @@ Some will like it, some won't, and many others would have done it differently (p
 - Update displays detection: remove `scr.txt` intermediary file for `SPDisplaysDataType`, `system_profiler SPDisplaysDataType` is written to `scr.txt` and then read back into the cache, the file round-trip is unnecessary
 - Add transparency to window background (`About.This.Hack-glass-4.x.x.zip` in releases)
 - Replace the custom updater system by a simple system based on the GitHub versioning API in pursuit of greater simplicity: no appcast.xml, no related keys in the Info.plist file, etc.
-- Add audio tab with motherboard's audio codec information (work in progress)
+- Add audio tab with audio information (work in progress).
 
 You can read about the migration process in [AppKit-XIB to SwiftUI](DOCS/AppKit-XIB-to-SwiftUI.md).
 
@@ -60,11 +60,20 @@ Get a clear picture of your startup disk, including name, available space, and d
 
 ## Audio (WIP)
 
-Check audio information. This applies only to Hackintosh; original Macs do not have an audio tab.  Macs with OpenCore / OCLP are treated as Hackintosh. Motherboard audio info is displayed when using AppleALC.kext + AppleHDA.kext or VoodooHDA.kext + `getdump`:
+Check audio information. This applies only to Hackintosh; original Macs do not have an audio tab.  Macs with OpenCore / OCLP are treated as Hackintosh.
+
+The Audio tab is displayed in these settings::
+- AppleALC.kext + AppleHDA.kext
+- VoodooHDA.kext + `getdump`
+- USB audio
+- HDMO audio.
 
 ![Audio](Images/Screenshots/Audio-applealc.png)
+![Audio](Images/Screenshots/Audio-voodoohda.png)
+![Audio](Images/Screenshots/Audio-usb.png)
+![Audio](Images/Screenshots/Audio-hdmi.png)
 
-`getdump` is a tool available in the VoodooHDA repository. The download link is usually found in the resources section of each VoodooHDA release. The latest version is available at this [link](https://github.com/CloverHackyColor/VoodooHDA/releases/download/Release312/getdump.zip). VoodooHDA users must have `getdump` installed to get the audio tab. Simply copy the tool to `/usr/local/bin` and that's all.
+**Note**: `getdump` is a tool available in the VoodooHDA repository. The download link is usually found in the resources section of each VoodooHDA release. The latest version is available at this [link](https://github.com/CloverHackyColor/VoodooHDA/releases/download/Release312/getdump.zip). VoodooHDA users must have `getdump` installed to get the audio tab. Simply copy the tool to `/usr/local/bin` and that's all.
 
 ## Support
 

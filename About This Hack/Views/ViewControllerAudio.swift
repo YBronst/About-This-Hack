@@ -42,7 +42,7 @@ struct AudioView: View {
         VStack(alignment: .leading, spacing: 7) {
             if !viewModel.driver.isEmpty {
                 AudioSpecRow(
-                    label: viewModel.driver == "USB"
+                    label: (viewModel.driver == "USB" || viewModel.driver == "HDMI")
                         ? NSLocalizedString("audio.spec.transport", comment: "Transport label")
                         : NSLocalizedString("audio.spec.driver", comment: "Driver label"),
                     value: viewModel.driver
@@ -50,22 +50,27 @@ struct AudioView: View {
             }
             if !viewModel.codecName.isEmpty {
                 AudioSpecRow(
-                    label: viewModel.driver == "USB"
+                    label: (viewModel.driver == "USB" || viewModel.driver == "HDMI")
                         ? NSLocalizedString("audio.spec.product", comment: "Product label")
                         : NSLocalizedString("audio.spec.codec", comment: "Codec label"),
-                    value: viewModel.codecName
+                    value: viewModel.codecName,
+                    tooltip: viewModel.codecTooltip
                 )
             }
             if !viewModel.vendorName.isEmpty {
                 AudioSpecRow(
-                    label: NSLocalizedString("audio.spec.vendor", comment: "Vendor label"),
-                    value: viewModel.vendorName
+                    label: viewModel.driver == "HDMI"
+                        ? NSLocalizedString("audio.spec.graphics_card", comment: "Graphics card label")
+                        : NSLocalizedString("audio.spec.vendor", comment: "Vendor label"),
+                    value: viewModel.vendorName,
+                    tooltip: viewModel.vendorTooltip
                 )
             }
             if !viewModel.deviceName.isEmpty {
                 AudioSpecRow(
                     label: NSLocalizedString("audio.spec.device_id", comment: "Device ID label"),
-                    value: viewModel.deviceName
+                    value: viewModel.deviceName,
+                    tooltip: viewModel.deviceTooltip
                 )
             }
             if !viewModel.layoutId.isEmpty {
@@ -83,6 +88,7 @@ struct AudioView: View {
 private struct AudioSpecRow: View {
     let label: String
     let value: String
+    var tooltip: String = ""
 
     private let labelWidth: CGFloat = 154
 
@@ -96,6 +102,7 @@ private struct AudioSpecRow: View {
             Text(value)
                 .font(.system(size: 13))
                 .frame(minWidth: labelWidth + 8, alignment: .leading)
+                .help(tooltip)
         }
         .padding(.trailing, 50)
 //        .border(.mint) // test
@@ -111,6 +118,9 @@ struct AudioViewModel {
     let layoutId: String
     let driver: String
     let hasData: Bool
+    let codecTooltip: String
+    let vendorTooltip: String
+    let deviceTooltip: String
 
     init() {
         let info = HCAudio.shared.getAudioInfo()
@@ -120,5 +130,8 @@ struct AudioViewModel {
         layoutId = info.layoutId
         driver = info.driver
         hasData = !info.vendorName.isEmpty || !info.codecName.isEmpty || !info.layoutId.isEmpty || !info.deviceName.isEmpty
+        codecTooltip = info.codecHex
+        vendorTooltip = info.vendorHex
+        deviceTooltip = info.deviceHex
     }
 }

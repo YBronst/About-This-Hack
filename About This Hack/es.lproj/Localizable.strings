@@ -73,6 +73,7 @@
 "audio.spec.layout_id" = "Layout ID";
 "audio.spec.transport" = "Clase";
 "audio.spec.product" = "Producto";
+"audio.spec.graphics_card" = "Tarjeta gráfica";
 
 /* Pestaña Soporte – títulos de enlaces */
 "support.macos_user_guide" = "Guía del usuario de macOS";

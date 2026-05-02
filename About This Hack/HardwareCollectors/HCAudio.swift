@@ -17,6 +17,9 @@ struct AudioInfo {
     let deviceName: String
     let layoutId: String
     let driver: String
+    let codecHex: String
+    let vendorHex: String
+    let deviceHex: String
 }
 
 // MARK: - HCAudio Collector
@@ -43,6 +46,12 @@ class HCAudio {
             return usbInfo
         }
 
+        // 1b. HDMI audio: if the current default output device uses HDMI transport,
+        //     report the output source name and the GPU driving it.
+        if let hdmiInfo = computeHDMIAudioInfo() {
+            return hdmiInfo
+        }
+
         // 2. Codec data: vendor ID from IOHDACodecDevice (present with AppleALC, absent with VoodooHDA)
         let codecOutput = run("ioreg -l -r -c IOHDACodecDevice -w 0 2>/dev/null")
 
@@ -67,13 +76,13 @@ class HCAudio {
         // These are available regardless of whether AppleALC or VoodooHDA is in use.
         let layoutId = parseLayoutId(from: pciOutput)
         let (pciVendor, pciDevice) = parsePciIds(from: pciOutput)
-        let deviceName = lookupPciDeviceName(vendorId: pciVendor, deviceId: pciDevice)
+        let (deviceName, deviceHex) = lookupPciDeviceName(vendorId: pciVendor, deviceId: pciDevice)
 
         // 4. AppleALC: exposes IOHDACodecDevice nodes → codecOutput is non-empty.
         if !codecOutput.isEmpty {
             let vendorIdInt = parseVendorId(from: codecOutput)
-            let codecName = vendorIdInt > 0 ? lookupCodecName(vendorId: vendorIdInt) : ""
-            let vendorName = vendorIdInt > 0 ? lookupAudioVendorName(vendorCode: (vendorIdInt >> 16) & 0xFFFF) : ""
+            let (codecName, codecHex) = vendorIdInt > 0 ? lookupCodecName(vendorId: vendorIdInt) : ("", "")
+            let (vendorName, vendorHex) = vendorIdInt > 0 ? lookupAudioVendorName(vendorCode: (vendorIdInt >> 16) & 0xFFFF) : ("", "")
 
             // Fall back to system_profiler only when all fields are empty
             // (unlikely with AppleALC, but covers edge cases).
@@ -85,7 +94,10 @@ class HCAudio {
                 vendorName: vendorName,
                 deviceName: deviceName,
                 layoutId: layoutId,
-                driver: "AppleALC"
+                driver: "AppleALC",
+                codecHex: codecHex,
+                vendorHex: vendorHex,
+                deviceHex: deviceHex
             )
         }
 
@@ -98,14 +110,17 @@ class HCAudio {
                 let dumpOutput = run("\(getdumpExec) 2>/dev/null")
                 let vendorIdInt = parseGetdumpCodecId(from: dumpOutput)
                 if vendorIdInt > 0 {
-                    let codecName = lookupCodecName(vendorId: vendorIdInt)
-                    let vendorName = lookupAudioVendorName(vendorCode: (vendorIdInt >> 16) & 0xFFFF)
+                    let (codecName, codecHex) = lookupCodecName(vendorId: vendorIdInt)
+                    let (vendorName, vendorHex) = lookupAudioVendorName(vendorCode: (vendorIdInt >> 16) & 0xFFFF)
                     return AudioInfo(
                         codecName: codecName,
                         vendorName: vendorName,
                         deviceName: deviceName,
                         layoutId: layoutId,
-                        driver: "VoodooHDA"
+                        driver: "VoodooHDA",
+                        codecHex: codecHex,
+                        vendorHex: vendorHex,
+                        deviceHex: deviceHex
                     )
                 }
             }
@@ -183,7 +198,67 @@ class HCAudio {
                 vendorName: manufacturer,
                 deviceName: "",
                 layoutId: "",
-                driver: "USB"
+                driver: "USB",
+                codecHex: "",
+                vendorHex: "",
+                deviceHex: ""
+            )
+        }
+
+        for line in output.components(separatedBy: .newlines) {
+            let leadingSpaces = line.prefix(while: { $0 == " " }).count
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            guard !trimmed.isEmpty else { continue }
+
+            // Device header lines: indented at the device level (>= 6 spaces), end with
+            // ":", and do not contain ": " (which would mark them as property lines).
+            if leadingSpaces >= 6 && trimmed.hasSuffix(":") && !trimmed.contains(": ") {
+                if let result = evaluateDevice() { return result }
+                currentName = String(trimmed.dropLast())  // strip trailing ":"
+                props = [:]
+            } else if !currentName.isEmpty, let colonRange = trimmed.range(of: ": ") {
+                let key = String(trimmed[trimmed.startIndex ..< colonRange.lowerBound])
+                let value = String(trimmed[colonRange.upperBound...])
+                props[key] = value
+            }
+        }
+
+        // Evaluate the last device block.
+        return evaluateDevice()
+    }
+
+    // MARK: - HDMI Audio Detection
+
+    // Checks whether the current default audio output device uses HDMI transport.
+    // Parses the plain-text output of `system_profiler SPAudioDataType`, splits it
+    // into per-device blocks, and returns an AudioInfo if a device is found that is
+    // marked as the Default Output Device AND has Transport = HDMI.
+    // The product name is taken from the "Output Source" field (falling back to the
+    // device header name), and the GPU name is read from HCGPU.
+    private func computeHDMIAudioInfo() -> AudioInfo? {
+        let output = run("system_profiler SPAudioDataType 2>/dev/null")
+        guard !output.isEmpty else { return nil }
+
+        var currentName = ""
+        var props: [String: String] = [:]
+
+        func evaluateDevice() -> AudioInfo? {
+            guard !currentName.isEmpty else { return nil }
+            let isDefault = (props["Default Output Device"] ?? "").lowercased() == "yes"
+            let transport = (props["Transport"] ?? "").trimmingCharacters(in: .whitespaces)
+            guard isDefault && transport.lowercased() == "hdmi" else { return nil }
+            let outputSource = (props["Output Source"] ?? "").trimmingCharacters(in: .whitespaces)
+            let productName = outputSource.isEmpty ? currentName : outputSource
+            let gpuName = HCGPU.shared.getGPU()
+            return AudioInfo(
+                codecName: productName,
+                vendorName: gpuName,
+                deviceName: "",
+                layoutId: "",
+                driver: "HDMI",
+                codecHex: "",
+                vendorHex: "",
+                deviceHex: ""
             )
         }
 
@@ -243,11 +318,11 @@ class HCAudio {
         }
 
         let name = device["_name"] as? String ?? ""
-        return AudioInfo(codecName: name, vendorName: vendor, deviceName: "", layoutId: "", driver: "")
+        return AudioInfo(codecName: name, vendorName: vendor, deviceName: "", layoutId: "", driver: "", codecHex: "", vendorHex: "", deviceHex: "")
     }
 
     private var emptyAudioInfo: AudioInfo {
-        AudioInfo(codecName: "", vendorName: "", deviceName: "", layoutId: "", driver: "")
+        AudioInfo(codecName: "", vendorName: "", deviceName: "", layoutId: "", driver: "", codecHex: "", vendorHex: "", deviceHex: "")
     }
 
     // MARK: - Parsers
@@ -347,61 +422,64 @@ class HCAudio {
     // MARK: - Codec Name Lookup
 
     // Map a codec vendor ID (upper 16 bits = vendor, lower 16 bits = model) to a
-    // human-readable string such as "Realtek ALC1220".
-    private func lookupCodecName(vendorId: UInt32) -> String {
+    // human-readable string such as "Realtek ALC1220", plus a hex string for tooltip use.
+    private func lookupCodecName(vendorId: UInt32) -> (name: String, hex: String) {
         let vendor = (vendorId >> 16) & 0xFFFF
         let model = vendorId & 0xFFFF
 
-        let hexSuffix = String(format: " (0x%04X:0x%04X)", vendor, model)
+        let hex = String(format: "0x%04X:0x%04X", vendor, model)
         switch vendor {
         case 0x10EC:
             // Realtek: model number encoded as hex digits matching the "ALC" designation
             // e.g. 0x0887 → ALC887, 0x1220 → ALC1220
-            return "Realtek ALC\(String(format: "%X", model))\(hexSuffix)"
+            return ("Realtek ALC\(String(format: "%X", model))", hex)
         case 0x8086:
-            return "Intel \(String(format: "0x%04X", model))\(hexSuffix)"
+            return ("Intel \(String(format: "0x%04X", model))", hex)
         case 0x10DE:
-            return "NVIDIA \(String(format: "0x%04X", model))\(hexSuffix)"
+            return ("NVIDIA \(String(format: "0x%04X", model))", hex)
         case 0x1002:
-            return "AMD \(String(format: "0x%04X", model))\(hexSuffix)"
+            return ("AMD \(String(format: "0x%04X", model))", hex)
         case 0x1106:
-            return "VIA \(String(format: "0x%04X", model))\(hexSuffix)"
+            return ("VIA \(String(format: "0x%04X", model))", hex)
         case 0x14F1:
-            return "Conexant \(String(format: "0x%04X", model))\(hexSuffix)"
+            return ("Conexant \(String(format: "0x%04X", model))", hex)
         case 0x1013:
-            return "Cirrus Logic \(String(format: "0x%04X", model))\(hexSuffix)"
+            return ("Cirrus Logic \(String(format: "0x%04X", model))", hex)
         case 0x111D:
-            return "IDT \(String(format: "0x%04X", model))\(hexSuffix)"
+            return ("IDT \(String(format: "0x%04X", model))", hex)
         case 0x11D4:
-            return "Analog Devices \(String(format: "0x%04X", model))\(hexSuffix)"
+            return ("Analog Devices \(String(format: "0x%04X", model))", hex)
         default:
-            return String(format: "0x%04X:0x%04X", vendor, model)
+            return (String(format: "0x%04X:0x%04X", vendor, model), "")
         }
     }
 
     // MARK: - Vendor / Device Name Lookups
 
-    // Map the upper-16-bit codec vendor code to a company name string.
-    private func lookupAudioVendorName(vendorCode: UInt32) -> String {
+    // Map the upper-16-bit codec vendor code to a company name string, plus a hex string for tooltip use.
+    private func lookupAudioVendorName(vendorCode: UInt32) -> (name: String, hex: String) {
+        let hex = String(format: "0x%04X", vendorCode)
         switch vendorCode {
-        case 0x10EC: return "Realtek Semiconductor Co., Ltd. (0x10EC)"
-        case 0x8086: return "Intel Corporation (0x8086)"
-        case 0x10DE: return "NVIDIA Corporation (0x10DE)"
-        case 0x1002: return "Advanced Micro Devices, Inc. (0x1002)"
-        case 0x1106: return "VIA Technologies, Inc. (0x1106)"
-        case 0x14F1: return "Conexant Systems, LLC (0x14F1)"
-        case 0x1013: return "Cirrus Logic, Inc. (0x1013)"
-        case 0x111D: return "IDT (0x111D)"
-        case 0x11D4: return "Analog Devices, Inc. (0x11D4)"
-        default: return String(format: "0x%04X", vendorCode)
+        case 0x10EC: return ("Realtek Semiconductor Co., Ltd.", hex)
+        case 0x8086: return ("Intel Corporation", hex)
+        case 0x10DE: return ("NVIDIA Corporation", hex)
+        case 0x1002: return ("Advanced Micro Devices, Inc.", hex)
+        case 0x1106: return ("VIA Technologies, Inc.", hex)
+        case 0x14F1: return ("Conexant Systems, LLC", hex)
+        case 0x1013: return ("Cirrus Logic, Inc.", hex)
+        case 0x111D: return ("IDT", hex)
+        case 0x11D4: return ("Analog Devices, Inc.", hex)
+        default: return (String(format: "0x%04X", vendorCode), "")
         }
     }
 
-    // Map a PCI vendor + device ID pair to a descriptive controller name.
+    // Map a PCI vendor + device ID pair to a descriptive controller name, plus a hex string for tooltip use.
     // Returns a human-readable string such as "Intel Cannon Lake PCH cAVS", or the
     // raw hex pair when the device is not in the table.
-    private func lookupPciDeviceName(vendorId: UInt32, deviceId: UInt32) -> String {
-        guard vendorId > 0 || deviceId > 0 else { return "" }
+    private func lookupPciDeviceName(vendorId: UInt32, deviceId: UInt32) -> (name: String, hex: String) {
+        guard vendorId > 0 || deviceId > 0 else { return ("", "") }
+
+        let hex = String(format: "0x%04X:0x%04X", vendorId, deviceId)
 
         // Build device description for known HDA controllers
         let deviceDesc: String?
@@ -468,8 +546,8 @@ class HCAudio {
         }
 
         if let desc = deviceDesc {
-            return "\(vendorName) \(desc) (\(String(format: "0x%04X", vendorId)):\(String(format: "0x%04X", deviceId)))"
+            return ("\(vendorName) \(desc)", hex)
         }
-        return "\(vendorName) \(String(format: "0x%04X", deviceId))"
+        return ("\(vendorName) \(String(format: "0x%04X", deviceId))", hex)
     }
 }
