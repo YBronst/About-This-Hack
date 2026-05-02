@@ -68,11 +68,11 @@
 "audio.spec.driver" = "Driver";
 "audio.spec.codec" = "Codec";
 "audio.spec.vendor" = "Fabricant";
-"audio.spec.device_id" = "ID de périphérique";
-"audio.spec.sub_device_id" = "ID de sous-périphérique";
+"audio.spec.device_id" = "Périphérique";
+"audio.spec.sub_device_id" = "Sous-périphérique";
 "audio.spec.layout_id" = "Layout ID";
 "audio.spec.transport" = "Classe";
-"audio.spec.product" = "Produit";
+"audio.spec.product" = "Périphérique";
 "audio.spec.graphics_card" = "Carte graphique";
 
 /* Onglet Assistance – titres des liens */

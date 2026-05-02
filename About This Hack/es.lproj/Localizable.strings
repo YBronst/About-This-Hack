@@ -68,11 +68,11 @@
 "audio.spec.driver" = "Controlador";
 "audio.spec.codec" = "Codec";
 "audio.spec.vendor" = "Fabricante";
-"audio.spec.device_id" = "ID de dispositivo";
-"audio.spec.sub_device_id" = "ID de sub-dispositivo";
+"audio.spec.device_id" = "Dispositivo";
+"audio.spec.sub_device_id" = "Sub-dispositivo";
 "audio.spec.layout_id" = "Layout ID";
 "audio.spec.transport" = "Clase";
-"audio.spec.product" = "Producto";
+"audio.spec.product" = "Dispositivo";
 "audio.spec.graphics_card" = "Tarjeta gráfica";
 
 /* Pestaña Soporte – títulos de enlaces */

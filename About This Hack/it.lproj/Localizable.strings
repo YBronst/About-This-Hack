@@ -68,11 +68,11 @@
 "audio.spec.driver" = "Driver";
 "audio.spec.codec" = "Codec";
 "audio.spec.vendor" = "Produttore";
-"audio.spec.device_id" = "ID dispositivo";
-"audio.spec.sub_device_id" = "ID sotto-dispositivo";
+"audio.spec.device_id" = "Dispositivo";
+"audio.spec.sub_device_id" = "Sotto-dispositivo";
 "audio.spec.layout_id" = "Layout ID";
 "audio.spec.transport" = "Classe";
-"audio.spec.product" = "Prodotto";
+"audio.spec.product" = "Dispositivo";
 "audio.spec.graphics_card" = "Scheda grafica";
 
 /* Scheda Supporto – titoli dei link */
