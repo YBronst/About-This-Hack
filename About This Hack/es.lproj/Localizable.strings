@@ -119,17 +119,8 @@
 "menu.help.title" = "Ayuda";
 "menu.help.ath_help" = "Ayuda de About This Hack";
 
-/* GitHub updater */
+/* Sparkle updater */
 "Check for Updates..." = "Buscar Actualizaciones...";
-"UpdateAvailable" = "Actualización disponible";
-"UpdateAvailableInfo" = "About This Hack %@ está disponible. ¿Desea descargarla?";
-"DownloadUpdate" = "Descargar";
-"UpdateLater" = "Más tarde";
-"UpToDate" = "Estás al día";
-"UpToDateInfo" = "About This Hack %@ es la versión más reciente disponible.";
-"UpdateCheckError" = "Error al buscar actualizaciones";
-"UpdateCheckFailed" = "No se pudo obtener información de actualización.";
-"UpdateCheckNetworkError" = "Se produjo un error de red. Comprueba tu conexión a internet.";
 
 /* Toolbar */
 "toolbar.toggle_sidebar" = "Mostrar/Ocultar barra lateral";

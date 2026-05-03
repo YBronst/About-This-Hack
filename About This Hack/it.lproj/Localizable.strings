@@ -119,17 +119,8 @@
 "menu.help.title" = "Aiuto";
 "menu.help.ath_help" = "Aiuto About This Hack";
 
-/* GitHub updater */
+/* Sparkle updater */
 "Check for Updates..." = "Cerca aggiornamenti...";
-"UpdateAvailable" = "Aggiornamento disponibile";
-"UpdateAvailableInfo" = "About This Hack  %@ è disponibile. Vuoi scaricarla?";
-"DownloadUpdate" = "Scarica";
-"UpdateLater" = "Più tardi";
-"UpToDate" = "Sei aggiornato";
-"UpToDateInfo" = "About This Hack %@ è la versione più recente disponibile.";
-"UpdateCheckError" = "Errore di controllo aggiornamenti";
-"UpdateCheckFailed" = "Impossibile recuperare le informazioni sull'aggiornamento.";
-"UpdateCheckNetworkError" = "Si è verificato un errore di rete. Controlla la connessione internet.";
 
 /* Toolbar */
 "toolbar.toggle_sidebar" = "Mostra/Nascondi barra laterale";

@@ -1,6 +1,7 @@
 import Cocoa
 import Foundation
 import SwiftUI
+import Sparkle
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
@@ -20,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     private var mainWindow: NSWindow?
     private var settingsWindowController: SettingsWindowController?
     private var languageSelectorWindowController: LanguageSelectorWindowController?
+    private var updaterController: UpdaterController?
 
     // END: - Properties -----------------------------------------
 
@@ -33,6 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         _ = AppState.shared
         // Start async data file creation – no blocking.
         CreateDataFiles.getInitDataFilesAsync {}
+        updaterController = UpdaterController()
     }
 
     func applicationWillFinishLaunching(_: Notification) {
@@ -176,15 +179,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
     // END: - Language Selector -----------------------------------------
 
-    // MARK: - GitHub Updates -----------------------------------------
+    // MARK: - Sparkle Updates -----------------------------------------
 
-    @IBAction func checkForUpdates(_: Any) {
-        GitHubUpdateChecker.shared.checkForUpdates(userInitiated: true)
+    @IBAction func checkForUpdates(_ sender: Any) {
+         updaterController?.checkForUpdates()
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(checkForUpdates(_:)) {
-            return !GitHubUpdateChecker.shared.isChecking
+            return updaterController?.canCheckForUpdates ?? false
         }
         if menuItem.action == #selector(showAudio(_:)) {
             return AppState.shared.shouldShowAudioTab
@@ -192,7 +195,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         return true
     }
 
-    // END: - GitHub Updates -----------------------------------------
+    // END: - Sparkle Updates -----------------------------------------
 
     // MARK: - Main Menu -----------------------------------------
 

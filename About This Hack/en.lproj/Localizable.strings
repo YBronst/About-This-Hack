@@ -119,17 +119,8 @@
 "menu.help.title" = "Help";
 "menu.help.ath_help" = "About This Hack Help";
 
-/* GitHub updater */
+/* Sparkle updater */
 "Check for Updates..." = "Check for Updates...";
-"UpdateAvailable" = "Update Available";
-"UpdateAvailableInfo" = "About This Hack %@ is available. Would you like to download it?";
-"DownloadUpdate" = "Download";
-"UpdateLater" = "Later";
-"UpToDate" = "You're Up to Date";
-"UpToDateInfo" = "About This Hack %@ is the latest version available.";
-"UpdateCheckError" = "Update Check Error";
-"UpdateCheckFailed" = "Could not retrieve update information.";
-"UpdateCheckNetworkError" = "A network error occurred. Please check your internet connection.";
 
 /* Toolbar */
 "toolbar.toggle_sidebar" = "Toggle Sidebar";
