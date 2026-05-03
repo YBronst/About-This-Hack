@@ -62,10 +62,11 @@ Get a clear picture of your startup disk, including name, available space, and d
 Check audio information. This applies only to Hackintosh; original Macs do not have an audio tab.  Macs with OpenCore / OCLP are treated as Hackintosh.
 
 The Audio tab is displayed in these situations:
+
 - AppleALC.kext + AppleHDA.kext
 - VoodooHDA.kext + `getdump`
 - USB audio
-- HDMI audio.
+- HDMI or DisplayPort audio.
 
 ![Audio](Images/Screenshots/Audio-applealc.png)
 ![Audio](Images/Screenshots/Audio-voodoohda.png)

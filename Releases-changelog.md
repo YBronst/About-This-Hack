@@ -1,6 +1,10 @@
 # Releases Changelog
 
-## 4.2.7 (1617) — HDMI audio support
+## 4.2.8 (1620) — DisplayPort audio support
+
+- Add DisplayPort audio device support to the Audio tab
+
+## 4.2.7 (1617) — Update documentation
 
 - Update Sparkle documentation
 

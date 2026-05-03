@@ -46,7 +46,7 @@ class HCAudio {
             return usbInfo
         }
 
-        // 1b. HDMI audio: if the current default output device uses HDMI transport,
+        // 1b. HDMI/DisplayPort audio: if the current default output device uses HDMI or DisplayPort transport,
         //     report the output source name and the GPU driving it.
         if let hdmiInfo = computeHDMIAudioInfo() {
             return hdmiInfo
@@ -232,7 +232,7 @@ class HCAudio {
     // Checks whether the current default audio output device uses HDMI transport.
     // Parses the plain-text output of `system_profiler SPAudioDataType`, splits it
     // into per-device blocks, and returns an AudioInfo if a device is found that is
-    // marked as the Default Output Device AND has Transport = HDMI.
+    // marked as the Default Output Device AND has Transport = HDMI or DisplayPort.
     // The product name is taken from the "Output Source" field (falling back to the
     // device header name), and the GPU name is read from HCGPU.
     private func computeHDMIAudioInfo() -> AudioInfo? {
@@ -246,16 +246,18 @@ class HCAudio {
             guard !currentName.isEmpty else { return nil }
             let isDefault = (props["Default Output Device"] ?? "").lowercased() == "yes"
             let transport = (props["Transport"] ?? "").trimmingCharacters(in: .whitespaces)
-            guard isDefault && transport.lowercased() == "hdmi" else { return nil }
+            let transportLower = transport.lowercased()
+            guard isDefault && (transportLower == "hdmi" || transportLower == "displayport") else { return nil }
             let outputSource = (props["Output Source"] ?? "").trimmingCharacters(in: .whitespaces)
             let productName = outputSource.isEmpty ? currentName : outputSource
             let gpuName = HCGPU.shared.getGPU()
+            let driverName = transportLower == "displayport" ? "DisplayPort" : "HDMI"
             return AudioInfo(
                 codecName: productName,
                 vendorName: gpuName,
                 deviceName: "",
                 layoutId: "",
-                driver: "HDMI",
+                driver: driverName,
                 codecHex: "",
                 vendorHex: "",
                 deviceHex: ""

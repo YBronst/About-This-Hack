@@ -42,7 +42,7 @@ struct AudioView: View {
         VStack(alignment: .leading, spacing: 7) {
             if !viewModel.driver.isEmpty {
                 AudioSpecRow(
-                    label: (viewModel.driver == "USB" || viewModel.driver == "HDMI")
+                    label: (viewModel.driver == "USB" || viewModel.driver == "HDMI" || viewModel.driver == "DisplayPort")
                         ? NSLocalizedString("audio.spec.transport", comment: "Transport label")
                         : NSLocalizedString("audio.spec.driver", comment: "Driver label"),
                     value: viewModel.driver
@@ -50,7 +50,7 @@ struct AudioView: View {
             }
             if !viewModel.codecName.isEmpty {
                 AudioSpecRow(
-                    label: (viewModel.driver == "USB" || viewModel.driver == "HDMI")
+                    label: (viewModel.driver == "USB" || viewModel.driver == "HDMI" || viewModel.driver == "DisplayPort")
                         ? NSLocalizedString("audio.spec.product", comment: "Product label")
                         : NSLocalizedString("audio.spec.codec", comment: "Codec label"),
                     value: viewModel.codecName,
@@ -59,7 +59,7 @@ struct AudioView: View {
             }
             if !viewModel.vendorName.isEmpty {
                 AudioSpecRow(
-                    label: viewModel.driver == "HDMI"
+                    label: (viewModel.driver == "HDMI" || viewModel.driver == "DisplayPort")
                         ? NSLocalizedString("audio.spec.graphics_card", comment: "Graphics card label")
                         : NSLocalizedString("audio.spec.vendor", comment: "Vendor label"),
                     value: viewModel.vendorName,
