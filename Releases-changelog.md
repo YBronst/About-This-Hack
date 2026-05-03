@@ -2,7 +2,7 @@
 
 ## 4.2.7 (1617) — HDMI audio support
 
-- Update Sparkle components
+- Update Sparkle documentation
 
 ## 4.2.6 (1615) — HDMI audio support
 
