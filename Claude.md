@@ -7,7 +7,7 @@
 - macOS 13.5 (Ventura) minimum deployment target
 - Pure SwiftUI UI (migrated from AppKit/XIB)
 - Storyboard-free (AppDelegate bootstraps everything manually)
-- Auto-updater via lightweight GitHub Releases checker (no Sparkle dependency)
+- Auto-updater via Sparkle framework (SPM dependency)
 - Localized into: English (`en`), Spanish (`es`), French (`fr`), Italian (`it`)
 <!-- - Transparent/liquid-glass window style (`.ultraThinMaterial` backgrounds) -->
 
@@ -18,7 +18,7 @@
 | Language | Swift 5 (+ one Objective-C file for SIP reading) |
 | UI framework | SwiftUI (macOS 13.5+) |
 | App lifecycle | AppKit (`NSApplicationDelegate`, no storyboard) |
-| Auto-updater | Lightweight GitHub Releases checker (`GitHubUpdateChecker`), no external dependencies |
+| Auto-updater | Sparkle framework via SPM (`UpdaterController` wrapping `SPUStandardUpdaterController`) |
 | Shell execution | Custom `run(_ command: String) -> String` via `/bin/zsh` subprocess |
 | Localization | `NSLocalizedString` + `.strings` files per language |
 | Persistence | `UserDefaults.standard` (window frame, custom logo path, language) |
@@ -62,7 +62,7 @@ About-This-Hack-2/
     │   └── HCVersion.swift
     ├── Models/                        ← Shared state, data init, utilities
     │   ├── CreateDataFiles.swift      ← Async creation of temp data files
-    │   ├── GitHubUpdateChecker.swift  ← Lightweight GitHub Releases update checker
+    │   ├── UpdateController.swift     ← Sparkle updater controller wrapper
     │   ├── InitGlobalVariables.swift  ← All global constants and paths
     │   ├── LoadingIndicatorController.swift
     │   ├── SystemFunctions.swift      ← run(), getSysctlValueByKey(), Bundle ext.
@@ -197,17 +197,16 @@ Assets are in `Assets.xcassets`. Notable image sets:
 - The path is saved to `UserDefaults` under key `"customLogoPath"` (`CustomLogoConstants.customLogoPathKey`).
 - A `Notification.Name.customLogoDidChange` notification is posted when the logo changes; `OverviewViewModel` listens and reloads.
 
-## GitHub Auto-Updater
+## Sparkle Auto-Updater
 
-- `GitHubUpdateChecker` is a singleton (`GitHubUpdateChecker.shared`) that queries the GitHub Releases API.
-- It compares the latest release tag against `CFBundleShortVersionString` and shows an `NSAlert` if a newer version is available.
-- No external dependencies – uses `URLSession` and `NSAlert` directly.
-- The "Check for Updates…" menu item (`⌘U`) calls `GitHubUpdateChecker.shared.checkForUpdates(userInitiated: true)`.
+- `UpdaterController` wraps `SPUStandardUpdaterController` from the Sparkle framework (SPM dependency, min 2.9.0).
+- It publishes `canCheckForUpdates` so `AppDelegate.validateMenuItem` can enable/disable the menu item.
+- The "Check for Updates…" menu item (`⌘U`) calls `updaterController?.checkForUpdates()`.
 
 ## Building
 
 - Open `About This Hack.xcodeproj` in Xcode 15+.
-- There are no external package dependencies. No package manager is needed beyond what Xcode provides.
+- Xcode resolves the Sparkle SPM package automatically on first open/build.
 - Target: macOS 13.5+, architecture: universal (Apple Silicon + Intel).
 - There are no automated test targets in the project.
 - The app is storyboard-free: `NSPrincipalClass` points to `AppDelegate`, and `AppDelegate.main()` is the entry point (marked `@main`).
@@ -231,7 +230,7 @@ Assets are in `Assets.xcassets`. Notable image sets:
 | Add a new tab | Add a case to `AppSection` in `WindowController.swift`, add a new view file in `Views/`, update `FakeSidebarLayout.detailView`, add menu item in `AppDelegate.createMainMenu()` |
 | Change global paths or URLs | `Models/InitGlobalVariables.swift` |
 | Add/edit a Localized string | All four `{lang}.lproj/Localizable.strings` |
-| Change update checker owner/repo | `Models/GitHubUpdateChecker.swift` (`owner`/`repo` constants) |
+| Change update checker | `Models/UpdateController.swift` (Sparkle `SPUStandardUpdaterController`) |
 | Change window appearance | `AppDelegate.createAndShowMainWindow()` |
 | Change Settings/custom logo logic | `Views/SettingsView.swift` + `Utilities/CustomLogoConstants.swift` |
 | Change tooltip content | `Models/Tooltips.swift` |

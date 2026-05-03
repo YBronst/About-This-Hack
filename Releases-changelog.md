@@ -1,12 +1,17 @@
 # Releases Changelog
 
+## 4.2.7 (1617) — HDMI audio support
+
+- Update Sparkle components
+
 ## 4.2.6 (1615) — HDMI audio support
 
 - Add HDMI audio device support to the Audio tab
 
-## 4.2.5 (1613) — USB audio support
+## 4.2.5 (1613) — USB audio support · Get back Sparkle updater
 
 - Add USB audio device support to the Audio tab
+- Replace the custom GitHub-based update checker with Sparkle
 
 ## 4.2.4 (1610) — Native updater replaces Sparkle
 
@@ -17,7 +22,7 @@
 
 - Improve audio detection and VoodooHDA support via the `getdump` tool (work in progress)
 - Fix accents in the French `Localizable.strings` file
-- README: Document audio tab behavior, getdump requirement for VoodooHDA, and update screenshot references
+- README: Document audio tab behavior, `getdump` requirement for VoodooHDA, and update screenshot references
 - Assets: Renamed Audio screenshot for AppleALC and added a VoodooHDA screenshot
 
 ## 4.2.0 (1604) — Display detection · Audio tab

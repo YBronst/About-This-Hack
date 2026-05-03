@@ -26,8 +26,7 @@ Some will like it, some won't, and many others would have done it differently (p
 - Rework the Displays UI to enable full display counts (removed hard limit of 3); use a horizontal ScrollView if more of 3 displays are found
 - Center window content when sidebar is hidden
 - Update displays detection: remove `scr.txt` intermediary file for `SPDisplaysDataType`, `system_profiler SPDisplaysDataType` is written to `scr.txt` and then read back into the cache, the file round-trip is unnecessary
-- Add transparency to window background (`About.This.Hack-glass-4.x.x.zip` in releases)
-- Replace the custom updater system by a simple system based on the GitHub versioning API in pursuit of greater simplicity: no appcast.xml, no related keys in the Info.plist file, etc.
+- Replace the custom updater system by Sparkle
 - Add audio tab with audio information (work in progress).
 
 You can read about the migration process in [AppKit-XIB to SwiftUI](DOCS/AppKit-XIB-to-SwiftUI.md).
@@ -84,10 +83,6 @@ Access a list of support resources for both Mac and Hackintosh users.
 ## Tooltips
 
 Some values show more details when hovered over. See if you can find them all! 😉
-
-## Auto-updater
-
-There is also a native, lightweight update checker designed for SwiftUI applications published on GitHub, which queries the GitHub versioning API to detect newer versions of the application. It requires no third-party dependencies (no Sparkle or similar framework required).
 
 ## Custom Logo
 
