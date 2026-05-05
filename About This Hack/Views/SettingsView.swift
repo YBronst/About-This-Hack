@@ -71,7 +71,7 @@ struct SettingsView: View {
     }
 }
 
-// ViewModel for SettingsView
+/// ViewModel for SettingsView
 class SettingsViewModel: ObservableObject {
     @Published var logoImage: NSImage = .init()
     @Published var statusMessage: String = ""

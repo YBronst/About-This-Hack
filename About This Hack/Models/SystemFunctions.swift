@@ -8,10 +8,10 @@ import Darwin
 
 var thisApplicationVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
 
-// IOReg port default
+/// IOReg port default
 var IOMainorMasterPortDefault: UInt32 = 0
 
-// Define RTLD_DEFAULT for symbol lookup
+/// Define RTLD_DEFAULT for symbol lookup
 let RTLD_DEFAULT = UnsafeMutableRawPointer(bitPattern: -2)
 
 func initPortDefault() -> mach_port_t {

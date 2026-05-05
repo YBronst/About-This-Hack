@@ -6,7 +6,7 @@ import AppKit
 import Foundation
 
 class InitGlobVar {
-    // Computed property for thisApplicationName
+    /// Computed property for thisApplicationName
     static var thisApplicationName: String {
         (Bundle.main.applicationName ?? "").replacingOccurrences(of: ".app", with: "")
     }
@@ -14,7 +14,7 @@ class InitGlobVar {
     static var athfilesDirectory = "/.ath"
     static var tempDirectory = "/private/tmp"
 
-    // Calculated property for athDirectory
+    /// Calculated property for athDirectory
     static var athDirectory: String {
         tempDirectory + athfilesDirectory
     }
@@ -44,7 +44,7 @@ class InitGlobVar {
     static var softwareUpdateSP = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane"
     static var softwareUpdateURL = "x-apple.systempreferences:com.apple.Software-Update-Settings.extension"
 
-    // Used by ViewControllerDisplays
+    /// Used by ViewControllerDisplays
     static var displayPrefPane = "/System/Library/PreferencePanes/Displays.prefPane"
 
     // Used by ViewControllerSupport

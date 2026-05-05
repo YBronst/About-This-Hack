@@ -9,12 +9,11 @@ class HCStartupDisk {
             print("Error: Failed to read startup disk info from HardwareCollector cache")
             return ""
         }
-        let diskName = content.components(separatedBy: "\n")
+        return content.components(separatedBy: "\n")
             .first { $0.contains("Volume Name") }?
             .components(separatedBy: ":")
             .last?
             .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        return diskName
     }()
 
     func getStartupDisk() -> String {

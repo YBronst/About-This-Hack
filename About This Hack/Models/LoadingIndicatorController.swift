@@ -8,7 +8,7 @@
 import Cocoa
 
 class LoadingIndicatorController {
-    // Singleton instance
+    /// Singleton instance
     static let shared = LoadingIndicatorController()
 
     private var loadingWindow: NSWindow?

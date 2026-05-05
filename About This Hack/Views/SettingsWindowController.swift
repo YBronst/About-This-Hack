@@ -5,7 +5,7 @@ class SettingsWindowController: NSWindowController {
     // MARK: - Constants
 
     private static let windowWidth: CGFloat = 422
-    // Content height matches the SwiftUI view frame height
+    /// Content height matches the SwiftUI view frame height
     private static let contentHeight: CGFloat = 330
 
     // MARK: - State

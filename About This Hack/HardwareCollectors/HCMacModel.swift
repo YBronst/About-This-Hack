@@ -18,8 +18,7 @@ class HCMacModel {
         if let fullIdentifier = getSysctlValueByKey(inputKey: "hw.model") {
             let parts = fullIdentifier.components(separatedBy: ":")
             let modelId = parts.last?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let finalModelId = modelId?.nilIfEmpty ?? "Unknown"
-            return finalModelId
+            return modelId?.nilIfEmpty ?? "Unknown"
         }
         print("Warning: Failed to get Model Identifier from hw.model")
         return "Unknown"
@@ -46,8 +45,7 @@ class HCMacModel {
 
         // MacPro7,1 OK
         let command = "cat \(InitGlobVar.hwFilePath) | grep \"Model Identifier\" | cut -d \":\" -f4"
-        let macNameFromHwFile = run(command).trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty ?? name
-        return macNameFromHwFile
+        return run(command).trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty ?? name
     }
 
     private lazy var macModels: [String: (Float, String)] = [

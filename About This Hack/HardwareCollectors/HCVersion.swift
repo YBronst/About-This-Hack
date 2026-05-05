@@ -35,8 +35,7 @@ class HCVersion {
     }
 
     private func getOSBuild() -> String {
-        let buildString = run("sw_vers -buildVersion").trimmingCharacters(in: .whitespacesAndNewlines)
-        return buildString
+        return run("sw_vers -buildVersion").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func setOSVersion(osNumber: String) {

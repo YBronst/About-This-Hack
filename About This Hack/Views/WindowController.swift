@@ -17,7 +17,9 @@ enum AppSection: String, CaseIterable, Identifiable {
     case audio
     case support
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     var title: String {
         switch self {

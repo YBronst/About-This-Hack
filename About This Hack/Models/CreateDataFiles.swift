@@ -4,7 +4,7 @@ class CreateDataFiles {
     private static var _dataFilesCreated: Bool = false
     private static let lock = NSLock()
 
-    // Notification name for when data files are created
+    /// Notification name for when data files are created
     static let dataFilesCreatedNotification = Notification.Name("DataFilesCreated")
 
     static var dataFilesCreated: Bool {

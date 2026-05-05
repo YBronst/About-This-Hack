@@ -28,7 +28,7 @@ class HCAudio {
     static let shared = HCAudio()
     private init() {}
 
-    // Lazy initialization runs on the background thread via pre-warming in HardwareCollector.getAllData().
+    /// Lazy initialization runs on the background thread via pre-warming in HardwareCollector.getAllData().
     private lazy var _audioInfo: AudioInfo = computeAudioInfo()
 
     func getAudioInfo() -> AudioInfo {
@@ -141,9 +141,9 @@ class HCAudio {
 
     // MARK: - getdump Helpers
 
-    // Return the full path of the `getdump` executable, or nil if not found.
-    // getdump is shipped with VoodooHDA and can be installed in /usr/local/bin or
-    // /opt/local/bin (the two most common locations from PKG installers).
+    /// Return the full path of the `getdump` executable, or nil if not found.
+    /// getdump is shipped with VoodooHDA and can be installed in /usr/local/bin or
+    /// /opt/local/bin (the two most common locations from PKG installers).
     private func getdumpPath() -> String? {
         let knownPaths = ["/usr/local/bin/getdump", "/opt/local/bin/getdump"]
         for path in knownPaths {
@@ -156,8 +156,8 @@ class HCAudio {
         return whichResult.isEmpty ? nil : whichResult
     }
 
-    // Parse the first "HDA Codec ID: 0xXXXXYYYY" line from getdump output and
-    // return the value as a UInt32 (upper 16 bits = vendor, lower 16 bits = model).
+    /// Parse the first "HDA Codec ID: 0xXXXXYYYY" line from getdump output and
+    /// return the value as a UInt32 (upper 16 bits = vendor, lower 16 bits = model).
     private func parseGetdumpCodecId(from output: String) -> UInt32 {
         for line in output.components(separatedBy: .newlines) {
             let t = line.trimmingCharacters(in: .whitespaces)
@@ -176,10 +176,10 @@ class HCAudio {
 
     // MARK: - USB Audio Detection
 
-    // Checks whether the current default audio output device is connected via USB.
-    // Parses the plain-text output of `system_profiler SPAudioDataType`, splits it
-    // into per-device blocks, and returns an AudioInfo if a device is found that is
-    // marked as the Default Output Device AND has Transport = USB.
+    /// Checks whether the current default audio output device is connected via USB.
+    /// Parses the plain-text output of `system_profiler SPAudioDataType`, splits it
+    /// into per-device blocks, and returns an AudioInfo if a device is found that is
+    /// marked as the Default Output Device AND has Transport = USB.
     private func computeUSBAudioInfo() -> AudioInfo? {
         let output = run("system_profiler SPAudioDataType 2>/dev/null")
         guard !output.isEmpty else { return nil }
@@ -191,7 +191,7 @@ class HCAudio {
             guard !currentName.isEmpty else { return nil }
             let isDefault = (props["Default Output Device"] ?? "").lowercased() == "yes"
             let transport = (props["Transport"] ?? "").trimmingCharacters(in: .whitespaces)
-            guard isDefault && transport.lowercased() == "usb" else { return nil }
+            guard isDefault, transport.lowercased() == "usb" else { return nil }
             let manufacturer = (props["Manufacturer"] ?? "").trimmingCharacters(in: .whitespaces)
             return AudioInfo(
                 codecName: currentName,
@@ -212,9 +212,9 @@ class HCAudio {
 
             // Device header lines: indented at the device level (>= 6 spaces), end with
             // ":", and do not contain ": " (which would mark them as property lines).
-            if leadingSpaces >= 6 && trimmed.hasSuffix(":") && !trimmed.contains(": ") {
+            if leadingSpaces >= 6, trimmed.hasSuffix(":"), !trimmed.contains(": ") {
                 if let result = evaluateDevice() { return result }
-                currentName = String(trimmed.dropLast())  // strip trailing ":"
+                currentName = String(trimmed.dropLast()) // strip trailing ":"
                 props = [:]
             } else if !currentName.isEmpty, let colonRange = trimmed.range(of: ": ") {
                 let key = String(trimmed[trimmed.startIndex ..< colonRange.lowerBound])
@@ -229,12 +229,12 @@ class HCAudio {
 
     // MARK: - HDMI Audio Detection
 
-    // Checks whether the current default audio output device uses HDMI transport.
-    // Parses the plain-text output of `system_profiler SPAudioDataType`, splits it
-    // into per-device blocks, and returns an AudioInfo if a device is found that is
-    // marked as the Default Output Device AND has Transport = HDMI or DisplayPort.
-    // The product name is taken from the "Output Source" field (falling back to the
-    // device header name), and the GPU name is read from HCGPU.
+    /// Checks whether the current default audio output device uses HDMI transport.
+    /// Parses the plain-text output of `system_profiler SPAudioDataType`, splits it
+    /// into per-device blocks, and returns an AudioInfo if a device is found that is
+    /// marked as the Default Output Device AND has Transport = HDMI or DisplayPort.
+    /// The product name is taken from the "Output Source" field (falling back to the
+    /// device header name), and the GPU name is read from HCGPU.
     private func computeHDMIAudioInfo() -> AudioInfo? {
         let output = run("system_profiler SPAudioDataType 2>/dev/null")
         guard !output.isEmpty else { return nil }
@@ -247,7 +247,7 @@ class HCAudio {
             let isDefault = (props["Default Output Device"] ?? "").lowercased() == "yes"
             let transport = (props["Transport"] ?? "").trimmingCharacters(in: .whitespaces)
             let transportLower = transport.lowercased()
-            guard isDefault && (transportLower == "hdmi" || transportLower == "displayport") else { return nil }
+            guard isDefault, transportLower == "hdmi" || transportLower == "displayport" else { return nil }
             let outputSource = (props["Output Source"] ?? "").trimmingCharacters(in: .whitespaces)
             let productName = outputSource.isEmpty ? currentName : outputSource
             let gpuName = HCGPU.shared.getGPU()
@@ -271,9 +271,9 @@ class HCAudio {
 
             // Device header lines: indented at the device level (>= 6 spaces), end with
             // ":", and do not contain ": " (which would mark them as property lines).
-            if leadingSpaces >= 6 && trimmed.hasSuffix(":") && !trimmed.contains(": ") {
+            if leadingSpaces >= 6, trimmed.hasSuffix(":"), !trimmed.contains(": ") {
                 if let result = evaluateDevice() { return result }
-                currentName = String(trimmed.dropLast())  // strip trailing ":"
+                currentName = String(trimmed.dropLast()) // strip trailing ":"
                 props = [:]
             } else if !currentName.isEmpty, let colonRange = trimmed.range(of: ": ") {
                 let key = String(trimmed[trimmed.startIndex ..< colonRange.lowerBound])
@@ -288,10 +288,10 @@ class HCAudio {
 
     // MARK: - system_profiler Fallback
 
-    // Used on real Macs whose audio hardware is not exposed via standard
-    // IOHDACodecDevice nodes (e.g. Intel Smart Sound Technology + CS8409).
-    // Parses `system_profiler SPAudioDataType -xml` to extract at least the
-    // audio device name and its vendor/manufacturer from CoreAudio.
+    /// Used on real Macs whose audio hardware is not exposed via standard
+    /// IOHDACodecDevice nodes (e.g. Intel Smart Sound Technology + CS8409).
+    /// Parses `system_profiler SPAudioDataType -xml` to extract at least the
+    /// audio device name and its vendor/manufacturer from CoreAudio.
     private func computeAudioInfoFromSystemProfiler() -> AudioInfo {
         let output = run("system_profiler SPAudioDataType -xml 2>/dev/null")
         guard let data = output.data(using: .utf8),
@@ -329,7 +329,7 @@ class HCAudio {
 
     // MARK: - Parsers
 
-    // Parse `"IOHDACodecVendorID" = <integer>` from ioreg output.
+    /// Parse `"IOHDACodecVendorID" = <integer>` from ioreg output.
     private func parseVendorId(from output: String) -> UInt32 {
         for line in output.components(separatedBy: .newlines) {
             let t = line.trimmingCharacters(in: .whitespaces)
@@ -347,11 +347,11 @@ class HCAudio {
         return 0
     }
 
-    // Parse layout-id from ioreg output.
-    // Checks "alc-layout-id" first (AppleALC override), then falls back to "layout-id".
-    // Handles two formats:
-    //   Data (AppleALC / bootloader injection): "alc-layout-id" = <07000000>  → first byte little-endian
-    //   Integer (VoodooHDA direct injection):   "layout-id" = 7
+    /// Parse layout-id from ioreg output.
+    /// Checks "alc-layout-id" first (AppleALC override), then falls back to "layout-id".
+    /// Handles two formats:
+    ///   Data (AppleALC / bootloader injection): "alc-layout-id" = <07000000>  → first byte little-endian
+    ///   Integer (VoodooHDA direct injection):   "layout-id" = 7
     private func parseLayoutId(from output: String) -> String {
         if let id = parseLayoutIdForKey("alc-layout-id", from: output), !id.isEmpty {
             return id
@@ -388,8 +388,8 @@ class HCAudio {
         return nil
     }
 
-    // Parse combined PCI device-id: reads `vendor-id` and `device-id` data properties
-    // and returns them as a tuple (vendorId, deviceId).
+    /// Parse combined PCI device-id: reads `vendor-id` and `device-id` data properties
+    /// and returns them as a tuple (vendorId, deviceId).
     private func parsePciIds(from output: String) -> (UInt32, UInt32) {
         var vendorId: UInt32 = 0
         var deviceId: UInt32 = 0
@@ -405,8 +405,8 @@ class HCAudio {
         return (vendorId, deviceId)
     }
 
-    // Read an ioreg data property formatted as `"key" = <XXYY0000>` and return the
-    // first two bytes interpreted as a little-endian 16-bit unsigned integer.
+    /// Read an ioreg data property formatted as `"key" = <XXYY0000>` and return the
+    /// first two bytes interpreted as a little-endian 16-bit unsigned integer.
     private func parseLeUInt16DataProp(_ line: String) -> UInt32? {
         guard let open = line.firstIndex(of: "<"),
               let close = line.firstIndex(of: ">"),
@@ -423,8 +423,8 @@ class HCAudio {
 
     // MARK: - Codec Name Lookup
 
-    // Map a codec vendor ID (upper 16 bits = vendor, lower 16 bits = model) to a
-    // human-readable string such as "Realtek ALC1220", plus a hex string for tooltip use.
+    /// Map a codec vendor ID (upper 16 bits = vendor, lower 16 bits = model) to a
+    /// human-readable string such as "Realtek ALC1220", plus a hex string for tooltip use.
     private func lookupCodecName(vendorId: UInt32) -> (name: String, hex: String) {
         let vendor = (vendorId >> 16) & 0xFFFF
         let model = vendorId & 0xFFFF
@@ -458,7 +458,7 @@ class HCAudio {
 
     // MARK: - Vendor / Device Name Lookups
 
-    // Map the upper-16-bit codec vendor code to a company name string, plus a hex string for tooltip use.
+    /// Map the upper-16-bit codec vendor code to a company name string, plus a hex string for tooltip use.
     private func lookupAudioVendorName(vendorCode: UInt32) -> (name: String, hex: String) {
         let hex = String(format: "0x%04X", vendorCode)
         switch vendorCode {
@@ -475,9 +475,9 @@ class HCAudio {
         }
     }
 
-    // Map a PCI vendor + device ID pair to a descriptive controller name, plus a hex string for tooltip use.
-    // Returns a human-readable string such as "Intel Cannon Lake PCH cAVS", or the
-    // raw hex pair when the device is not in the table.
+    /// Map a PCI vendor + device ID pair to a descriptive controller name, plus a hex string for tooltip use.
+    /// Returns a human-readable string such as "Intel Cannon Lake PCH cAVS", or the
+    /// raw hex pair when the device is not in the table.
     private func lookupPciDeviceName(vendorId: UInt32, deviceId: UInt32) -> (name: String, hex: String) {
         guard vendorId > 0 || deviceId > 0 else { return ("", "") }
 

@@ -4,7 +4,7 @@
 
 import Sparkle
 
-// View model that publishes when checks for updates can be performed by the user
+/// View model that publishes when checks for updates can be performed by the user
 final class UpdaterController: ObservableObject {
     private let updaterController: SPUStandardUpdaterController
 

@@ -19,7 +19,9 @@ class Tooltips {
         return HCMacModel.shared.macName + " - " + HCMacModel.shared.getModelIdentifier() + "\n" + pciData
     }()
 
-    var macModeltoolTip: String { _macModeltoolTip }
+    var macModeltoolTip: String {
+        _macModeltoolTip
+    }
 
     var cputoolTip: String {
         HCCPU.shared.getCPU() + "\n" + HCCPU.shared.getCPUInfo()

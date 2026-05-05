@@ -4,7 +4,7 @@ class HCRAM {
     static let shared = HCRAM()
     private init() {}
 
-    // Shared parsed memory lines for efficiency
+    /// Shared parsed memory lines for efficiency
     private lazy var parsedMemoryLines: [String] = {
         guard let content = HardwareCollector.shared.getCachedFileContent(InitGlobVar.sysmemFilePath) else {
             print("Error: No RAM data available from HardwareCollector")

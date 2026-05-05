@@ -1,7 +1,7 @@
 import Cocoa
 import Foundation
-import SwiftUI
 import Sparkle
+import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
@@ -181,8 +181,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
     // MARK: - Sparkle Updates -----------------------------------------
 
-    @IBAction func checkForUpdates(_ sender: Any) {
-         updaterController?.checkForUpdates()
+    @IBAction func checkForUpdates(_: Any) {
+        updaterController?.checkForUpdates()
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
