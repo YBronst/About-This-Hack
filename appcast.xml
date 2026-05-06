@@ -9,10 +9,15 @@
         
        <item>
             <title>Version 4.2.8</title>
-            <description sparkle:format="markdown">## What's new
-            - Add DisplayPort audio device support
-            - Apply swiftformat for code cleanup
-            - Add tooltips in Audio tab</description>
+            <description> <![CDATA[
+            <h2>What's New</h2>
+            <ul>
+                <li>Add DisplayPort audio device support</li>
+            	<li>Apply swiftformat for code cleanup</li>
+            	<li>Add tooltips in Audio tab</li>
+           </ul>
+           ]]>
+			</description>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
             <sparkle:version>1620</sparkle:version>
             <sparkle:shortVersionString>4.2.8</sparkle:shortVersionString>
