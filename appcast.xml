@@ -5,10 +5,13 @@
         <description>Most recent changes in the latest update</description>
         <language>en</language>
         <link> https://github.com/perez987/About-This-Hack</link>
+        <language>en</language>
         
        <item>
             <title>Version 4.2.8</title>
-            <description>Most recent changes in the latest update</description>
+            <description sparkle:format="markdown">## What's new<br>
+            - Add DisplayPort audio device support to the Audio tab
+            - Apply swiftformat for code cleanup</description>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
             <sparkle:version>1620</sparkle:version>
             <sparkle:shortVersionString>4.2.8</sparkle:shortVersionString>
