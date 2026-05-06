@@ -165,10 +165,10 @@ Data is collected into `/private/tmp/.ath/` at launch and deleted on termination
 
 ## Audio Tab Visibility
 
-The Audio tab is only shown on Hackintoshes with an active audio kext:
+The Audio tab is only shown on Hackintoshes or Macs with OCLP / OpenCore:
 
-1. `AppState.isHackintosh` → true when bootloader is Clover or OpenCore (without OCLP, or with OCLP + AppleALC/VoodooHDA/USB audio).
-2. `AppState.shouldShowAudioTab` → true when `isHackintosh` AND `HCAudio` reports driver = `"AppleALC"`, `"VoodooHDA"`, or `"USB"`.
+1. `AppState.isHackintosh` → true when bootloader is Clover or OpenCore.
+2. `AppState.shouldShowAudioTab` → true when `isHackintosh` AND `HCAudio` reports driver = `AppleALC`, `VoodooHDA`, `USB`, `HDMI`or `DisplayPort`.
 3. The `Audio` menu item in AppDelegate is also validated against `shouldShowAudioTab`.
 
 For VoodooHDA, the `getdump` tool must be installed at `/usr/local/bin/getdump`.
