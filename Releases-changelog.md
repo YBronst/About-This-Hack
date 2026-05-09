@@ -1,5 +1,10 @@
 # Releases Changelog
 
+## 4.2.9 (1621) - Embed Sparkle.xcframework
+
+- Embed Sparkle by adding Sparkle.xcframework to the project
+- Remove the Swift package product dependency for Sparkle
+
 ## 4.2.8 (1620) — DisplayPort audio support
 
 - Add DisplayPort audio device support to the Audio tab
