@@ -29,7 +29,7 @@
 
 ```
 About-This-Hack-2/
-├── Claude.md                          ← this file
+├── CLAUDE.md                          ← this file
 ├── README.md
 ├── DOCS/                              ← Developer documentation (markdown)
 │   ├── AppKit-XIB-to-SwiftUI.md
@@ -212,6 +212,34 @@ Assets are in `Assets.xcassets`. Notable image sets:
 - Target: macOS 13.5+, architecture: universal (Apple Silicon + Intel).
 - There are no automated test targets in the project.
 - The app is storyboard-free: `NSPrincipalClass` points to `AppDelegate`, and `AppDelegate.main()` is the entry point (marked `@main`).
+
+## Agent Quickstart (for new tasks)
+
+Use this checklist when starting a new session:
+
+1. Read `README.md` and this file to confirm current behavior and constraints.
+2. If touching UI/navigation: inspect `Views/ContentView.swift`, `Views/WindowController.swift`, and `AppDelegate.swift`.
+3. If touching hardware data: inspect `HardwareCollector.swift` plus relevant `HardwareCollectors/HC*.swift`.
+4. If adding user-visible text: update all `Localizable.strings` files in `en/es/fr/it`.
+5. If adding shell/system calls: keep them off the main thread and route through `run(_:)`.
+6. If changing updater behavior: verify `Models/UpdateController.swift` and Sparkle wiring in `AppDelegate`.
+
+## Task-to-File Map (fast lookup)
+
+- App lifecycle and menu/actions: `About This Hack/AppDelegate.swift`
+- Shared app state and tab routing: `About This Hack/Views/WindowController.swift`
+- Root layout / sidebar / detail switching: `About This Hack/Views/ContentView.swift`
+- Hardware aggregation cache and preload: `About This Hack/HardwareCollector.swift`
+- Startup data file generation: `About This Hack/Models/CreateDataFiles.swift`
+- Global constants/paths: `About This Hack/Models/InitGlobalVariables.swift`
+- Shell helper: `About This Hack/Utilities/Shell.swift`
+- Overview tab: `About This Hack/Views/ViewController.swift`
+- Displays tab: `About This Hack/Views/ViewControllerDisplays.swift`
+- Storage tab: `About This Hack/Views/ViewControllerStorage.swift`
+- Audio tab: `About This Hack/Views/ViewControllerAudio.swift`
+- Support tab: `About This Hack/Views/ViewControllerSupport.swift`
+- Settings + custom logo flow: `About This Hack/Views/SettingsView.swift`
+- Language picker window: `About This Hack/Views/LanguageSelectorView.swift`
 
 ## Common Pitfalls
 
