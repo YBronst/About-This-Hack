@@ -133,10 +133,10 @@ With the recommendation in both cases to move the file to the Trash:
 
 A big thank you to our contributors:
 
-[matxpa](https://github.com/matxpa) for doing so much and helping add so many features. <br>
-[MDNich](https://github.com/MDNich) for helping out a ton with features, code, and setting up the update server. <br>
-[LordNaut](https://github.com/Nautilus704) for helping me fix stuff with AppDelegate and sorting out a bunch of minor, but important features! <br>
-[Ben216k](https://github.com/Ben216k) for being awesome, providing some of the commands, and helping me debug a lot. <br>
-[Snoopy](https://macosicons.com/#/u/Squid4572) for helping create the new icon. <br>
-The internet for helping me with a lot of the code.
+- [matxpa](https://github.com/matxpa) for doing so much and helping add so many features. <br>
+- [MDNich](https://github.com/MDNich) for helping out a ton with features, code, and setting up the update server. <br>
+- [LordNaut](https://github.com/Nautilus704) for helping me fix stuff with AppDelegate and sorting out a bunch of minor, but important features! <br>
+- [Ben216k](https://github.com/Ben216k) for being awesome, providing some of the commands, and helping me debug a lot. <br>
+- [Snoopy](https://macosicons.com/#/u/Squid4572) for helping create the new icon. <br>
+- The internet for helping me with a lot of the code.
 
