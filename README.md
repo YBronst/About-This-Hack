@@ -5,7 +5,9 @@
 ![Xcode](https://img.shields.io/badge/Xcode-15-lavender.svg)
 ![GitHub Downloads](https://img.shields.io/github/downloads/perez987/About-This-Hack/total?style=flat&label=Downloads&color=green)
 
-![Overview](Images/Screenshots/Overview.png)
+| Opaque | Translucent |
+| --- | --- |
+| ![Overview](Images/Screenshots/Overview.png) | ![Overview](Images/Screenshots/Glass/Overview.png) |
 
 ## Migration to SwiftUI
 
@@ -50,13 +52,17 @@ A throwback to the (better) About This Mac view from pre-Ventura. Get instant ac
 
 Visualize your connected displays with their respective resolutions.
 
-![Displays](Images/Screenshots/Displaysx2.png)
+| Opaque | Translucent |
+| --- | --- |
+| ![Overview](Images/Screenshots/Displaysx2.png) | ![Overview](Images/Screenshots/Glass/Displays.png) |
 
 ## Storage
 
 Get a clear picture of your startup disk, including name, available space, and disk type, all presented with an easy-to-read usage bar.
 
-![Storage](Images/Screenshots/Storage.png)
+| Opaque | Translucent |
+| --- | --- |
+| ![Overview](Images/Screenshots/Storage.png) | ![Overview](Images/Screenshots/Glass/Storage.png) |
 
 ## Audio (WIP)
 
@@ -69,10 +75,10 @@ The Audio tab is displayed in these situations:
 - USB audio
 - HDMI or DisplayPort audio.
 
-![Audio](Images/Screenshots/Audio-applealc.png)
-![Audio](Images/Screenshots/Audio-voodoohda.png)
-![Audio](Images/Screenshots/Audio-usb.png)
-![Audio](Images/Screenshots/Audio-hdmi.png)
+| Opaque | Translucent |
+| --- | --- |
+| ![Overview](Images/Screenshots/Audio-applealc.png) | ![Overview](Images/Screenshots/Glass/Audio.png) |
+
 
 **Note**: `getdump` is a tool available in the VoodooHDA repository. The download link is usually found in the resources section of each VoodooHDA release. The latest version is available at this [link](https://github.com/CloverHackyColor/VoodooHDA/releases/download/Release312/getdump.zip). VoodooHDA users must have `getdump` installed to get the audio tab. Simply copy the tool to `/usr/local/bin` and that's all.
 
@@ -80,7 +86,9 @@ The Audio tab is displayed in these situations:
 
 Access a list of support resources for both Mac and Hackintosh users.
 
-![Support](Images/Screenshots/Support.png)
+| Opaque | Translucent |
+| --- | --- |
+| ![Overview](Images/Screenshots/Support.png) | ![Overview](Images/Screenshots/Glass/Support.png) |
 
 ## Tooltips
 
