@@ -103,10 +103,6 @@ Want to personalize your About This Hack? You can now replace the macOS logo in 
 3. Your custom logo will instantly appear in the Overview tab
 4. Click "Reset to Default" anytime to restore the original macOS logo
 
-| Custom | Default |
-|:---:|:---:|
-| ![Custom](Images/Screenshots/Custom-logo.png) | ![Custom](Images/Screenshots/Default-logo.png) |
-
 **Note:** The image must be in PNG format and exactly 1024x1024 pixels in size.
 
 ## Getting Started
