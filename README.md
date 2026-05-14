@@ -54,7 +54,7 @@ Visualize your connected displays with their respective resolutions.
 
 | Opaque | Translucent |
 | --- | --- |
-| ![Overview](Images/Screenshots/Displaysx2.png) | ![Overview](Images/Screenshots/Glass/Displays.png) |
+| ![Overview](Images/Screenshots/Displays.png) | ![Overview](Images/Screenshots/Glass/Displays.png) |
 
 ## Storage
 
