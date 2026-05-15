@@ -5,7 +5,7 @@
 ![Xcode](https://img.shields.io/badge/Xcode-15-lavender.svg)
 ![GitHub Downloads](https://img.shields.io/github/downloads/perez987/About-This-Hack/total?style=flat&label=Downloads&color=green)
 
-| Opaque | Translucent |
+| | |
 | --- | --- |
 | ![Overview](Images/Screenshots/Overview.png) | ![Overview](Images/Screenshots/Glass/Overview.png) |
 
@@ -53,7 +53,7 @@ A throwback to the (better) About This Mac view from pre-Ventura. Get instant ac
 
 Visualize your connected displays with their respective resolutions.
 
-| Opaque | Translucent |
+| | |
 | --- | --- |
 | ![Overview](Images/Screenshots/Displays.png) | ![Overview](Images/Screenshots/Glass/Displays.png) |
 
@@ -61,7 +61,7 @@ Visualize your connected displays with their respective resolutions.
 
 Get a clear picture of your startup disk, including name, available space, and disk type, all presented with an easy-to-read usage bar.
 
-| Opaque | Translucent |
+| | |
 | --- | --- |
 | ![Overview](Images/Screenshots/Storage.png) | ![Overview](Images/Screenshots/Glass/Storage.png) |
 
@@ -76,7 +76,7 @@ The Audio tab is displayed in these situations:
 - USB audio
 - HDMI or DisplayPort audio.
 
-| Opaque | Translucent |
+| | |
 | --- | --- |
 | ![Overview](Images/Screenshots/Audio-applealc.png) | ![Overview](Images/Screenshots/Glass/Audio.png) |
 
@@ -87,7 +87,7 @@ The Audio tab is displayed in these situations:
 
 Access a list of support resources for both Mac and Hackintosh users.
 
-| Opaque | Translucent |
+| | |
 | --- | --- |
 | ![Overview](Images/Screenshots/Support.png) | ![Overview](Images/Screenshots/Glass/Support.png) |
 
