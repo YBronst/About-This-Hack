@@ -1,6 +1,6 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/runner/Library/Developer/Xcode/DerivedData/Sparkle-exldbkeccxacimdqjemeuairoyax/Build/Intermediates.noindex/ArchiveIntermediates/Sparkle/InstallationBuildProductsLocation/Applications/Updater.app/Contents/MacOS/Updater'
+binary-path:     '/Users/yo/Library/Developer/Xcode/DerivedData/Sparkle-dhkviqvzewkdzvgezcpoeajvjuoq/Build/Intermediates.noindex/ArchiveIntermediates/Sparkle/InstallationBuildProductsLocation/Applications/Updater.app/Contents/MacOS/Updater'
 relocations:
   - { offset: 0x27, size: 0x8, addend: 0x0, symName: '-[SPUAppcastItemState initWithMajorUpgrade:criticalUpdate:informationalUpdate:minimumUpdateVersionIsOK:minimumOperatingSystemVersionIsOK:maximumOperatingSystemVersionIsOK:arm64HardwareRequirementIsOK:]', symObjAddr: 0x0, symBinAddr: 0x100007E78, symSize: 0x94 }
   - { offset: 0x253, size: 0x8, addend: 0x0, symName: '-[SPUAppcastItemState initWithMajorUpgrade:criticalUpdate:informationalUpdate:minimumUpdateVersionIsOK:minimumOperatingSystemVersionIsOK:maximumOperatingSystemVersionIsOK:arm64HardwareRequirementIsOK:]', symObjAddr: 0x0, symBinAddr: 0x100007E78, symSize: 0x94 }
@@ -39,8 +39,8 @@ relocations:
   - { offset: 0x1017, size: 0x8, addend: 0x0, symName: _SPUUnarchiveRootObjectSecurely, symObjAddr: 0x78, symBinAddr: 0x100001530, symSize: 0x78 }
   - { offset: 0x11F3, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem supportsSecureCoding]', symObjAddr: 0x0, symBinAddr: 0x1000015A8, symSize: 0x8 }
   - { offset: 0x125E, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem emptyAppcastItem]', symObjAddr: 0xEC4, symBinAddr: 0x10000246C, symSize: 0x30 }
-  - { offset: 0x1289, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.emptyAppcastItem, symObjAddr: 0xFD00, symBinAddr: 0x10001B5D8, symSize: 0x0 }
-  - { offset: 0x129F, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.onceToken, symObjAddr: 0xFD08, symBinAddr: 0x10001B5E0, symSize: 0x0 }
+  - { offset: 0x1289, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.emptyAppcastItem, symObjAddr: 0xFCD8, symBinAddr: 0x10001B5D8, symSize: 0x0 }
+  - { offset: 0x129F, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.onceToken, symObjAddr: 0xFCE0, symBinAddr: 0x10001B5E0, symSize: 0x0 }
   - { offset: 0x1C9E, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem supportsSecureCoding]', symObjAddr: 0x0, symBinAddr: 0x1000015A8, symSize: 0x8 }
   - { offset: 0x1CCE, size: 0x8, addend: 0x0, symName: '-[SUAppcastItem initWithCoder:]', symObjAddr: 0x8, symBinAddr: 0x1000015B0, symSize: 0x9DC }
   - { offset: 0x1D79, size: 0x8, addend: 0x0, symName: '-[SUAppcastItem encodeWithCoder:]', symObjAddr: 0x9E4, symBinAddr: 0x100001F8C, symSize: 0x2F0 }
@@ -275,8 +275,8 @@ relocations:
   - { offset: 0x168FA, size: 0x8, addend: 0x0, symName: '-[SUHost .cxx_destruct]', symObjAddr: 0x1948, symBinAddr: 0x100007050, symSize: 0x54 }
   - { offset: 0x1695F, size: 0x8, addend: 0x0, symName: _SULog, symObjAddr: 0x0, symBinAddr: 0x100007164, symSize: 0x134 }
   - { offset: 0x1696D, size: 0x8, addend: 0x0, symName: _SULog, symObjAddr: 0x0, symBinAddr: 0x100007164, symSize: 0x134 }
-  - { offset: 0x1698F, size: 0x8, addend: 0x0, symName: _SULog.onceToken, symObjAddr: 0x1C40, symBinAddr: 0x10001B5E8, symSize: 0x0 }
-  - { offset: 0x169A5, size: 0x8, addend: 0x0, symName: _SULog.logger, symObjAddr: 0x1C48, symBinAddr: 0x10001B5F0, symSize: 0x0 }
+  - { offset: 0x1698F, size: 0x8, addend: 0x0, symName: _SULog.onceToken, symObjAddr: 0x1C18, symBinAddr: 0x10001B5E8, symSize: 0x0 }
+  - { offset: 0x169A5, size: 0x8, addend: 0x0, symName: _SULog.logger, symObjAddr: 0x1C20, symBinAddr: 0x10001B5F0, symSize: 0x0 }
   - { offset: 0x16D39, size: 0x8, addend: 0x0, symName: _SULog.cold.2, symObjAddr: 0x17C, symBinAddr: 0x10000975C, symSize: 0x74 }
   - { offset: 0x16D92, size: 0x8, addend: 0x0, symName: _SULog.cold.1, symObjAddr: 0x168, symBinAddr: 0x100009748, symSize: 0x14 }
   - { offset: 0x16DAE, size: 0x8, addend: 0x0, symName: _SULog.cold.1, symObjAddr: 0x168, symBinAddr: 0x100009748, symSize: 0x14 }

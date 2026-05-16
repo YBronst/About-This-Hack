@@ -1,6 +1,6 @@
 ---
 triple:          'x86_64-apple-darwin'
-binary-path:     '/Users/runner/Library/Developer/Xcode/DerivedData/Sparkle-exldbkeccxacimdqjemeuairoyax/Build/Intermediates.noindex/ArchiveIntermediates/Sparkle/InstallationBuildProductsLocation/Applications/Updater.app/Contents/MacOS/Updater'
+binary-path:     '/Users/yo/Library/Developer/Xcode/DerivedData/Sparkle-dhkviqvzewkdzvgezcpoeajvjuoq/Build/Intermediates.noindex/ArchiveIntermediates/Sparkle/InstallationBuildProductsLocation/Applications/Updater.app/Contents/MacOS/Updater'
 relocations:
   - { offset: 0x27, size: 0x8, addend: 0x0, symName: '-[SPUAppcastItemState initWithMajorUpgrade:criticalUpdate:informationalUpdate:minimumUpdateVersionIsOK:minimumOperatingSystemVersionIsOK:maximumOperatingSystemVersionIsOK:arm64HardwareRequirementIsOK:]', symObjAddr: 0x0, symBinAddr: 0x100009040, symSize: 0x7C }
   - { offset: 0x253, size: 0x8, addend: 0x0, symName: '-[SPUAppcastItemState initWithMajorUpgrade:criticalUpdate:informationalUpdate:minimumUpdateVersionIsOK:minimumOperatingSystemVersionIsOK:maximumOperatingSystemVersionIsOK:arm64HardwareRequirementIsOK:]', symObjAddr: 0x0, symBinAddr: 0x100009040, symSize: 0x7C }
@@ -31,8 +31,8 @@ relocations:
   - { offset: 0x1672, size: 0x8, addend: 0x0, symName: _SPUUnarchiveRootObjectSecurely, symObjAddr: 0x80, symBinAddr: 0x1000014A0, symSize: 0x7E }
   - { offset: 0x187C, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem supportsSecureCoding]', symObjAddr: 0x0, symBinAddr: 0x10000151E, symSize: 0xB }
   - { offset: 0x18E7, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem emptyAppcastItem]', symObjAddr: 0x1353, symBinAddr: 0x100002871, symSize: 0x22 }
-  - { offset: 0x1912, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.emptyAppcastItem, symObjAddr: 0x13F10, symBinAddr: 0x100016F18, symSize: 0x0 }
-  - { offset: 0x1928, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.onceToken, symObjAddr: 0x13F18, symBinAddr: 0x100016F20, symSize: 0x0 }
+  - { offset: 0x1912, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.emptyAppcastItem, symObjAddr: 0x13EF0, symBinAddr: 0x100016F18, symSize: 0x0 }
+  - { offset: 0x1928, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.onceToken, symObjAddr: 0x13EF8, symBinAddr: 0x100016F20, symSize: 0x0 }
   - { offset: 0x2327, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem supportsSecureCoding]', symObjAddr: 0x0, symBinAddr: 0x10000151E, symSize: 0xB }
   - { offset: 0x2357, size: 0x8, addend: 0x0, symName: '-[SUAppcastItem initWithCoder:]', symObjAddr: 0xB, symBinAddr: 0x100001529, symSize: 0xCE0 }
   - { offset: 0x2C5C, size: 0x8, addend: 0x0, symName: '-[SUAppcastItem encodeWithCoder:]', symObjAddr: 0xCEB, symBinAddr: 0x100002209, symSize: 0x401 }
@@ -234,8 +234,8 @@ relocations:
   - { offset: 0x1A893, size: 0x8, addend: 0x0, symName: '-[SUHost .cxx_destruct]', symObjAddr: 0x1F3F, symBinAddr: 0x100008201, symSize: 0x49 }
   - { offset: 0x1A8F8, size: 0x8, addend: 0x0, symName: _SULog, symObjAddr: 0x0, symBinAddr: 0x10000824A, symSize: 0x18A }
   - { offset: 0x1A905, size: 0x8, addend: 0x0, symName: _SULog, symObjAddr: 0x0, symBinAddr: 0x10000824A, symSize: 0x18A }
-  - { offset: 0x1A927, size: 0x8, addend: 0x0, symName: _SULog.onceToken, symObjAddr: 0x1E30, symBinAddr: 0x100016F28, symSize: 0x0 }
-  - { offset: 0x1A93D, size: 0x8, addend: 0x0, symName: _SULog.logger, symObjAddr: 0x1E38, symBinAddr: 0x100016F30, symSize: 0x0 }
+  - { offset: 0x1A927, size: 0x8, addend: 0x0, symName: _SULog.onceToken, symObjAddr: 0x1E00, symBinAddr: 0x100016F28, symSize: 0x0 }
+  - { offset: 0x1A93D, size: 0x8, addend: 0x0, symName: _SULog.logger, symObjAddr: 0x1E08, symBinAddr: 0x100016F30, symSize: 0x0 }
   - { offset: 0x1AD18, size: 0x8, addend: 0x0, symName: _SULog.cold.2, symObjAddr: 0x1CE, symBinAddr: 0x10000B3D0, symSize: 0x5A }
   - { offset: 0x1AD73, size: 0x8, addend: 0x0, symName: _SULog.cold.1, symObjAddr: 0x1B6, symBinAddr: 0x10000B3B8, symSize: 0x18 }
   - { offset: 0x1ADA0, size: 0x8, addend: 0x0, symName: ___SULog_block_invoke, symObjAddr: 0x18A, symBinAddr: 0x1000083D4, symSize: 0x2C }
