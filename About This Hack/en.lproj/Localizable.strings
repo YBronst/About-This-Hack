@@ -13,7 +13,7 @@
 /* Segmented Control Titles */
 "segment.title.overview" = "Overview";
 "segment.title.displays" = "Displays";
-"segment.title.storage" = "Storage";
+"segment.title.storage" = "System disk";
 "segment.title.audio" = "Audio";
 "segment.title.support" = "Support";
 

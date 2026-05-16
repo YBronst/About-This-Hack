@@ -15,7 +15,7 @@
 /* Segmented Control Titles */
 "segment.title.overview" = "Übersicht";
 "segment.title.displays" = "Monitore";
-"segment.title.storage" = "Speicher";
+"segment.title.storage" = "Systemfestplatte";
 "segment.title.audio" = "Audio";
 "segment.title.support" = "Support";
 
