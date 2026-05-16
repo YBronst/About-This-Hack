@@ -124,3 +124,6 @@
 
 /* Toolbar */
 "toolbar.toggle_sidebar" = "Toggle Sidebar";
+
+/* About window */
+"about.version" = "Version %@ (Build %@)";

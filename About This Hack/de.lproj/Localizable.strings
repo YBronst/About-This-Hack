@@ -138,5 +138,3 @@
 
 /* About window */
 "about.version" = "Version %@ (Build %@)";
-
-

@@ -124,3 +124,6 @@
 
 /* Toolbar */
 "toolbar.toggle_sidebar" = "Mostra/Nascondi barra laterale";
+
+/* About window */
+"about.version" = "Versione %@ (Build %@)";
