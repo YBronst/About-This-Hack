@@ -1,0 +1,142 @@
+/*
+  Localizable.strings
+  About This Hack
+  
+  German localization
+  
+  https://github.com/kgp-macPro
+*/
+
+/* Tooltips */
+"tooltip.bootloader" = "Bootloader: %@\nBoot-Argumente: %@";
+"tooltip.sysinfo" = "Details über Hardware, Netzwerk, Software usw.";
+"tooltip.softupd" = "macOS- und Sicherheitsupdates suchen und installieren";
+
+/* Segmented Control Titles */
+"segment.title.overview" = "Übersicht";
+"segment.title.displays" = "Monitore";
+"segment.title.storage" = "Speicher";
+"segment.title.audio" = "Audio";
+"segment.title.support" = "Support";
+
+/* Segmented Control Tooltips */
+"segment.tooltip.overview" = "Übersicht über die Systemspezifikationen";
+"segment.tooltip.displays" = "Monitore und Auflösungen";
+"segment.tooltip.storage" = "Startvolumen, Verbindungstyp und verfügbarer Speicherplatz";
+"segment.tooltip.audio" = "Informationen zum Audio-Codec des Mainboards";
+"segment.tooltip.support" = "Support-Links und Hilfe für deinen Hackintosh oder Mac";
+
+/* Storage */
+"storage.available" = "Verfügbar";
+
+/* Loading Indicator */
+"loading.data.message" = "Daten werden geladen...";
+
+/* Settings Window */
+"settings.title" = "Benutzerdefinierte Logo-Einstellungen";
+"settings.logo.info" = "Ziehe ein PNG-Bild (1024x1024 Pixel) hierher,\num das macOS-Logo im Tab „Übersicht“ anzupassen";
+"settings.logo.reset" = "Auf Standard zurücksetzen";
+"settings.logo.custom_active" = "Benutzerdefiniertes Logo aktiv";
+"settings.logo.default_active" = "Standardlogo aktiv";
+"settings.logo.reset_success" = "Logo auf Standard zurückgesetzt";
+"settings.logo.error.invalid" = "Ungültige Bilddatei";
+"settings.logo.error.not_png" = "Bild muss im PNG-Format vorliegen";
+"settings.logo.error.no_rep" = "Bildabmessungen können nicht gelesen werden";
+"settings.logo.error.wrong_size" = "Bild muss 1024x1024 px groß sein (aktuell %dx%d)";
+"settings.logo.success" = "Benutzerdefiniertes Logo erfolgreich angewendet";
+
+/* Overview tab – spec row labels */
+"spec.processor" = "Prozessor";
+"spec.memory" = "Speicher";
+"spec.graphics" = "Grafik";
+"spec.display" = "Bildschirm";
+"spec.startup_disk" = "Startvolumen";
+"spec.serial_number" = "Seriennummer";
+"spec.bootloader" = "Bootloader";
+
+/* Overview tab – action buttons */
+"button.system_report" = "Systembericht…";
+"button.software_update" = "Softwareupdate…";
+
+/* Overview tab – credits */
+"credits.text" = "™ und © 2021–2026\nAlexander Skula et al.\nAlle Rechte vorbehalten.";
+
+/* Displays tab */
+"displays.preferences" = "Monitoreinstellungen…";
+"displays.none" = "Keine Monitore erkannt";
+
+/* Audio tab */
+"audio.none" = "Keine Audio-Codec-Informationen verfügbar";
+"audio.spec.driver" = "Treiber";
+"audio.spec.codec" = "Codec";
+"audio.spec.vendor" = "Hersteller";
+"audio.spec.device_id" = "Gerät";
+"audio.spec.sub_device_id" = "Untergerät";
+"audio.spec.layout_id" = "Layout-ID";
+"audio.spec.transport" = "Verbindungstyp";
+"audio.spec.product" = "Gerät";
+"audio.spec.graphics_card" = "Grafikkarte";
+
+/* Support tab – link titles */
+"support.macos_user_guide" = "macOS-Benutzerhandbuch";
+"support.whats_new" = "Neu in macOS";
+"support.apple_support" = "Apple Support";
+"support.hackintosh_guide" = "Hackintosh-Anleitung";
+"support.mac_basics" = "Mac-Grundlagen";
+"support.mac_user_guide" = "Mac-Benutzerhandbuch";
+"support.credits" = "Erstellt mit ❤️ von Alexander Skula, MDNich und matxpa";
+
+/* Language Menu */
+"Language menu" = "Sprache";
+"Select Language menu item" = "Sprache auswählen...";
+"Language selector title" = "Sprache";
+"Cancel" = "Abbrechen";
+"OK" = "OK";
+"Language changed alert title" = "Sprache geändert";
+"Language changed message" = "Bitte starte die Anwendung neu,\num die neue Sprache anzuwenden.";
+
+"menu.app.title" = "About This Hack-glass";
+"menu.app.about" = "About This Hack-glass";
+"menu.app.preferences" = "Preferences";
+"menu.app.services" = "Services";
+"menu.app.hide" = "Hide About This Hack-glass";
+"menu.app.hide_others" = "Hide Others";
+"menu.app.show_all" = "Show All";
+"menu.app.quit" = "Quit About This Hack-glass";
+
+/* Main menu - App menu */
+"menu.app.title" = "About This Hack-glass";
+"menu.app.about" = "About This Hack-glass";
+"menu.app.preferences" = "Einstellungen";
+"menu.app.services" = "Dienste";
+"menu.app.hide" = "About This Hack-glass ausblenden";
+"menu.app.hide_others" = "Andere ausblenden";
+"menu.app.show_all" = "Alle einblenden";
+"menu.app.quit" = "About This Hack-glass beenden";
+
+/* Main menu - Window menu */
+"menu.window.title" = "Fenster";
+"menu.window.minimize" = "Minimieren";
+"menu.window.close" = "Schließen";
+"menu.window.zoom" = "Zoomen";
+"menu.window.overview" = "Übersicht";
+"menu.window.displays" = "Monitore";
+"menu.window.storage" = "Speicher";
+"menu.window.audio" = "Audio";
+"menu.window.support" = "Support";
+"menu.window.bring_all_to_front" = "Alle nach vorn bringen";
+
+/* Main menu - Help menu */
+"menu.help.title" = "Hilfe";
+"menu.help.ath_help" = "About This Hack-glass Hilfe";
+
+/* Sparkle updater */
+"Check for Updates..." = "Nach Updates suchen...";
+
+/* Toolbar */
+"toolbar.toggle_sidebar" = "Seitenleiste ein-/ausblenden";
+
+/* About window */
+"about.version" = "Version %@ (Build %@)";
+
+

@@ -31,7 +31,7 @@ class LanguageSelectorWindowController: NSWindowController {
             width: Self.windowWidth,
             height: Self.windowHeight
         )
-        let styleMask: NSWindow.StyleMask = [.titled, .closable]
+        let styleMask: NSWindow.StyleMask = [.titled, .closable, .fullSizeContentView]
         let window = NSWindow(
             contentRect: contentRect,
             styleMask: styleMask,
@@ -40,6 +40,11 @@ class LanguageSelectorWindowController: NSWindowController {
         )
         window.title = NSLocalizedString("Language selector title", comment: "Language selector title")
         window.isReleasedWhenClosed = false
+
+        // MARK: transparent window
+        window.isOpaque = false
+        window.backgroundColor = .clear
+        window.titlebarAppearsTransparent = true
 
         self.init(window: window)
         performSetupIfNeeded()

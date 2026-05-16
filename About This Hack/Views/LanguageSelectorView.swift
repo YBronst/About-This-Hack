@@ -31,6 +31,7 @@ struct LanguageSelectorView: View {
     private let languages: [LanguageItem] = [
         LanguageItem(code: "en", name: "English", flag: "🇬🇧"),
         LanguageItem(code: "es", name: "Español", flag: "🇪🇸"),
+        LanguageItem(code: "de", name: "Deutsch", flag: "🇩🇪"),
         LanguageItem(code: "fr", name: "Français", flag: "🇫🇷"),
         LanguageItem(code: "it", name: "Italiano", flag: "🇮🇹"),
     ]
@@ -66,7 +67,9 @@ struct LanguageSelectorView: View {
                 .tag(language.code)
                 .padding(.vertical, 4)
             }
-            .frame(width: 222, height: 168)
+            .scrollContentBackground(.hidden)
+            .background(.ultraThinMaterial)
+            .frame(width: 222, height: 208)
             .border(Color.gray.opacity(0.3), width: 1)
 
             HStack(spacing: 12) {
@@ -89,6 +92,7 @@ struct LanguageSelectorView: View {
         }
         .padding()
         .frame(width: 280)
+        .background(.ultraThinMaterial, ignoresSafeAreaEdges: .all)
         .alert(
             NSLocalizedString("Language changed alert title", comment: "Language changed alert title"),
             isPresented: $showRestartAlert
