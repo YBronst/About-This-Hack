@@ -55,9 +55,9 @@ Visualize your connected displays with their respective resolutions.
 
 | |
 | --- |
-| ![Overview](Images/Screenshots/Displaysx2.png) |
+| ![Overview](Images/Screenshots/Displays.png) |
 
-## Storage
+## System disk
 
 Get a clear picture of your startup disk, including name, available space, and disk type, all presented with an easy-to-read usage bar.
 
