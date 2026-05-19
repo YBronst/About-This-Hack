@@ -18,7 +18,7 @@
 | Language | Swift 5 (+ one Objective-C file for SIP reading) |
 | UI framework | SwiftUI (macOS 13.5+) |
 | App lifecycle | AppKit (`NSApplicationDelegate`, no storyboard) |
-| Auto-updater | Sparkle framework via SPM (`UpdaterController` wrapping `SPUStandardUpdaterController`) |
+| Auto-updater | Sparkle via integrated xcframework (`UpdaterController` wrapping `SPUStandardUpdaterController`) |
 | Shell execution | Custom `run(_ command: String) -> String` via `/bin/zsh` subprocess |
 | Localization | `NSLocalizedString` + `.strings` files per language |
 | Persistence | `UserDefaults.standard` (window frame, custom logo path, language) |
@@ -65,11 +65,12 @@ About-This-Hack-2/
     │   └── HCVersion.swift
     ├── Models/                        ← Shared state, data init, utilities
     │   ├── CreateDataFiles.swift      ← Async creation of temp data files
-    │   ├── UpdateController.swift     ← Sparkle updater controller wrapper
     │   ├── InitGlobalVariables.swift  ← All global constants and paths
     │   ├── LoadingIndicatorController.swift
     │   ├── SystemFunctions.swift      ← getSysctlValueByKey(), IOKit port helpers, Bundle ext.
     │   ├── Tooltips.swift             ← Lazy tooltip strings (expensive to compute)
+    │   ├── UpdateController.swift     ← Sparkle updater controller wrapper
+    ├── Sparkle.xcframeork             ← Sparkle integrated package
     ├── Utilities/                     ← Small helpers
     │   ├── CustomLogoConstants.swift  ← UserDefaults key + Notification.Name
     │   ├── InsertExtension.swift      ← String/Data extensions
@@ -201,7 +202,7 @@ Assets are in `Assets.xcassets`. Notable image sets:
 
 ## Sparkle Auto-Updater
 
-- `UpdaterController` wraps `SPUStandardUpdaterController` from the Sparkle framework (SPM dependency, min 2.9.0).
+- `UpdaterController` wraps `SPUStandardUpdaterController` from the Sparkle integrated framework (2.9.2).
 - It publishes `canCheckForUpdates` so `AppDelegate.validateMenuItem` can enable/disable the menu item.
 - The "Check for Updates…" menu item (`⌘U`) calls `updaterController?.checkForUpdates()`.
 

@@ -1,5 +1,25 @@
 # Releases Changelog
 
+## 4.3.2 (1627) - May 19, 2026
+
+**Update Sparkle to 2.9.2**
+
+- Update Sparkle integrated framework to 2.9.2
+
+## 4.3.1 (1626) - May 16, 2026
+
+**Add German language**
+
+- Add German language (thanks to [kgp-macPro]( https://github.com/kgp-macPro))
+- Rename `Storage` to `System disk` in locales
+
+## 4.3.0 (1625) - May 15, 2026
+
+**Update Sparkle and glass version**
+
+- Update Sparkle and app digital signatures by applying `codesign` to the compiled bundle
+- Glass version: apply translucent effect to language selector and about dialog 
+
 ## 4.2.9 (1621) - Embed Sparkle.xcframework
 
 - Embed Sparkle by adding Sparkle.xcframework to the project
