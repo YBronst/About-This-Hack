@@ -1,6 +1,6 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/yo/Library/Developer/Xcode/DerivedData/Sparkle-dhkviqvzewkdzvgezcpoeajvjuoq/Build/Intermediates.noindex/ArchiveIntermediates/Sparkle/InstallationBuildProductsLocation/Library/Frameworks/Sparkle.framework/Versions/B/Sparkle'
+binary-path:     '/Users/yo/Library/Developer/Xcode/DerivedData/Sparkle-fslqrlbijyoycggqomwfotxdjzkh/Build/Intermediates.noindex/ArchiveIntermediates/Sparkle/InstallationBuildProductsLocation/Library/Frameworks/Sparkle.framework/Versions/B/Sparkle'
 relocations:
   - { offset: 0x158F88, size: 0x8, addend: 0x0, symName: _SPUExtractAppcastContent, symObjAddr: 0x0, symBinAddr: 0x10B8, symSize: 0x2A8 }
   - { offset: 0x158F96, size: 0x8, addend: 0x0, symName: _SPUExtractAppcastContent, symObjAddr: 0x0, symBinAddr: 0x10B8, symSize: 0x2A8 }
@@ -709,8 +709,8 @@ relocations:
   - { offset: 0x174423, size: 0x8, addend: 0x0, symName: '-[SPUUpdaterCycle .cxx_destruct]', symObjAddr: 0xF0, symBinAddr: 0x11BC0, symSize: 0x8 }
   - { offset: 0x174492, size: 0x8, addend: 0x0, symName: '+[SPUStandardVersionDisplay standardVersionDisplay]', symObjAddr: 0x0, symBinAddr: 0x11BC8, symSize: 0x34 }
   - { offset: 0x1744A0, size: 0x8, addend: 0x0, symName: '+[SPUStandardVersionDisplay standardVersionDisplay]', symObjAddr: 0x0, symBinAddr: 0x11BC8, symSize: 0x34 }
-  - { offset: 0x1744CA, size: 0x8, addend: 0x0, symName: _standardVersionDisplay.versionDisplay, symObjAddr: 0x35E0, symBinAddr: 0x677F8, symSize: 0x0 }
-  - { offset: 0x1744E0, size: 0x8, addend: 0x0, symName: _standardVersionDisplay.onceToken, symObjAddr: 0x35E8, symBinAddr: 0x67800, symSize: 0x0 }
+  - { offset: 0x1744CA, size: 0x8, addend: 0x0, symName: _standardVersionDisplay.versionDisplay, symObjAddr: 0x35D8, symBinAddr: 0x677F8, symSize: 0x0 }
+  - { offset: 0x1744E0, size: 0x8, addend: 0x0, symName: _standardVersionDisplay.onceToken, symObjAddr: 0x35E0, symBinAddr: 0x67800, symSize: 0x0 }
   - { offset: 0x17458F, size: 0x8, addend: 0x0, symName: '+[SPUStandardVersionDisplay standardVersionDisplay].cold.1', symObjAddr: 0x1A0, symBinAddr: 0x2D96C, symSize: 0x14 }
   - { offset: 0x1745AB, size: 0x8, addend: 0x0, symName: '+[SPUStandardVersionDisplay standardVersionDisplay].cold.1', symObjAddr: 0x1A0, symBinAddr: 0x2D96C, symSize: 0x14 }
   - { offset: 0x1745BD, size: 0x8, addend: 0x0, symName: '___51+[SPUStandardVersionDisplay standardVersionDisplay]_block_invoke', symObjAddr: 0x34, symBinAddr: 0x11BFC, symSize: 0x30 }
@@ -840,8 +840,8 @@ relocations:
   - { offset: 0x179E29, size: 0x8, addend: 0x0, symName: '-[SUAppcastDriver .cxx_destruct]', symObjAddr: 0x2384, symBinAddr: 0x149F0, symSize: 0x48 }
   - { offset: 0x17A1A7, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem supportsSecureCoding]', symObjAddr: 0x0, symBinAddr: 0x14A40, symSize: 0x8 }
   - { offset: 0x17A1E8, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem emptyAppcastItem]', symObjAddr: 0xEC4, symBinAddr: 0x15904, symSize: 0x30 }
-  - { offset: 0x17A214, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.emptyAppcastItem, symObjAddr: 0xF3A0, symBinAddr: 0x67808, symSize: 0x0 }
-  - { offset: 0x17A22B, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.onceToken, symObjAddr: 0xF3A8, symBinAddr: 0x67810, symSize: 0x0 }
+  - { offset: 0x17A214, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.emptyAppcastItem, symObjAddr: 0xF398, symBinAddr: 0x67808, symSize: 0x0 }
+  - { offset: 0x17A22B, size: 0x8, addend: 0x0, symName: _emptyAppcastItem.onceToken, symObjAddr: 0xF3A0, symBinAddr: 0x67810, symSize: 0x0 }
   - { offset: 0x17A895, size: 0x8, addend: 0x0, symName: '+[SUAppcastItem supportsSecureCoding]', symObjAddr: 0x0, symBinAddr: 0x14A40, symSize: 0x8 }
   - { offset: 0x17A8C8, size: 0x8, addend: 0x0, symName: '-[SUAppcastItem initWithCoder:]', symObjAddr: 0x8, symBinAddr: 0x14A48, symSize: 0x9DC }
   - { offset: 0x17A97E, size: 0x8, addend: 0x0, symName: '-[SUAppcastItem encodeWithCoder:]', symObjAddr: 0x9E4, symBinAddr: 0x15424, symSize: 0x2F0 }
@@ -1140,8 +1140,8 @@ relocations:
   - { offset: 0x182F51, size: 0x8, addend: 0x0, symName: '-[SUInstallerStatus .cxx_destruct]', symObjAddr: 0x860, symBinAddr: 0x1AEBC, symSize: 0x30 }
   - { offset: 0x1833F3, size: 0x8, addend: 0x0, symName: _SULog, symObjAddr: 0x0, symBinAddr: 0x1AEEC, symSize: 0x134 }
   - { offset: 0x183401, size: 0x8, addend: 0x0, symName: _SULog, symObjAddr: 0x0, symBinAddr: 0x1AEEC, symSize: 0x134 }
-  - { offset: 0x183423, size: 0x8, addend: 0x0, symName: _SULog.onceToken, symObjAddr: 0x2930, symBinAddr: 0x67818, symSize: 0x0 }
-  - { offset: 0x183439, size: 0x8, addend: 0x0, symName: _SULog.logger, symObjAddr: 0x2938, symBinAddr: 0x67820, symSize: 0x0 }
+  - { offset: 0x183423, size: 0x8, addend: 0x0, symName: _SULog.onceToken, symObjAddr: 0x2928, symBinAddr: 0x67818, symSize: 0x0 }
+  - { offset: 0x183439, size: 0x8, addend: 0x0, symName: _SULog.logger, symObjAddr: 0x2930, symBinAddr: 0x67820, symSize: 0x0 }
   - { offset: 0x1836E7, size: 0x8, addend: 0x0, symName: _SULog.cold.2, symObjAddr: 0x17C, symBinAddr: 0x327A8, symSize: 0x74 }
   - { offset: 0x183745, size: 0x8, addend: 0x0, symName: _SULog.cold.1, symObjAddr: 0x168, symBinAddr: 0x32794, symSize: 0x14 }
   - { offset: 0x183761, size: 0x8, addend: 0x0, symName: _SULog.cold.1, symObjAddr: 0x168, symBinAddr: 0x32794, symSize: 0x14 }
@@ -1150,8 +1150,8 @@ relocations:
   - { offset: 0x1838BD, size: 0x8, addend: 0x0, symName: '+[SUOperatingSystem systemVersionString]', symObjAddr: 0x0, symBinAddr: 0x1B054, symSize: 0x8C }
   - { offset: 0x183944, size: 0x8, addend: 0x0, symName: '-[SUStandardVersionComparator init]', symObjAddr: 0x0, symBinAddr: 0x1B0E0, symSize: 0x34 }
   - { offset: 0x183952, size: 0x8, addend: 0x0, symName: '+[SUStandardVersionComparator defaultComparator]', symObjAddr: 0x34, symBinAddr: 0x1B114, symSize: 0x30 }
-  - { offset: 0x18397C, size: 0x8, addend: 0x0, symName: _defaultComparator.defaultComparator, symObjAddr: 0x5900, symBinAddr: 0x67828, symSize: 0x0 }
-  - { offset: 0x183992, size: 0x8, addend: 0x0, symName: _defaultComparator.onceToken, symObjAddr: 0x5908, symBinAddr: 0x67830, symSize: 0x0 }
+  - { offset: 0x18397C, size: 0x8, addend: 0x0, symName: _defaultComparator.defaultComparator, symObjAddr: 0x58F8, symBinAddr: 0x67828, symSize: 0x0 }
+  - { offset: 0x183992, size: 0x8, addend: 0x0, symName: _defaultComparator.onceToken, symObjAddr: 0x5900, symBinAddr: 0x67830, symSize: 0x0 }
   - { offset: 0x183B5D, size: 0x8, addend: 0x0, symName: '-[SUStandardVersionComparator init]', symObjAddr: 0x0, symBinAddr: 0x1B0E0, symSize: 0x34 }
   - { offset: 0x183BC8, size: 0x8, addend: 0x0, symName: '+[SUStandardVersionComparator defaultComparator].cold.1', symObjAddr: 0x8E4, symBinAddr: 0x32F2C, symSize: 0x14 }
   - { offset: 0x183BE4, size: 0x8, addend: 0x0, symName: '+[SUStandardVersionComparator defaultComparator].cold.1', symObjAddr: 0x8E4, symBinAddr: 0x32F2C, symSize: 0x14 }
@@ -1345,7 +1345,7 @@ relocations:
   - { offset: 0x18AB24, size: 0x8, addend: 0x0, symName: _SPUMakeUserAgentWithBundle, symObjAddr: 0x0, symBinAddr: 0x21354, symSize: 0x8C }
   - { offset: 0x18AB8C, size: 0x8, addend: 0x0, symName: _SPUMakeUserAgentWithHost, symObjAddr: 0x8C, symBinAddr: 0x213E0, symSize: 0x158 }
   - { offset: 0x18AD46, size: 0x8, addend: 0x0, symName: '+[SUUpdater sharedUpdater]', symObjAddr: 0x0, symBinAddr: 0x21538, symSize: 0x58 }
-  - { offset: 0x18AD60, size: 0x8, addend: 0x0, symName: _sharedUpdaters, symObjAddr: 0xBE10, symBinAddr: 0x67838, symSize: 0x0 }
+  - { offset: 0x18AD60, size: 0x8, addend: 0x0, symName: _sharedUpdaters, symObjAddr: 0xBE08, symBinAddr: 0x67838, symSize: 0x0 }
   - { offset: 0x18B0D7, size: 0x8, addend: 0x0, symName: '+[SUUpdater sharedUpdater]', symObjAddr: 0x0, symBinAddr: 0x21538, symSize: 0x58 }
   - { offset: 0x18B10E, size: 0x8, addend: 0x0, symName: '+[SUUpdater updaterForBundle:]', symObjAddr: 0x58, symBinAddr: 0x21590, symSize: 0xB8 }
   - { offset: 0x18B165, size: 0x8, addend: 0x0, symName: '-[SUUpdater initForBundle:]', symObjAddr: 0x110, symBinAddr: 0x21648, symSize: 0x1E4 }

@@ -1,6 +1,6 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Users/yo/Library/Developer/Xcode/DerivedData/Sparkle-dhkviqvzewkdzvgezcpoeajvjuoq/Build/Intermediates.noindex/ArchiveIntermediates/Sparkle/IntermediateBuildFilesPath/UninstalledProducts/macosx/Downloader.xpc/Contents/MacOS/Downloader'
+binary-path:     '/Users/yo/Library/Developer/Xcode/DerivedData/Sparkle-fslqrlbijyoycggqomwfotxdjzkh/Build/Intermediates.noindex/ArchiveIntermediates/Sparkle/IntermediateBuildFilesPath/UninstalledProducts/macosx/Downloader.xpc/Contents/MacOS/Downloader'
 relocations:
   - { offset: 0xD4069, size: 0x8, addend: 0x0, symName: '+[SUCodeSigningVerifier codeSignatureInfoForCode:]', symObjAddr: 0x9E0, symBinAddr: 0x100000E70, symSize: 0x2AC }
   - { offset: 0xD4248, size: 0x8, addend: 0x0, symName: '+[SUCodeSigningVerifier logSigningInfoForCode:label:]', symObjAddr: 0x57C, symBinAddr: 0x100000DF8, symSize: 0x78 }
