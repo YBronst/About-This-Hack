@@ -25,11 +25,10 @@
 		CV0000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CV0000000000002 /* ContentView.swift */; };
 		D903343B2F7F00AE000528E8 /* HCAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D903343A2F7F00AE000528E8 /* HCAudio.swift */; };
 		D90473D82D6FD62900B738E3 /* ObjCSIP.m in Sources */ = {isa = PBXBuildFile; fileRef = D90473D72D6FD62900B738E3 /* ObjCSIP.m */; };
-		D959451F2FBD017A00FEE445 /* Sparkle.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D959451D2FBD017200FEE445 /* Sparkle.xcframework */; };
-		D95945202FBD017A00FEE445 /* Sparkle.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D959451D2FBD017200FEE445 /* Sparkle.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D99B37092F1010F400B71FAE /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99B37082F1010F400B71FAE /* SettingsWindowController.swift */; };
 		D99B370B2F10110C00B71FAE /* CustomLogoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99B370A2F10110C00B71FAE /* CustomLogoConstants.swift */; };
 		D9BA05882FA7B63900D73D31 /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA05872FA7B62F00D73D31 /* UpdateController.swift */; };
+		D9DD8E762FE827B500BB6388 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = D9DD8E752FE827B500BB6388 /* Sparkle */; };
 		D9E195DA2F1184F5009E9F91 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E195D92F1184F5009E9F91 /* SettingsView.swift */; };
 		DC6870462A63334400CAD908 /* HCVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6870452A63334400CAD908 /* HCVersion.swift */; };
 		DC6870482A63336E00CAD908 /* HardwareCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6870472A63336E00CAD908 /* HardwareCollector.swift */; };
@@ -54,7 +53,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D95945202FBD017A00FEE445 /* Sparkle.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +84,6 @@
 		D90473D72D6FD62900B738E3 /* ObjCSIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCSIP.m; sourceTree = "<group>"; };
 		D90473D92D6FD70800B738E3 /* ObjCSIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjCSIP.h; sourceTree = "<group>"; };
 		D9423A102FB91655008C2265 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		D959451D2FBD017200FEE445 /* Sparkle.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Sparkle.xcframework; sourceTree = "<group>"; };
 		D99B37082F1010F400B71FAE /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		D99B370A2F10110C00B71FAE /* CustomLogoConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLogoConstants.swift; sourceTree = "<group>"; };
 		D9BA05872FA7B62F00D73D31 /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
@@ -115,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D959451F2FBD017A00FEE445 /* Sparkle.xcframework in Frameworks */,
+				D9DD8E762FE827B500BB6388 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +149,6 @@
 				115D921A26D6F65600F5DF35 /* Info.plist */,
 				LOCVAR00000000000000001 /* Localizable.strings */,
 				C055B7F92ED5D88D00246967 /* Models */,
-				D959451D2FBD017200FEE445 /* Sparkle.xcframework */,
 				C147F9E62DD9FFD300D8C1CF /* Utilities */,
 				C055B7FA2ED5D89700246967 /* Views */,
 			);
@@ -252,6 +248,7 @@
 			);
 			name = "About This Hack";
 			packageProductDependencies = (
+				D9DD8E752FE827B500BB6388 /* Sparkle */,
 			);
 			productName = "About This Hack";
 			productReference = 115D920E26D6F65500F5DF35 /* About This Hack.app */;
@@ -287,6 +284,7 @@
 			);
 			mainGroup = 115D920526D6F65500F5DF35;
 			packageReferences = (
+				D9DD8E742FE827B500BB6388 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 115D920F26D6F65500F5DF35 /* Products */;
 			projectDirPath = "";
@@ -597,6 +595,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D9DD8E742FE827B500BB6388 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D9DD8E752FE827B500BB6388 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9DD8E742FE827B500BB6388 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 115D920626D6F65500F5DF35 /* Project object */;
 }
