@@ -23,7 +23,6 @@
 | Localization | `NSLocalizedString` + `.strings` files per language |
 | Persistence | `UserDefaults.standard` (window frame, custom logo path, language) |
 | IPC / system data | `system_profiler`, `diskutil`, `nvram`, `sw_vers`, `sysctlbyname`, IOKit, `/bin/zsh` subprocesses |
-| Bridging | Objective-C file `ObjCSIP` reads the `csr-active-config` SIP value |
 
 ## Repository Layout
 
@@ -45,13 +44,9 @@ About-This-Hack-2/
 └── About This Hack/                   ← All source code
     ├── AppDelegate.swift              ← App entry point, window/menu setup
     ├── HardwareCollector.swift        ← Central data collector (singleton)
-    ├── About This Hack-Bridging-Header.h
     ├── About_This_Hack.entitlements
     ├── Info.plist
     ├── Assets.xcassets/               ← Images (OS badges, disk icons, display icons)
-    ├── Bridge/                        ← Objective-C SIP bridge
-    │   ├── ObjCSIP.h
-    │   └── ObjCSIP.m
     ├── HardwareCollectors/            ← Individual hardware data collectors
     │   ├── HCAudio.swift
     │   ├── HCBootloader.swift
@@ -269,4 +264,4 @@ Use this checklist when starting a new session:
 | Change sidebar navigation model | `Views/WindowController.swift` (AppState + AppSection) |
 | Change how data files are created | `Models/CreateDataFiles.swift` |
 | Change how data is read and cached | `HardwareCollector.swift` |
-| Understand SIP reading | `Bridge/ObjCSIP.{h,m}` |
+| Understand SIP reading | `HardwareCollectors/HCVersion.swift` (`csrActiveConfig()` uses `dlsym` to call `csr_get_active_config`) | |

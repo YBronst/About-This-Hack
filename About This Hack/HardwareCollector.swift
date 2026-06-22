@@ -40,7 +40,6 @@ class HardwareCollector {
     var deviceLocation = ""
     var deviceProtocol = ""
     var hasBuiltInDisplay = false
-    var macType: MacType = .laptop
 
     func getCachedFileContent(_ path: String) -> String? {
         cacheLock.lock()

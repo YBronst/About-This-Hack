@@ -270,7 +270,7 @@ The following features were carried over unchanged:
 - Serial-number show/hide toggle
 - Tooltips on spec fields (`.help()` modifier)
 - Keyboard shortcuts ⌘1–4 for tabs, ⌘, for Settings
-- ObjC bridge for SIP detection (`ObjCSIP`)
+- SIP detection via `dlsym("csr_get_active_config")` in Swift (`HCVersion.csrActiveConfig()`)
 - Window position persistence (`AppState` helpers)
 - Full localization: keys added for spec labels, button
   titles, and log messages
