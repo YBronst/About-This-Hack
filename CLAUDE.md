@@ -18,7 +18,7 @@
 | Language | Swift 5 (+ one Objective-C file for SIP reading) |
 | UI framework | SwiftUI (macOS 13.5+) |
 | App lifecycle | AppKit (`NSApplicationDelegate`, no storyboard) |
-| Auto-updater | Sparkle via integrated xcframework (`UpdaterController` wrapping `SPUStandardUpdaterController`) |
+| Auto-updater | Sparkle via SPM package (`UpdaterController` wrapping `SPUStandardUpdaterController`) |
 | Shell execution | Custom `run(_ command: String) -> String` via `/bin/zsh` subprocess |
 | Localization | `NSLocalizedString` + `.strings` files per language |
 | Persistence | `UserDefaults.standard` (window frame, custom logo path, language) |
@@ -27,7 +27,7 @@
 ## Repository Layout
 
 ```
-About-This-Hack-2/
+About-This-Hack/
 ├── CLAUDE.md                          ← this file
 ├── README.md
 ├── DOCS/                              ← Developer documentation (markdown)
@@ -41,6 +41,7 @@ About-This-Hack-2/
 ├── Images/                            ← README screenshots (not bundled)
 ├── Releases-changelog.md
 ├── appcast.xml
+├── appcast-glass.xml
 └── About This Hack/                   ← All source code
     ├── AppDelegate.swift              ← App entry point, window/menu setup
     ├── HardwareCollector.swift        ← Central data collector (singleton)
@@ -65,7 +66,6 @@ About-This-Hack-2/
     │   ├── SystemFunctions.swift      ← getSysctlValueByKey(), IOKit port helpers, Bundle ext.
     │   ├── Tooltips.swift             ← Lazy tooltip strings (expensive to compute)
     │   ├── UpdateController.swift     ← Sparkle updater controller wrapper
-    ├── Sparkle.xcframeork             ← Sparkle integrated package
     ├── Utilities/                     ← Small helpers
     │   ├── CustomLogoConstants.swift  ← UserDefaults key + Notification.Name
     │   ├── InsertExtension.swift      ← String/Data extensions
@@ -83,7 +83,7 @@ About-This-Hack-2/
     │   ├── LanguageSelectorView.swift
     │   ├── LanguageSelectorWindowController.swift
     │   └── WindowController.swift       ← AppState: ObservableObject shared state
-    └── {en,es,fr,it}.lproj/
+    └── {en,es,fr,it,de}.lproj/
         └── Localizable.strings
 ```
 
@@ -175,15 +175,15 @@ The Audio tab is only shown on Hackintoshes or Macs with OCLP / OpenCore:
 
 - All user-facing strings use `NSLocalizedString("key", comment: "…")`.
 - String files live at `{lang}.lproj/Localizable.strings`.
-- Supported languages: `en`, `es`, `fr`, `it`.
+- Supported languages: `en`, `es`, `fr`, `it`, `de`.
 - Language is changed at runtime by writing `[langCode]` to `UserDefaults "AppleLanguages"` and restarting the app. The Language Selector window (`LanguageSelectorView`) handles this.
-- When adding a new string, add it to all four `.strings` files. The key in every file must match exactly.
+- When adding a new string, add it to all five `.strings` files. The key in every file must match exactly.
 
 ## Assets
 
 Assets are in `Assets.xcassets`. Notable image sets:
 
-- `Tahoe`, `Sequoia`, `Sonoma`, `Ventura`, `Monterey`, `Big Sur`, etc. – OS badge images used in Overview.
+- `Golden Gate`, `Tahoe`, `Sequoia`, `Sonoma`, `Ventura`, `Monterey`, `Big Sur`, etc. – OS badge images used in Overview.
 - `{OS} Internal SSD`, `{OS} External SSD`, `{OS} Internal HDD`, `{OS} External HDD` – Storage tab disk icons.
 - `MacBook`, `genericLCD`, `LG4K`, `iPad`, `AppleDisplay` – Display tab icons.
 - `Audio` – Audio tab icon.
@@ -197,7 +197,7 @@ Assets are in `Assets.xcassets`. Notable image sets:
 
 ## Sparkle Auto-Updater
 
-- `UpdaterController` wraps `SPUStandardUpdaterController` from the Sparkle integrated framework (2.9.2).
+- `UpdaterController` wraps `SPUStandardUpdaterController` from the Sparkle SPM package (2.9.3).
 - It publishes `canCheckForUpdates` so `AppDelegate.validateMenuItem` can enable/disable the menu item.
 - The "Check for Updates…" menu item (`⌘U`) calls `updaterController?.checkForUpdates()`.
 
@@ -216,7 +216,7 @@ Use this checklist when starting a new session:
 1. Read `README.md` and this file to confirm current behavior and constraints.
 2. If touching UI/navigation: inspect `Views/ContentView.swift`, `Views/WindowController.swift`, and `AppDelegate.swift`.
 3. If touching hardware data: inspect `HardwareCollector.swift` plus relevant `HardwareCollectors/HC*.swift`.
-4. If adding user-visible text: update all `Localizable.strings` files in `en/es/fr/it`.
+4. If adding user-visible text: update all `Localizable.strings` files in `en/es/fr/it/de`.
 5. If adding shell/system calls: keep them off the main thread and route through `run(_:)`.
 6. If changing updater behavior: verify `Models/UpdateController.swift` and Sparkle wiring in `AppDelegate`.
 
@@ -256,7 +256,7 @@ Use this checklist when starting a new session:
 | Add a new tab | Add a case to `AppSection` in `WindowController.swift`, add a new view file in `Views/`, update `FakeSidebarLayout.detailView`, add menu item in `AppDelegate.createMainMenu()` |
 | Change the Language menu | `AppDelegate.insertLanguageMenu()` – inserts a "Language" submenu (⌘L) between the main app menu and the Window menu |
 | Change global paths or URLs | `Models/InitGlobalVariables.swift` |
-| Add/edit a Localized string | All four `{lang}.lproj/Localizable.strings` |
+| Add/edit a Localized string | All five `{lang}.lproj/Localizable.strings` |
 | Change update checker | `Models/UpdateController.swift` (Sparkle `SPUStandardUpdaterController`) |
 | Change window appearance | `AppDelegate.createAndShowMainWindow()` |
 | Change Settings/custom logo logic | `Views/SettingsView.swift` + `Utilities/CustomLogoConstants.swift` |
@@ -264,4 +264,4 @@ Use this checklist when starting a new session:
 | Change sidebar navigation model | `Views/WindowController.swift` (AppState + AppSection) |
 | Change how data files are created | `Models/CreateDataFiles.swift` |
 | Change how data is read and cached | `HardwareCollector.swift` |
-| Understand SIP reading | `HardwareCollectors/HCVersion.swift` (`csrActiveConfig()` uses `dlsym` to call `csr_get_active_config`) | |
+| Understand SIP reading | `HardwareCollectors/HCVersion.swift` (`csrActiveConfig()` uses `dlsym` to call `csr_get_active_config`) |
