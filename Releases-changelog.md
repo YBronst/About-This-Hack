@@ -1,5 +1,14 @@
 # Releases Changelog
 
+## 4.3.4 (1632) - Jun 24, 2026
+
+**Refactor SIP and Mac model**
+
+- Improve Mac model identification
+- Refactor SIP detection (drop Objective-C files, not needed anymore)
+- Add Sparkle 2.9.3 by SPM replacing the integrated Sparkle `xcframework`
+- Update to macOS 27 Golden Gate
+
 ## 4.3.2 (1627) - May 19, 2026
 
 **Update Sparkle to 2.9.2**
