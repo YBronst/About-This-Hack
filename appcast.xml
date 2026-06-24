@@ -11,12 +11,12 @@
             <title>Version 4.3.3</title>
             <description></description>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
-            <sparkle:version>1630</sparkle:version>
+            <sparkle:version>1632</sparkle:version>
             <sparkle:shortVersionString>4.3.3</sparkle:shortVersionString>
             <enclosure
                 url="https://github.com/perez987/About-This-Hack/releases/download/4.3.3/About.This.Hack-4.3.3.zip"
-                length="8014091"
-                sparkle:edSignature="cuO+T/GVvRjKoTpyry9PPMoC5ZYOYm6nOjaR+TWV4uspoCQ/9NUPZXQLbZH+qOYQJSwEKtf6owR8FQufrtVLDQ=="
+                length="8235837"
+                sparkle:edSignature="PX/r6qw76K4pHf+DFPFM15EBzrqpFJkzZjI0GRLTs2G7CInwhD5Q97MMaxeYd+nH46X/Zt5ZIvQXAJjO1/WtBQ=="
                 type="application/octet-stream"
             />
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
