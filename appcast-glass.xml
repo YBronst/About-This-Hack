@@ -8,15 +8,15 @@
         <language>en</language>
         
        <item>
-            <title>Version 4.3.4 (glass)</title>
+            <title>Version 4.3.5 (glass)</title>
             <description></description>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
-            <sparkle:version>1634</sparkle:version>
-            <sparkle:shortVersionString>4.3.4</sparkle:shortVersionString>
+            <sparkle:version>1635</sparkle:version>
+            <sparkle:shortVersionString>4.3.5</sparkle:shortVersionString>
             <enclosure
-                url="https://github.com/perez987/About-This-Hack/releases/download/4.3.4/About.This.Hack-4.3.4-glass.zip"
-                length="8252423"
-                sparkle:edSignature="C77EPs3lkHXpI+pSJ2IOB6QvDGwh8ukObFvwoIzNjszZ343TTQENhd5DuaQnmKTcxvZxCtvypCfOQxuBE5lRBg=="
+                url="https://github.com/perez987/About-This-Hack/releases/download/4.3.5/About.This.Hack-4.3.5-glass.zip"
+                length="8410049"
+                sparkle:edSignature="wO8k9INNncShs7yG2idLxzwpDu9sq+CJTh9OpwO/rLwx6uePhSqxsslJjZztd+xLeUIaY5NbPyFBhm8MwhwlBg=="
                 type="application/octet-stream"
             />
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
