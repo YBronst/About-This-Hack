@@ -69,7 +69,7 @@ private struct FakeSidebarLayout: View {
                 }
                 .padding(.top, 8)
                 .padding(.horizontal, 8)
-                .frame(width: 165)
+                .frame(width: 180)
                 .frame(maxHeight: .infinity)
                 .background(Color(NSColor.controlBackgroundColor)) // opaque window
 //                .background(.ultraThinMaterial) // transparent window
