@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "GenericLogo_55A54008AD1BA589AA210D2629C1DF41_0.png",
+      "filename" : "GenericLogo_256x256.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "GenericLogo@2x_55A54008AD1BA589AA210D2629C1DF41_0.png",
+      "filename" : "GenericLogo_256x256@x2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

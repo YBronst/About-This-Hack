@@ -24,7 +24,6 @@
 		C1LOADIND000000000000001 /* LoadingIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1LOADIND000000000000002 /* LoadingIndicatorController.swift */; };
 		CV0000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CV0000000000002 /* ContentView.swift */; };
 		D903343B2F7F00AE000528E8 /* HCAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D903343A2F7F00AE000528E8 /* HCAudio.swift */; };
-		D90473D82D6FD62900B738E3 /* ObjCSIP.m in Sources */ = {isa = PBXBuildFile; fileRef = D90473D72D6FD62900B738E3 /* ObjCSIP.m */; };
 		D99B37092F1010F400B71FAE /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99B37082F1010F400B71FAE /* SettingsWindowController.swift */; };
 		D99B370B2F10110C00B71FAE /* CustomLogoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99B370A2F10110C00B71FAE /* CustomLogoConstants.swift */; };
 		D9BA05882FA7B63900D73D31 /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BA05872FA7B62F00D73D31 /* UpdateController.swift */; };
@@ -80,9 +79,6 @@
 		C1LOADIND000000000000002 /* LoadingIndicatorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorController.swift; sourceTree = "<group>"; };
 		CV0000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D903343A2F7F00AE000528E8 /* HCAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HCAudio.swift; sourceTree = "<group>"; };
-		D90473D62D6FD62900B738E3 /* About This Hack-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "About This Hack-Bridging-Header.h"; sourceTree = "<group>"; };
-		D90473D72D6FD62900B738E3 /* ObjCSIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCSIP.m; sourceTree = "<group>"; };
-		D90473D92D6FD70800B738E3 /* ObjCSIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjCSIP.h; sourceTree = "<group>"; };
 		D9423A102FB91655008C2265 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D99B37082F1010F400B71FAE /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		D99B370A2F10110C00B71FAE /* CustomLogoConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLogoConstants.swift; sourceTree = "<group>"; };
@@ -139,11 +135,9 @@
 		115D921026D6F65500F5DF35 /* About This Hack */ = {
 			isa = PBXGroup;
 			children = (
-				D90473D62D6FD62900B738E3 /* About This Hack-Bridging-Header.h */,
 				115D921B26D6F65600F5DF35 /* About_This_Hack.entitlements */,
 				115D921126D6F65500F5DF35 /* AppDelegate.swift */,
 				115D921526D6F65600F5DF35 /* Assets.xcassets */,
-				C08F47512ED5DF5700F36232 /* Bridge */,
 				DC6870472A63336E00CAD908 /* HardwareCollector.swift */,
 				DC6870442A63332C00CAD908 /* HardwareCollectors */,
 				115D921A26D6F65600F5DF35 /* Info.plist */,
@@ -184,15 +178,6 @@
 				C1BAD6FE26D70091008460FB /* WindowController.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		C08F47512ED5DF5700F36232 /* Bridge */ = {
-			isa = PBXGroup;
-			children = (
-				D90473D92D6FD70800B738E3 /* ObjCSIP.h */,
-				D90473D72D6FD62900B738E3 /* ObjCSIP.m */,
-			);
-			path = Bridge;
 			sourceTree = "<group>";
 		};
 		C147F9E62DD9FFD300D8C1CF /* Utilities */ = {
@@ -312,7 +297,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D90473D82D6FD62900B738E3 /* ObjCSIP.m in Sources */,
 				CV0000000000001 /* ContentView.swift in Sources */,
 				LANGSV000000000000001 /* LanguageSelectorView.swift in Sources */,
 				LANGWC000000000000001 /* LanguageSelectorWindowController.swift in Sources */,
@@ -530,7 +514,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "About This Hack/About This Hack-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -566,7 +550,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "About This Hack/About This Hack-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
