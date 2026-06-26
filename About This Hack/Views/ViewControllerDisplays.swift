@@ -162,8 +162,30 @@ enum DisplaysViewModel {
         case let n where n.contains("built"):
             named = "MacBook"
         default:
-            named = "genericLCD"
+            named = genericLCDImageNameForCurrentOS()
         }
         return NSImage(named: named) ?? NSImage()
     }
+    
+    private static func genericLCDImageNameForCurrentOS() -> String {
+        switch HCVersion.shared.osVersion {
+        case .bigSur:
+            return "genericLCDBigSur"
+        case .monterey:
+            return "genericLCDMonterey"
+        case .ventura:
+            return "genericLCDVentura"
+        case .sonoma:
+            return "genericLCDSonoma"
+        case .sequoia:
+            return "genericLCDSequoia"
+        case .tahoe:
+            return "genericLCDTahoe"
+        case .goldengate:
+            return "genericLCDGoldenGate"
+        case .unknown:
+            return "genericLCD"
+        }
+    }
+    
 }
