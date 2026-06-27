@@ -42,9 +42,9 @@ class LanguageSelectorWindowController: NSWindowController {
         window.isReleasedWhenClosed = false
 
         // MARK: transparent window
-        window.isOpaque = false
-        window.backgroundColor = .clear
-        window.titlebarAppearsTransparent = true
+//        window.isOpaque = false
+//        window.backgroundColor = .clear
+//        window.titlebarAppearsTransparent = true
 
         self.init(window: window)
         performSetupIfNeeded()

@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "genericLCDGoldenGate.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "genericLCDGoldenGate.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

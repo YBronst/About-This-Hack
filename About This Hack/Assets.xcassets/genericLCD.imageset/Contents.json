@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "icon_512x512.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon_512x512@2x.png",
+      "filename" : "genericLCD.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

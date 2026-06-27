@@ -7,13 +7,13 @@
 
 | |
 | --- |
-| ![Overview](Images/Screenshots/Overview.png) |
+| ![Overview](Images/Overview.png) |
 
 ## Migration to SwiftUI
 
 2009-Nissan-Cube is the author of the original [About This Hack](https://github.com/2009-Nissan-Cube/About-This-Hack) repository, excellent project that Hackintosh users really like. About This Hack was built with AppKit-Swift. For graphical interfaces, AppKit uses Interface Builder files, which are more complex to manage compared to SwiftUI's simpler code.
 
-I have worked on the migration of the project from AppKit-XIB to pure SwiftUI, adopting a modern interface with a left-hand sidebar containing links to the four tabs, whose values ​​are displayed on the right. Fonts and other elements have been enlarged, improving readability on high-resolution screens.
+I have worked on the migration of the project from AppKit-XIB to pure SwiftUI, adopting a modern interface with a left-hand sidebar containing links to the four tabs, whose values are displayed on the right. Fonts and other elements have been enlarged, improving readability on high-resolution screens.
 
 Some will like it, some won't, and many others would have done it differently (probably better). Therefore, issues and pull requests are welcome.
 
@@ -55,7 +55,7 @@ Visualize your connected displays with their respective resolutions.
 
 | |
 | --- |
-| ![Overview](Images/Screenshots/Displays.png) |
+| ![Overview](Images/Displays.png) |
 
 ## System disk
 
@@ -63,7 +63,7 @@ Get a clear picture of your startup disk, including name, available space, and d
 
 | |
 | --- |
-| ![Overview](Images/Screenshots/Storage.png) | 
+| ![Overview](Images/Storage.png) | 
 
 ## Audio (WIP)
 
@@ -78,8 +78,8 @@ The Audio tab is displayed in these situations:
 
 | | |
 | --- | --- |
-| ![Overview](Images/Screenshots/Audio-applealc.png) | ![Overview](Images/Screenshots/Audio-usb.png) |
-| ![Overview](Images/Screenshots/Audio-hdmi.png) | ![Overview](Images/Screenshots/Audio-voodoohda.png) |
+| ![Overview](Images/Audio-applealc.png) | ![Overview](Images/Audio-usb.png) |
+| ![Overview](Images/Audio-hdmi.png) | ![Overview](Images/Audio-voodoohda.png) |
 
 **Note**: `getdump` is a tool available in the VoodooHDA repository. The download link is usually found in the resources section of each VoodooHDA release. The latest version is available at this [link](https://github.com/CloverHackyColor/VoodooHDA/releases/download/Release312/getdump.zip). VoodooHDA users must have `getdump` installed to get the audio tab. Simply copy the tool to `/usr/local/bin` and that's all.
 
@@ -89,7 +89,7 @@ Access a list of support resources for both Mac and Hackintosh users.
 
 | |
 | --- |
-| ![Overview](Images/Screenshots/Support.png) |
+| ![Overview](Images/Support.png) |
 
 ## Tooltips
 
@@ -116,8 +116,6 @@ Want to personalize your About This Hack? You can now replace the macOS logo in 
 Or this one:
 <br>`Could not verify that Download Full Installer does not contain malicious software.`<br>
 With the recommendation in both cases to move the file to the Trash:
-
-
 
    - Go to `System Preferences` → `Security & Privacy`
    - You'll see a notice saying "About This Hack app is blocked"

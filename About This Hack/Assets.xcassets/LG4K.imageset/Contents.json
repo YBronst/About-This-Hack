@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "icon_512x512.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon_1024x1024.png",
+      "filename" : "LG4K.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

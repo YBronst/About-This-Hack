@@ -1,5 +1,18 @@
 # Releases Changelog
 
+## 4.3.6 (1636) - Jun 27, 2026
+
+**Update Audio imageset**
+
+- Update `Audio` imageset, thanks to [chris1111](https://github.com/chris1111)
+- Adjust sidebar width in `ContentView.swift` to accommodate localized strings
+
+## 4.3.5 (1635) - Jun 26, 2026
+
+**Update Unknown imageset**
+
+- Update `Unknown` imageset, used when macOS version is not recognized; thanks to [chris1111](https://github.com/chris1111)
+
 ## 4.3.4 (1632) - Jun 24, 2026
 
 **Refactor SIP and Mac model**

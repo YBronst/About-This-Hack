@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "genericLCDTahoe.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "genericLCDTahoe.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

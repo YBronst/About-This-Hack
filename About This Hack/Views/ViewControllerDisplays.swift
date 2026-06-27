@@ -26,7 +26,8 @@ struct DisplaysView: View {
                 }
                 Spacer()
             }
-            .padding(.vertical, 12)
+            .padding(.top, 14)
+            .padding(.bottom, 24)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -51,7 +52,7 @@ struct DisplaysView: View {
                     .frame(minWidth: geometry.size.width, alignment: .center)
                 }
             }
-            .frame(height: 250)
+            .frame(height: 310)
         }
     }
 
@@ -72,7 +73,7 @@ private struct DisplayCard: View {
             Image(nsImage: info.image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 132, height: 132)
+                .frame(width: 200, height: 200)
             Text(info.name)
                 .font(.system(size: 13, weight: .medium))
                 .multilineTextAlignment(.center)
@@ -146,13 +147,13 @@ enum DisplaysViewModel {
     private static func displayImage(for name: String, index: Int, hasBuiltIn: Bool) -> NSImage {
         // First display that's a built-in: use macbook icon
         if index == 0 && hasBuiltIn {
-            return NSImage(named: "MacBook") ?? NSImage()
+            return NSImage(named: genericMacBookImageNameForCurrentOS()) ?? NSImage()
         }
         let lower = name.lowercased()
         let named: String
         switch lower {
-//        case let n where n.contains("imac"):
-//            named = "NSComputer"
+        case let n where n.contains("imac"):
+            named = "genericImac"
         case let n where n.contains("lg") && (n.contains("hdr") || n.contains("4k")):
             named = "LG4K"
         case let n where n.contains("sidecar"):
@@ -160,13 +161,13 @@ enum DisplaysViewModel {
         case let n where n.contains("led") && n.contains("cinema"):
             named = "AppleDisplay"
         case let n where n.contains("built"):
-            named = "MacBook"
+            named = genericMacBookImageNameForCurrentOS()
         default:
             named = genericLCDImageNameForCurrentOS()
         }
         return NSImage(named: named) ?? NSImage()
     }
-    
+
     private static func genericLCDImageNameForCurrentOS() -> String {
         switch HCVersion.shared.osVersion {
         case .bigSur:
@@ -185,6 +186,27 @@ enum DisplaysViewModel {
             return "genericLCDGoldenGate"
         case .unknown:
             return "genericLCD"
+        }
+    }
+    
+    private static func genericMacBookImageNameForCurrentOS() -> String {
+        switch HCVersion.shared.osVersion {
+        case .bigSur:
+            return "genericMacBookBigSur"
+        case .monterey:
+            return "genericMacBookMonterey"
+        case .ventura:
+            return "genericMacBookVentura"
+        case .sonoma:
+            return "genericMacBookSonoma"
+        case .sequoia:
+            return "genericMacBookSequoia"
+        case .tahoe:
+            return "genericMacBookTahoe"
+        case .goldengate:
+            return "genericMacBookGoldenGate"
+        case .unknown:
+            return "genericMacBook"
         }
     }
     

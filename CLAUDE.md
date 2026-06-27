@@ -9,7 +9,7 @@
 - Storyboard-free (AppDelegate bootstraps everything manually)
 - Auto-updater via Sparkle framework (SPM dependency)
 - Localized into: English (`en`), Spanish (`es`), French (`fr`), Italian (`it`)
-<!-- - Transparent/liquid-glass window style (`.ultraThinMaterial` backgrounds) -->
+- In the Releases page there is a version with transparent/liquid-glass windows (`.ultraThinMaterial` backgrounds)
 
 ## Tech Stack
 
