@@ -9,7 +9,7 @@
 - Storyboard-free (AppDelegate bootstraps everything manually)
 - Auto-updater via Sparkle framework (SPM dependency)
 - Localized into: English (`en`), Spanish (`es`), French (`fr`), Italian (`it`)
-- In the Releases page there is a version with transparent/liquid-glass windows (`.ultraThinMaterial` backgrounds)
+<!-- - Transparent/liquid-glass window style (`.ultraThinMaterial` backgrounds) -->
 
 ## Tech Stack
 
@@ -185,7 +185,10 @@ Assets are in `Assets.xcassets`. Notable image sets:
 
 - `Golden Gate`, `Tahoe`, `Sequoia`, `Sonoma`, `Ventura`, `Monterey`, `Big Sur`, etc. – OS badge images used in Overview.
 - `{OS} Internal SSD`, `{OS} External SSD`, `{OS} Internal HDD`, `{OS} External HDD` – Storage tab disk icons.
-- `MacBook`, `genericLCD`, `LG4K`, `iPad`, `AppleDisplay` – Display tab icons.
+- `genericMacBook`, `genericMacBook{BigSur,Monterey,Ventura,Sonoma,Sequoia,Tahoe,GoldenGate}` – Built-in / MacBook display icons (one per macOS version, selected at runtime by `genericMacBookImageNameForCurrentOS()`).
+- `genericLCD`, `genericLCD{BigSur,Monterey,Ventura,Sonoma,Sequoia,Tahoe,GoldenGate}` – Generic external LCD icons (one per macOS version, selected at runtime by `genericLCDImageNameForCurrentOS()`).
+- `genericImac` – Generic iMac display icon.
+- `LG4K`, `AppleDisplay`, `iPad` – Specific external display icons.
 - `Audio` – Audio tab icon.
 - `AppIcon` – App icon.
 
