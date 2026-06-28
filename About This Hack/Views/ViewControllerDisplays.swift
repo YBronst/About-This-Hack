@@ -145,33 +145,25 @@ enum DisplaysViewModel {
     }
 
     private static func displayImage(for name: String, index: Int, hasBuiltIn: Bool) -> NSImage {
-        // First display that's a built-in: use macbook icon
+        // First display that's a built-in: use iMac or MacBook icon
         if index == 0 && hasBuiltIn {
-            return NSImage(named: genericMacBookImageNameForCurrentOS()) ?? NSImage()
+            if name.contains("imac") {
+                return NSImage(named: genericImacImageNameForCurrentOS()) ?? NSImage()
+            } else {
+                return NSImage(named: genericMacBookImageNameForCurrentOS()) ?? NSImage()
+            }
+        } else {
+            // Display that's not a built-in: use LCD monitor or iPad icon
+            let lower = name.lowercased()
+            let named: String
+            switch lower {
+            case let n where n.contains("sidecar"):
+                named = "iPad"
+            default:
+                named = genericLCDImageNameForCurrentOS()
+            }
+            return NSImage(named: named) ?? NSImage()
         }
-        let lower = name.lowercased()
-        let named: String
-        switch lower {
-            // iMac screen
-        case let n where n.contains("imac"):
-            named = genericImacImageNameForCurrentOS()
-            // LG 4K monitor
-//        case let n where n.contains("lg") && (n.contains("hdr") || n.contains("4k")):
-//            named = "LG4K"
-            // iPad screen
-        case let n where n.contains("sidecar"):
-            named = "iPad"
-            // Apple display
-//        case let n where n.contains("led") && n.contains("cinema"):
-//            named = "AppleDisplay"
-            // Laptop built.in screen
-        case let n where n.contains("built"):
-            named = genericMacBookImageNameForCurrentOS()
-            // Generic monitor
-        default:
-            named = genericLCDImageNameForCurrentOS()
-        }
-        return NSImage(named: named) ?? NSImage()
     }
     
     private static func genericImacImageNameForCurrentOS() -> String {
