@@ -152,12 +152,12 @@
 		C055B7F92ED5D88D00246967 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D9BA05872FA7B62F00D73D31 /* UpdateController.swift */,
 				C1EDE5622AC9E72900878889 /* CreateDataFiles.swift */,
 				C1EDE5602AC9E70C00878889 /* InitGlobalVariables.swift */,
 				C1LOADIND000000000000002 /* LoadingIndicatorController.swift */,
 				9664A9122BECC81D00B5E306 /* SystemFunctions.swift */,
 				C1D8307C2AAE57E500ABD4A4 /* Tooltips.swift */,
+				D9BA05872FA7B62F00D73D31 /* UpdateController.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

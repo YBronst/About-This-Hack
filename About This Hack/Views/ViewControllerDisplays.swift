@@ -152,20 +152,47 @@ enum DisplaysViewModel {
         let lower = name.lowercased()
         let named: String
         switch lower {
+            // iMac screen
         case let n where n.contains("imac"):
-            named = "genericImac"
-        case let n where n.contains("lg") && (n.contains("hdr") || n.contains("4k")):
-            named = "LG4K"
+            named = genericImacImageNameForCurrentOS()
+            // LG 4K monitor
+//        case let n where n.contains("lg") && (n.contains("hdr") || n.contains("4k")):
+//            named = "LG4K"
+            // iPad screen
         case let n where n.contains("sidecar"):
             named = "iPad"
-        case let n where n.contains("led") && n.contains("cinema"):
-            named = "AppleDisplay"
+            // Apple display
+//        case let n where n.contains("led") && n.contains("cinema"):
+//            named = "AppleDisplay"
+            // Laptop built.in screen
         case let n where n.contains("built"):
             named = genericMacBookImageNameForCurrentOS()
+            // Generic monitor
         default:
             named = genericLCDImageNameForCurrentOS()
         }
         return NSImage(named: named) ?? NSImage()
+    }
+    
+    private static func genericImacImageNameForCurrentOS() -> String {
+        switch HCVersion.shared.osVersion {
+        case .bigSur:
+            return "genericImacBigSur"
+        case .monterey:
+            return "genericImacMonterey"
+        case .ventura:
+            return "genericImacVentura"
+        case .sonoma:
+            return "genericImacSonoma"
+        case .sequoia:
+            return "genericImacSequoia"
+        case .tahoe:
+            return "genericImacTahoe"
+        case .goldengate:
+            return "genericImacGoldenGate"
+        case .unknown:
+            return "genericImac"
+        }
     }
 
     private static func genericLCDImageNameForCurrentOS() -> String {
