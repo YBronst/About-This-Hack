@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "genericMacBookSonoma.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "genericMacBookSonoma.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

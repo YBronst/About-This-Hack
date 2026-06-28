@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "genericImacGoldenGate.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "genericImacGoldenGate.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "genericLCDSequoia.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "genericLCDSequoia.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

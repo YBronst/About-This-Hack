@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "genericMacBookTahoe.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "genericMacBookTahoe.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

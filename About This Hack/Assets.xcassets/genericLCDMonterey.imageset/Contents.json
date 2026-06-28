@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "genericLCDMonterey.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "genericLCDMonterey.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

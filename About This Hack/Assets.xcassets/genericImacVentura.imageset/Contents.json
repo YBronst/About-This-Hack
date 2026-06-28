@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "genericImacVentura.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "genericImacVentura.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
