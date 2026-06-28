@@ -1,5 +1,13 @@
 # Releases Changelog
 
+## 4.3.7 (1637) - Jun 28, 2026
+
+**Per-macOS-version artwork for displays**
+
+- Review the Displays tab: display images are now larger
+- Use per-macOS-version artwork for built-in screens (MacBook assets), generic external monitors and iMac screens (proper iMac icons has been added)
+- Several asset files have been cleaned up and normalized
+
 ## 4.3.6 (1636) - Jun 27, 2026
 
 **Update Audio imageset**

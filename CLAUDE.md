@@ -186,9 +186,9 @@ Assets are in `Assets.xcassets`. Notable image sets:
 - `Golden Gate`, `Tahoe`, `Sequoia`, `Sonoma`, `Ventura`, `Monterey`, `Big Sur`, etc. – OS badge images used in Overview.
 - `{OS} Internal SSD`, `{OS} External SSD`, `{OS} Internal HDD`, `{OS} External HDD` – Storage tab disk icons.
 - `genericMacBook`, `genericMacBook{BigSur,Monterey,Ventura,Sonoma,Sequoia,Tahoe,GoldenGate}` – Built-in / MacBook display icons (one per macOS version, selected at runtime by `genericMacBookImageNameForCurrentOS()`).
-- `genericLCD`, `genericLCD{BigSur,Monterey,Ventura,Sonoma,Sequoia,Tahoe,GoldenGate}` – Generic external LCD icons (one per macOS version, selected at runtime by `genericLCDImageNameForCurrentOS()`).
-- `genericImac` – Generic iMac display icon.
-- `LG4K`, `AppleDisplay`, `iPad` – Specific external display icons.
+-  `genericLCD`, `genericLCD{BigSur,Monterey,Ventura,Sonoma,Sequoia,Tahoe,GoldenGate}` – Generic internal LCD icons (one per macOS version, selected at runtime by `genericLCDImageNameForCurrentOS()`).
+- `genericImac`, `genericImac{BigSur,Monterey,Ventura,Sonoma,Sequoia,Tahoe,GoldenGate}` – Generic internal Imac icons (one per macOS version, selected at runtime by `genericImacImageNameForCurrentOS()`).
+- `iPad` – Specific external display icon.
 - `Audio` – Audio tab icon.
 - `AppIcon` – App icon.
 
