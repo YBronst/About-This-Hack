@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "genericLCDBigSur.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "genericLCDBigSur.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

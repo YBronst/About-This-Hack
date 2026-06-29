@@ -73,7 +73,7 @@ private struct DisplayCard: View {
             Image(nsImage: info.image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 200, height: 200)
+                .frame(width: 200)
             Text(info.name)
                 .font(.system(size: 13, weight: .medium))
                 .multilineTextAlignment(.center)

@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "genericMacBook.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "genericMacBook.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
