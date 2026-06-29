@@ -81,6 +81,7 @@ The Audio tab is displayed in these situations:
 | --- | --- |
 | ![Overview](Images/Audio-applealc.png) | ![Overview](Images/Audio-usb.png) |
 | ![Overview](Images/Audio-hdmi.png) | ![Overview](Images/Audio-voodoohda.png) |
+| ![Overview](Images/Audio-hdauniversal.png) | ![Overview](Images/Audio-dp.png) |
 
 **Note**: `getdump` is a tool available in the VoodooHDA repository. The download link is usually found in the resources section of each VoodooHDA release. The latest version is available at this [link](https://github.com/CloverHackyColor/VoodooHDA/releases/download/Release312/getdump.zip). VoodooHDA users must have `getdump` installed to get the audio tab. Simply copy the tool to `/usr/local/bin` and that's all.
 

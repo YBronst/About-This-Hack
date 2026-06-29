@@ -1,5 +1,11 @@
 # Releases Changelog
 
+## 4.3.8 (1638) - Jun 30, 2026
+
+**Add HDAUniversal audio**
+
+- Add HDAUniversal audio: detection of `HDAUniversal.kext` (new audio system for Hackintoshes, made by *Mald0n*)
+
 ## 4.3.7 (1637) - Jun 28, 2026
 
 **Per-macOS-version artwork for displays**

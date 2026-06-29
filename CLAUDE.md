@@ -167,8 +167,8 @@ Data is collected into `/private/tmp/.ath/` at launch and deleted on termination
 
 The Audio tab is only shown on Hackintoshes or Macs with OCLP / OpenCore:
 
-1. `AppState.isHackintosh` → true when bootloader is Clover; true when bootloader is OpenCore without OCLP; true when bootloader is OpenCore with OCLP **and** `HCAudio` reports an expected driver (`AppleALC`, `VoodooHDA`, `USB`, `HDMI`, or `DisplayPort`). Returns false on Apple iBoot (Apple Silicon) or Apple UEFI (real Intel Mac without OpenCore).
-2. `AppState.shouldShowAudioTab` → true when `isHackintosh` AND `HCAudio` reports driver = `AppleALC`, `VoodooHDA`, `USB`, `HDMI`, or `DisplayPort`.
+1. `AppState.isHackintosh` → true when bootloader is Clover; true when bootloader is OpenCore without OCLP; true when bootloader is OpenCore with OCLP **and** `HCAudio` reports an expected driver (`AppleALC`, `VoodooHDA`, `HDAUniversal`, `USB`, `HDMI`, or `DisplayPort`). Returns false on Apple iBoot (Apple Silicon) or Apple UEFI (real Intel Mac without OpenCore).
+2. `AppState.shouldShowAudioTab` → true when `isHackintosh` AND `HCAudio` reports driver = `AppleALC`, `VoodooHDA`, `HDAUniversal`, `USB`, `HDMI`, or `DisplayPort`.
 3. The `Audio` menu item in AppDelegate is also validated against `shouldShowAudioTab`.
 
 ## Localization
