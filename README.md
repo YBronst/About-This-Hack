@@ -72,6 +72,7 @@ Check audio information. This applies only to Hackintosh; original Macs do not h
 The Audio tab is displayed in these situations:
 
 - AppleALC.kext + AppleHDA.kext
+- HDAUniversal.kext
 - VoodooHDA.kext + `getdump`
 - USB audio
 - HDMI or DisplayPort audio.
@@ -138,4 +139,3 @@ A big thank you to our contributors:
 - [Ben216k](https://github.com/Ben216k) for being awesome, providing some of the commands, and helping me debug a lot. <br>
 - [Snoopy](https://macosicons.com/#/u/Squid4572) for helping create the new icon. <br>
 - The internet for helping me with a lot of the code.
-

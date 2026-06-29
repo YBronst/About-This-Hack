@@ -8,15 +8,15 @@
         <language>en</language>
         
        <item>
-            <title>Version 4.3.7</title>
+            <title>Version 4.3.8</title>
             <description></description>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
-            <sparkle:version>1637</sparkle:version>
-            <sparkle:shortVersionString>4.3.7</sparkle:shortVersionString>
+            <sparkle:version>1638</sparkle:version>
+            <sparkle:shortVersionString>4.3.8</sparkle:shortVersionString>
             <enclosure
-                url="https://github.com/perez987/About-This-Hack/releases/download/4.3.7/About.This.Hack-4.3.7.zip"
-                length="14570672"
-                sparkle:edSignature="A6jDjdhDXcgSFlsVQafBczekSG0ALXoFJ7TkAUqbmiUxHhZlCdc+BX9fRbNX+UuPNKC0HW/B/Nfb8wSfyFFyCw=="
+                url="https://github.com/perez987/About-This-Hack/releases/download/4.3.8/About.This.Hack-4.3.8.zip"
+                length="14574703"
+                sparkle:edSignature="1FlQKgArP2p4VkejBNJjpzhavuAo2WuQrNIFLYFEgmIqVF4OwQY4EqB3Kk90+zlZPJkGoqlmY4q0X6f6nj0mCg=="
                 type="application/octet-stream"
             />
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>

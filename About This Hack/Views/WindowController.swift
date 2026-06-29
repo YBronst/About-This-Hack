@@ -90,9 +90,9 @@ class AppState: ObservableObject {
                 // OpenCore + OCLP can mean either a real Mac patched for newer macOS
                 // compatibility, or a Hackintosh that uses OCLP for driver patches
                 // (e.g. audio, WiFi on Sonoma).  Treat as Hackintosh when
-                // AppleALC, VoodooHDA, USB, HDMI, or DisplayPort audio is detected as the default output.
+                // AppleALC, HDAUniversal, VoodooHDA, USB, HDMI, or DisplayPort audio is detected as the default output.
                 let driver = HCAudio.shared.getAudioInfo().driver
-                return driver == "AppleALC" || driver == "VoodooHDA" || driver == "USB" || driver == "HDMI" || driver == "DisplayPort"
+                return driver == "AppleALC" || driver == "HDAUniversal" || driver == "VoodooHDA" || driver == "USB" || driver == "HDMI" || driver == "DisplayPort"
             }
             return true
         }
@@ -102,7 +102,7 @@ class AppState: ObservableObject {
     }
 
     /// True when the audio tab should be visible.
-    /// Shown on Hackintoshes running AppleALC, VoodooHDA (with getdump available),
+    /// Shown on Hackintoshes running AppleALC, HDAUniversal, VoodooHDA (with getdump available),
     /// or with a USB, HDMI, or DisplayPort audio device set as the default output.
     /// Hidden on real Macs and on Hackintoshes where none of these are active
     /// (or when VoodooHDA is active but getdump is not installed).
@@ -111,7 +111,7 @@ class AppState: ObservableObject {
         guard isDataLoaded else { return true }
         guard isHackintosh else { return false }
         let driver = HCAudio.shared.getAudioInfo().driver
-        return driver == "AppleALC" || driver == "VoodooHDA" || driver == "USB" || driver == "HDMI" || driver == "DisplayPort"
+        return driver == "AppleALC" || driver == "HDAUniversal" || driver == "VoodooHDA" || driver == "USB" || driver == "HDMI" || driver == "DisplayPort"
     }
 
     private let defaults = UserDefaults.standard

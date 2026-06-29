@@ -101,7 +101,41 @@ class HCAudio {
             )
         }
 
-        // 5. VoodooHDA: does not expose IOHDACodecDevice nodes but registers a
+        // 5. HDAUniversal: does not expose IOHDACodecDevice nodes but creates
+        //    an HDAUniversalDevice branch in the IORegistry when active.
+        let hdaUniversalOutput = run("ioreg -p IOService -r -w 0 -l -n HDAUniversalDevice 2>/dev/null")
+        if !hdaUniversalOutput.isEmpty {
+            // Try to read the real codec name from IOAudioDeviceShortName property.
+            // Line format:  "IOAudioDeviceShortName" = "ALC1220"
+            var hdaCodecName = "HDAUniversal"
+            let shortNameKey = "\"IOAudioDeviceShortName\""
+            for line in hdaUniversalOutput.components(separatedBy: "\n") {
+                let trimmed = line.trimmingCharacters(in: .whitespaces)
+                guard let keyRange = trimmed.range(of: shortNameKey) else { continue }
+                let prefix = trimmed[..<keyRange.lowerBound]
+                guard prefix.allSatisfy({ $0 == "|" || $0 == "+" || $0 == "-" || $0 == "o" || $0 == " " || $0 == "\t" }) else { continue }
+                if let eqRange = trimmed.range(of: "=") {
+                    let trimSet = CharacterSet.whitespaces.union(CharacterSet(charactersIn: "\""))
+                    let value = trimmed[eqRange.upperBound...].trimmingCharacters(in: trimSet)
+                    if !value.isEmpty {
+                        hdaCodecName = value
+                    }
+                }
+                break
+            }
+            return AudioInfo(
+                codecName: hdaCodecName,
+                vendorName: "olarila.com",
+                deviceName: deviceName,
+                layoutId: layoutId,
+                driver: "HDAUniversal",
+                codecHex: "",
+                vendorHex: "",
+                deviceHex: deviceHex
+            )
+        }
+
+        // 6. VoodooHDA: does not expose IOHDACodecDevice nodes but registers a
         //    VoodooHDADevice in the IORegistry.  Codec info is obtained via the
         //    `getdump` command-line tool shipped with VoodooHDA.
         let voodooOutput = run("ioreg -l -r -c VoodooHDADevice -w 0 2>/dev/null")
@@ -129,7 +163,7 @@ class HCAudio {
             return emptyAudioInfo
         }
 
-        // 6. No AppleALC, no VoodooHDA.  Fall back to system_profiler for real Macs
+        // 7. No AppleALC, HDAUniversal, or VoodooHDA. Fall back to system_profiler for real Macs
         //    whose audio hardware is not exposed via standard IOHDACodecDevice nodes
         //    (e.g. Intel Smart Sound Technology + CS8409).
         if layoutId.isEmpty && deviceName.isEmpty {
