@@ -107,30 +107,52 @@ class HCAudio {
         if !hdaUniversalOutput.isEmpty {
             // Try to read the real codec name from IOAudioDeviceShortName property.
             // Line format:  "IOAudioDeviceShortName" = "ALC1220"
+            // Also try to read the codec vendor ID from HDAUniversalEffectiveCodecID
+            // (decimal integer, e.g. 283906592 = 0x10EC1220 → vendor 0x10EC = Realtek).
             var hdaCodecName = "HDAUniversal"
+            var hdaVendorName = ""
+            var hdaVendorHex = ""
+            var hdaCodecHex = ""
             let shortNameKey = "\"IOAudioDeviceShortName\""
+            let codecIdKey = "\"HDAUniversalEffectiveCodecID\""
             for line in hdaUniversalOutput.components(separatedBy: "\n") {
                 let trimmed = line.trimmingCharacters(in: .whitespaces)
-                guard let keyRange = trimmed.range(of: shortNameKey) else { continue }
-                let prefix = trimmed[..<keyRange.lowerBound]
-                guard prefix.allSatisfy({ $0 == "|" || $0 == "+" || $0 == "-" || $0 == "o" || $0 == " " || $0 == "\t" }) else { continue }
-                if let eqRange = trimmed.range(of: "=") {
-                    let trimSet = CharacterSet.whitespaces.union(CharacterSet(charactersIn: "\""))
-                    let value = trimmed[eqRange.upperBound...].trimmingCharacters(in: trimSet)
-                    if !value.isEmpty {
-                        hdaCodecName = value
+                if hdaCodecName == "HDAUniversal", let keyRange = trimmed.range(of: shortNameKey) {
+                    let prefix = trimmed[..<keyRange.lowerBound]
+                    if prefix.allSatisfy({ $0 == "|" || $0 == "+" || $0 == "-" || $0 == "o" || $0 == " " || $0 == "\t" }),
+                       let eqRange = trimmed.range(of: "=") {
+                        let trimSet = CharacterSet.whitespaces.union(CharacterSet(charactersIn: "\""))
+                        let value = trimmed[eqRange.upperBound...].trimmingCharacters(in: trimSet)
+                        if !value.isEmpty { hdaCodecName = value }
                     }
                 }
-                break
+                if trimmed.contains(codecIdKey), let eqRange = trimmed.range(of: "=") {
+                    let valueStr = trimmed[eqRange.upperBound...].trimmingCharacters(in: .whitespaces)
+                    // Value is a decimal integer; also accept 0x-prefixed hex just in case.
+                    let codecId: UInt32?
+                    if valueStr.lowercased().hasPrefix("0x") {
+                        codecId = UInt32(valueStr.dropFirst(2), radix: 16)
+                    } else {
+                        codecId = UInt32(valueStr)
+                    }
+                    if let id = codecId, id > 0 {
+                        let vendorCode = (id >> 16) & 0xFFFF
+                        let (vName, vHex) = lookupAudioVendorName(vendorCode: vendorCode)
+                        hdaVendorName = vName
+                        hdaVendorHex = vHex
+                        let (_, cHex) = lookupCodecName(vendorId: id)
+                        hdaCodecHex = cHex
+                    }
+                }
             }
             return AudioInfo(
                 codecName: hdaCodecName,
-                vendorName: "olarila.com",
+                vendorName: hdaVendorName,
                 deviceName: deviceName,
                 layoutId: layoutId,
                 driver: "HDAUniversal",
-                codecHex: "",
-                vendorHex: "",
+                codecHex: hdaCodecHex,
+                vendorHex: hdaVendorHex,
                 deviceHex: deviceHex
             )
         }
