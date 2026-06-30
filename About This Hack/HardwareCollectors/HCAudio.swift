@@ -105,6 +105,8 @@ class HCAudio {
         //    an HDAUniversalDevice branch in the IORegistry when active.
         let hdaUniversalOutput = run("ioreg -p IOService -r -w 0 -l -n HDAUniversalDevice 2>/dev/null")
         if !hdaUniversalOutput.isEmpty {
+            let hdaUniversalLayoutId = parseHDAUniversalEffectiveLayoutId(from: hdaUniversalOutput)
+            let effectiveLayoutId = hdaUniversalLayoutId.isEmpty ? layoutId : hdaUniversalLayoutId
             // Try to read the real codec name from IOAudioDeviceShortName property.
             // Line format:  "IOAudioDeviceShortName" = "ALC1220"
             // Also try to read the codec vendor ID from HDAUniversalEffectiveCodecID
@@ -149,7 +151,7 @@ class HCAudio {
                 codecName: hdaCodecName,
                 vendorName: hdaVendorName,
                 deviceName: deviceName,
-                layoutId: layoutId,
+                layoutId: effectiveLayoutId,
                 driver: "HDAUniversal",
                 codecHex: hdaCodecHex,
                 vendorHex: hdaVendorHex,
@@ -442,6 +444,21 @@ class HCAudio {
             }
         }
         return nil
+    }
+
+    /// Parse HDAUniversal layout-id from ioreg output.
+    /// Format: "HDAUniversalEffectiveLayoutID" = 7
+    private func parseHDAUniversalEffectiveLayoutId(from output: String) -> String {
+        let key = "\"HDAUniversalEffectiveLayoutID\""
+        for line in output.components(separatedBy: .newlines) {
+            let t = line.trimmingCharacters(in: .whitespaces)
+            guard t.contains(key), let eqRange = t.range(of: "=") else { continue }
+            let valueStr = String(t[eqRange.upperBound...]).trimmingCharacters(in: .whitespaces)
+            if let value = UInt32(valueStr), value > 0 {
+                return "\(value)"
+            }
+        }
+        return ""
     }
 
     /// Parse combined PCI device-id: reads `vendor-id` and `device-id` data properties
