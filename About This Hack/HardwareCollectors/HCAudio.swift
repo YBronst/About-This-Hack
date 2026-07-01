@@ -599,6 +599,7 @@ class HCAudio {
         case (0x8086, 0x51CA): deviceDesc = "Raptor Lake-P HD Audio"
         case (0x8086, 0x7AD0): deviceDesc = "Alder Lake PCH-P HD Audio"
         case (0x8086, 0x7E28): deviceDesc = "Meteor Lake-P HD Audio"
+        case (0x8086, 0xF0C8): deviceDesc = "Intel 500 Series PCH High Definition"
         // NVIDIA – GeForce/Quadro HDMI audio controllers
         case (0x10DE, _) where deviceId >= 0x0BE2 && deviceId <= 0x0BEF: deviceDesc = "GT 2xx HDMI Audio"
         case (0x10DE, _): deviceDesc = "HD Audio Controller"
