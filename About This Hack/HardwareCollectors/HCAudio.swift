@@ -447,27 +447,14 @@ class HCAudio {
     }
 
     /// Parse HDAUniversal layout-id from ioreg output.
-    /// Format: "HDAUniversalEffectiveLayoutID" = 0x45 (hexadecimal)
-    /// Converts the hexadecimal value to decimal for UI display.
+    /// Format: "HDAUniversalEffectiveLayoutID" = 69 (decimal value, used as-is)
     private func parseHDAUniversalEffectiveLayoutId(from output: String) -> String {
         let key = "\"HDAUniversalEffectiveLayoutID\""
-        let hexadecimalCharacters = CharacterSet(charactersIn: "0123456789abcdefABCDEF")
         for line in output.components(separatedBy: .newlines) {
             let t = line.trimmingCharacters(in: .whitespaces)
             guard t.contains(key), let eqRange = t.range(of: "=") else { continue }
             let rawValue = String(t[eqRange.upperBound...]).trimmingCharacters(in: .whitespaces)
-            let cleanedValue = rawValue
-                .trimmingCharacters(in: CharacterSet(charactersIn: "\""))
-                .trimmingCharacters(in: .whitespaces)
-            let normalizedValue = cleanedValue.lowercased()
-            let hexValue = normalizedValue.hasPrefix("0x")
-                ? String(normalizedValue.dropFirst(2))
-                : normalizedValue
-            guard !hexValue.isEmpty,
-                  hexValue.unicodeScalars.allSatisfy({ hexadecimalCharacters.contains($0) }) else {
-                continue
-            }
-            if let value = UInt32(hexValue, radix: 16), value > 0 {
+            if let value = UInt32(rawValue), value > 0 {
                 return "\(value)"
             }
         }
