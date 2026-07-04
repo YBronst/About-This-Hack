@@ -138,21 +138,54 @@ class HardwareCollector {
         dataHasBeenSet = true
     }
 
+    /// Extracts the pixel-dimensions portion from a resolution field value string,
+    /// stripping any trailing "(…)" parenthesised annotations and "@ XX Hz" refresh-rate suffix.
+    private func extractDimensions(from fieldValue: String) -> String {
+        var value = fieldValue
+            .components(separatedBy: "(").first?
+            .trimmingCharacters(in: .whitespaces) ?? ""
+        if let atRange = value.range(of: #"\s*@\s*[\d.]+ ?Hz"#, options: .regularExpression) {
+            value = String(value[..<atRange.lowerBound]).trimmingCharacters(in: .whitespaces)
+        }
+        return value
+    }
+
     private func getDisplayRes() -> [String] {
         guard let content = getCachedFileContent(InitGlobVar.scrFilePath) else { return [] }
-        return content.components(separatedBy: .newlines)
-            .filter { $0.contains("Resolution:") }
-            .compactMap { line -> String? in
-                guard let range = line.range(of: "Resolution:") else { return nil }
-                var value = String(line[range.upperBound...])
-                    .components(separatedBy: "(").first?
-                    .trimmingCharacters(in: .whitespaces) ?? ""
-                // Strip trailing "@ XX Hz" so the resolution shows only dimensions
-                if let atRange = value.range(of: #"\s*@\s*[\d.]+ ?Hz"#, options: .regularExpression) {
-                    value = String(value[..<atRange.lowerBound]).trimmingCharacters(in: .whitespaces)
+        let lines = content.components(separatedBy: .newlines)
+        var result: [String] = []
+
+        for (i, line) in lines.enumerated() {
+            guard line.contains("Resolution:"),
+                  let resRange = line.range(of: "Resolution:") else { continue }
+
+            // Extract the Resolution value as fallback
+            let resValue = extractDimensions(from: String(line[resRange.upperBound...]))
+
+            // Look ahead for "UI Looks like:" within the same display block.
+            // If found, use its dimensions as the effective (scaled) resolution.
+            var scaledResolution: String? = nil
+            for j in (i + 1) ..< min(i + 6, lines.count) {
+                let next = lines[j]
+                // Another Resolution: line means a new display — stop looking
+                if next.contains("Resolution:") { break }
+                if next.contains("UI Looks like:"),
+                   let uiRange = next.range(of: "UI Looks like:")
+                {
+                    let uiValue = extractDimensions(from: String(next[uiRange.upperBound...]))
+                    if !uiValue.isEmpty {
+                        scaledResolution = uiValue
+                    }
+                    break
                 }
-                return value.isEmpty ? nil : value
             }
+
+            let finalRes = scaledResolution ?? resValue
+            if !finalRes.isEmpty {
+                result.append(finalRes)
+            }
+        }
+        return result
     }
 
     private func getDisplayRefreshRates() -> [String] {

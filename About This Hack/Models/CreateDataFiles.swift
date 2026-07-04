@@ -77,13 +77,6 @@ class CreateDataFiles {
         print("Data files created")
         // */
 
-        /*  Testing phase - Uncomment and modify path for testing phase
-         let testDataRep = "~/Downloads/0-ath-issue-N78" // Replace with your test data directory
-
-         createFileIfNeeded(atPath: InitGlobVar.hwFilePath, withCommand: "ln -s \(testDataRep)/hw.txt  \"\(InitGlobVar.hwFilePath)\"")
-         // ... Add similar lines for other files
-         */
-
         lock.lock()
         _dataFilesCreated = true
         lock.unlock()
