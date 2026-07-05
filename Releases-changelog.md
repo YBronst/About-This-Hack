@@ -1,5 +1,11 @@
 # Releases Changelog
 
+## 4.3.9 (1639) - Jul 5, 2026
+
+**Prefer scaled display resolution**
+
+- Update display to use `UI Looks Like` dimensions when present (scaled dimensions), falling back to `Resolution` (maximum resolution supported by the hardware); this improves reported display resolution for scaled modes
+
 ## 4.3.8 (1638) - Jun 30, 2026
 
 **Add HDAUniversal audio**
