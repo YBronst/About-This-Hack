@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
     <channel>
-        <title>About This Hack (glass)</title>
+        <title>About This Hack</title>
         <description>Most recent changes in the latest update</description>
         <language>en</language>
         <link> https://github.com/perez987/About-This-Hack</link>
         <language>en</language>
         
        <item>
-            <title>Version 4.3.9 (glass)</title>
+            <title>Version 4.3.9 Glass</title>
             <description></description>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
             <sparkle:version>1639</sparkle:version>
-            <sparkle:shortVersionString>4.3.9<sparkle:shortVersionString>
+            <sparkle:shortVersionString>4.3.9</sparkle:shortVersionString>
             <enclosure
                 url="https://github.com/perez987/About-This-Hack/releases/download/4.3.9/About.This.Hack-4.3.9-glass.zip"
-                length="14651524"
-                sparkle:edSignature="d3NF/t+6iLh+AQG6v4mgq1ueeK96ZhFBdAOwLBKkEfJfJ9lrktNu+bOU4ULbYksCSniZMDmZ3at3ThCAKCvCDQ=="
+                length="14651277"
+                sparkle:edSignature="y3xoTSZ3xije9C7vPBJQUpPe73skCz7vbutqLjp13Edwzj4khxMrEX/v6SGyX5xRsQHFGIsoXi3/JPi479nPAg=="
                 type="application/octet-stream"
             />
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
