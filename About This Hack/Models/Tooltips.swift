@@ -15,7 +15,7 @@ class Tooltips {
     }
 
     private lazy var _macModeltoolTip: String = {
-        let pciData = run("system_profiler SPPCIDataType | grep \":$\" | sed 's/://g'")
+        let pciData = run("system_profiler SPPCIDataType 2>/dev/null | grep \":$\" | sed 's/://g'")
         return HCMacModel.shared.macName + " - " + HCMacModel.shared.getModelIdentifier() + "\n" + pciData
     }()
 

@@ -1,5 +1,11 @@
 # Releases Changelog
 
+## 4.4.0 (1640) - Jul 8, 2026
+
+**Set macOS signing identity**
+
+- Configure the Xcode project to use the `Apple Development` code signing identity
+
 ## 4.3.9 (1639) - Jul 5, 2026
 
 **Prefer scaled display resolution**

@@ -100,7 +100,7 @@ class HardwareCollector {
         // Run system_profiler SPDisplaysDataType directly (no intermediate file) and
         // populate the cache so that all GPU/display lookups via getCachedFileContent
         // find the data without touching the file system.
-        let scrContent = run("system_profiler SPDisplaysDataType")
+        let scrContent = run("system_profiler SPDisplaysDataType 2>/dev/null")
         if !scrContent.isEmpty {
             storeCachedFileContent(InitGlobVar.scrFilePath, content: scrContent)
         }

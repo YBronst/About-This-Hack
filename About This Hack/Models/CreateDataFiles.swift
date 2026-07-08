@@ -56,11 +56,11 @@ class CreateDataFiles {
         // Note: scrXmlFilePath and syssoftdataFilePath removed - they were never used in the codebase
         // Note: SPDisplaysDataType is run directly (without a file) in HardwareCollector.getAllData()
         let commands = [
-            "system_profiler SPHardwareDataType > \"\(InitGlobVar.hwFilePath)\"",
-            "system_profiler SPMemoryDataType | grep -v \"^Memory:$\" > \"\(InitGlobVar.sysmemFilePath)\"",
+            "system_profiler SPHardwareDataType 2>/dev/null > \"\(InitGlobVar.hwFilePath)\"",
+            "system_profiler SPMemoryDataType 2>/dev/null | grep -v \"^Memory:$\" > \"\(InitGlobVar.sysmemFilePath)\"",
             "diskutil info / > \"\(InitGlobVar.bootvolnameFilePath)\"",
             "diskutil list / > \"\(InitGlobVar.bootvollistFilePath)\"",
-            "system_profiler SPStorageDataType > \"\(InitGlobVar.storagedataFilePath)\"",
+            "system_profiler SPStorageDataType 2>/dev/null > \"\(InitGlobVar.storagedataFilePath)\"",
         ]
 
         // Execute all commands concurrently
@@ -76,6 +76,13 @@ class CreateDataFiles {
         group.wait()
         print("Data files created")
         // */
+
+        /*  Testing phase - Uncomment and modify path for testing phase
+         let testDataRep = "~/Downloads/0-ath-issue-N78" // Replace with your test data directory
+
+         createFileIfNeeded(atPath: InitGlobVar.hwFilePath, withCommand: "ln -s \(testDataRep)/hw.txt  \"\(InitGlobVar.hwFilePath)\"")
+         // ... Add similar lines for other files
+         */
 
         lock.lock()
         _dataFilesCreated = true
