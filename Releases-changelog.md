@@ -1,5 +1,11 @@
 # Releases Changelog
 
+## 4.4.0 (1644) - Jul 10, 2026
+
+**Notarized app**
+
+- The app is now notarized, no more needing of `xattr` or any other Gatekeeper action but opening a file downloaded from Internet warning
+
 ## 4.4.0 (1640) - Jul 8, 2026
 
 **Set macOS signing identity**
