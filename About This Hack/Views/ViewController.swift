@@ -119,9 +119,11 @@ struct OverviewView: View {
                 Button(NSLocalizedString("button.system_report", comment: "System Report button")) {
                     viewModel.showSystemReport()
                 }
+                .help(viewModel.systemReportButtonTooltip)
                 Button(NSLocalizedString("button.software_update", comment: "Software Update button")) {
                     viewModel.showSoftwareUpdate()
                 }
+                .help(viewModel.softwareUpdateButtonTooltip)
             }
             Spacer()
             Text(NSLocalizedString("credits.text", comment: "Credits text"))
@@ -216,6 +218,8 @@ class OverviewViewModel: ObservableObject {
     let startupDiskTooltip: String
     let serialTooltip: String
     let bootloaderTooltip: String
+    let systemReportButtonTooltip: String
+    let softwareUpdateButtonTooltip: String
 
     private let defaults = UserDefaults.standard
 
@@ -247,6 +251,8 @@ class OverviewViewModel: ObservableObject {
         startupDiskTooltip = t.startupDisktoolTip
         serialTooltip = t.serialToggletoolTip
         bootloaderTooltip = t.blVersiontoolTip
+        systemReportButtonTooltip = t.btSysInfotoolTip
+        softwareUpdateButtonTooltip = t.btSoftUpdtoolTip
 
         reloadLogo()
     }
