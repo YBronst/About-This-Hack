@@ -112,7 +112,7 @@
 "menu.window.zoom" = "Zoom";
 "menu.window.overview" = "Overview";
 "menu.window.displays" = "Displays";
-"menu.window.storage" = "Storage";
+"menu.window.storage" = "System disk";
 "menu.window.audio" = "Audio";
 "menu.window.support" = "Support";
 "menu.window.bring_all_to_front" = "Bring All to Front";

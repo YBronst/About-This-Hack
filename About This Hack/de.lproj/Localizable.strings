@@ -123,7 +123,7 @@
 "menu.window.zoom" = "Zoomen";
 "menu.window.overview" = "Übersicht";
 "menu.window.displays" = "Monitore";
-"menu.window.storage" = "Speicher";
+"menu.window.storage" = "Systemfestplatte";
 "menu.window.audio" = "Audio";
 "menu.window.support" = "Support";
 "menu.window.bring_all_to_front" = "Alle nach vorn bringen";

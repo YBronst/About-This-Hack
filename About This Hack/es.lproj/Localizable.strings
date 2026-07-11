@@ -112,7 +112,7 @@
 "menu.window.zoom" = "Ampliar";
 "menu.window.overview" = "General";
 "menu.window.displays" = "Pantallas";
-"menu.window.storage" = "Almacenamiento";
+"menu.window.storage" = "Disco de sistema";
 "menu.window.audio" = "Audio";
 "menu.window.support" = "Soporte";
 "menu.window.bring_all_to_front" = "Traer Todo al Frente";
