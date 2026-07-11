@@ -1,6 +1,15 @@
 # Releases Changelog
 
-## 4.4.0 (1644) - Jul 10, 2026
+## 4.4.6 (1646) - Jul 12, 2026
+
+**Sandboxed app**
+
+- App is sandboxed
+- Bundled as DMG instead of ZIP to avoid Sparkle updates issues
+- Add Sparkle entitlements
+- Minor localization changes in Storage label
+
+## 4.4.4 (1644) - Jul 10, 2026
 
 **Notarized app**
 
