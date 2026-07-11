@@ -44,6 +44,8 @@
 "settings.logo.success" = "Logo personalizado aplicado correctamente";
 
 /* Pestaña General – etiquetas de especificaciones */
+"cpu.total_cores" = "Número de núcleos: %d";
+"cpu.total_cores_unknown" = "Número de núcleos: Desconocido";
 "spec.processor" = "Procesador";
 "spec.memory" = "Memoria";
 "spec.graphics" = "Gráficos";

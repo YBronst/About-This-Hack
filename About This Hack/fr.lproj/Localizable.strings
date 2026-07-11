@@ -44,6 +44,8 @@
 "settings.logo.success" = "Logo personnalisé appliqué avec succès";
 
 /* Onglet Aperçu – étiquettes de spécifications */
+"cpu.total_cores" = "Total des cœurs : %d";
+"cpu.total_cores_unknown" = "Total des cœurs : Inconnu";
 "spec.processor" = "Processeur";
 "spec.memory" = "Mémoire";
 "spec.graphics" = "Graphiques";

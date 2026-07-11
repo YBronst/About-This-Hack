@@ -97,7 +97,7 @@ AppDelegate.init()
   │     and checks CreateDataFiles.dataFilesCreated in case files are already ready
   └── CreateDataFiles.getInitDataFilesAsync { }
         └── background thread: runs system_profiler / diskutil commands
-              → writes temp files to /private/tmp/.ath/
+              → writes temp files to InitGlobVar.athDirectory (`FileManager.default.temporaryDirectory/.ath`)
               → posts DataFilesCreatedNotification
 
 AppState receives DataFilesCreatedNotification
@@ -151,7 +151,7 @@ All subprocess calls go through `run(_ command: String) -> String` in `Shell.swi
 
 ## Temp Files
 
-Data is collected into `/private/tmp/.ath/` at launch and deleted on termination.
+Data is collected into `InitGlobVar.athDirectory` (`FileManager.default.temporaryDirectory/.ath`) inside the app sandbox temp container and deleted on termination.
 
 | File path constant | Content |
 |---|---|

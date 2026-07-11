@@ -11,12 +11,11 @@ class InitGlobVar {
         (Bundle.main.applicationName ?? "").replacingOccurrences(of: ".app", with: "")
     }
 
-    static var athfilesDirectory = "/.ath"
-    static var tempDirectory = "/private/tmp"
-
-    /// Calculated property for athDirectory
+    /// Sandbox-safe temporary directory: returns the app container's tmp folder
+    /// when sandboxed, or the system /private/tmp directory otherwise.
     static var athDirectory: String {
-        tempDirectory + athfilesDirectory
+        FileManager.default.temporaryDirectory
+            .appendingPathComponent(".ath", isDirectory: true).path
     }
 
     static let defaultfileManager = FileManager.default
@@ -57,3 +56,4 @@ class InitGlobVar {
 
     static var nvramOpencoreVersion = "4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:opencore-version"
 }
+

@@ -44,8 +44,16 @@ class CreateDataFiles {
         }
         lock.unlock()
 
-        _ = run("rm -rf " + InitGlobVar.athDirectory + " 2>/dev/null")
-        _ = run("mkdir " + InitGlobVar.athDirectory + " 2>/dev/null")
+        let fm = FileManager.default
+        let athURL = URL(fileURLWithPath: InitGlobVar.athDirectory, isDirectory: true)
+
+        // Remove any stale directory and recreate it fresh
+        try? fm.removeItem(at: athURL)
+        do {
+            try fm.createDirectory(at: athURL, withIntermediateDirectories: true)
+        } catch {
+            print("Error: could not create temp directory \(athURL.path): \(error)")
+        }
 
         // /* Product phase  - Uncomment for product phase
         // Use DispatchGroup to run all commands in parallel
@@ -58,8 +66,8 @@ class CreateDataFiles {
         let commands = [
             "system_profiler SPHardwareDataType 2>/dev/null > \"\(InitGlobVar.hwFilePath)\"",
             "system_profiler SPMemoryDataType 2>/dev/null | grep -v \"^Memory:$\" > \"\(InitGlobVar.sysmemFilePath)\"",
-            "diskutil info / > \"\(InitGlobVar.bootvolnameFilePath)\"",
-            "diskutil list / > \"\(InitGlobVar.bootvollistFilePath)\"",
+            "diskutil info / 2>/dev/null > \"\(InitGlobVar.bootvolnameFilePath)\"",
+            "diskutil list / 2>/dev/null > \"\(InitGlobVar.bootvollistFilePath)\"",
             "system_profiler SPStorageDataType 2>/dev/null > \"\(InitGlobVar.storagedataFilePath)\"",
         ]
 

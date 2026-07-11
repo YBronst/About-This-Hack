@@ -57,6 +57,7 @@ enum AppSection: String, CaseIterable, Identifiable {
 /// Shared observable state used by both AppDelegate (menu actions) and ContentView (navigation).
 class AppState: ObservableObject {
     static let shared = AppState()
+    private static let hackintoshAudioDrivers: Set<String> = ["AppleALC", "HDAUniversal", "VoodooHDA", "USB", "HDMI", "DisplayPort"]
 
     @Published var selectedSection: AppSection? = .overview
     @Published var isDataLoaded = false
@@ -81,23 +82,36 @@ class AppState: ObservableObject {
     /// Returns true during loading so the audio tab is not prematurely hidden.
     var isHackintosh: Bool {
         guard isDataLoaded else { return true }
-        let bootloader = HCBootloader.shared.getBootloader()
-        if bootloader.hasPrefix("Clover") {
+        let bootloader = HCBootloader.shared.getBootloader().trimmingCharacters(in: .whitespacesAndNewlines)
+        let normalizedBootloader = bootloader.lowercased()
+
+        if normalizedBootloader.hasPrefix("clover") {
             return true
         }
-        if bootloader.hasPrefix("OpenCore") {
+        if normalizedBootloader.hasPrefix("opencore") {
             if FileManager.default.fileExists(atPath: InitGlobVar.oclpXmlFilePath) {
+                let driver = HCAudio.shared.getAudioInfo().driver
                 // OpenCore + OCLP can mean either a real Mac patched for newer macOS
                 // compatibility, or a Hackintosh that uses OCLP for driver patches
                 // (e.g. audio, WiFi on Sonoma).  Treat as Hackintosh when
                 // AppleALC, HDAUniversal, VoodooHDA, USB, HDMI, or DisplayPort audio is detected as the default output.
-                let driver = HCAudio.shared.getAudioInfo().driver
-                return driver == "AppleALC" || driver == "HDAUniversal" || driver == "VoodooHDA" || driver == "USB" || driver == "HDMI" || driver == "DisplayPort"
+                return AppState.hackintoshAudioDrivers.contains(driver)
             }
             return true
         }
+
+        // Fallback for OpenCore systems where bootloader string lookup failed:
+        // Known Hackintosh audio drivers (AppleALC / HDAUniversal / VoodooHDA /
+        // USB / HDMI / DisplayPort) indicate this is not a stock Apple boot path.
+        let driver = HCAudio.shared.getAudioInfo().driver
+        if AppState.hackintoshAudioDrivers.contains(driver) {
+            return true
+        }
+
         // Apple iBoot (Apple Silicon) or Apple UEFI → real Mac
-        AppState.printRealMacOnce()
+        if normalizedBootloader.hasPrefix("apple iboot") || normalizedBootloader.hasPrefix("apple uefi") {
+            AppState.printRealMacOnce()
+        }
         return false
     }
 
@@ -111,7 +125,7 @@ class AppState: ObservableObject {
         guard isDataLoaded else { return true }
         guard isHackintosh else { return false }
         let driver = HCAudio.shared.getAudioInfo().driver
-        return driver == "AppleALC" || driver == "HDAUniversal" || driver == "VoodooHDA" || driver == "USB" || driver == "HDMI" || driver == "DisplayPort"
+        return AppState.hackintoshAudioDrivers.contains(driver)
     }
 
     private let defaults = UserDefaults.standard

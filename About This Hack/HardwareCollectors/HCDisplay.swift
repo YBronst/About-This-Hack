@@ -86,23 +86,60 @@ class HCDisplay {
         line.trimmingCharacters(in: .whitespaces)
     }
 
+    private func extractDimensions(from fieldValue: String) -> String {
+        var value = fieldValue
+            .components(separatedBy: "(").first?
+            .trimmingCharacters(in: .whitespaces) ?? ""
+        if let atRange = value.range(of: #"\s*@\s*[\d.]+ ?Hz"#, options: .regularExpression) {
+            value = String(value[..<atRange.lowerBound]).trimmingCharacters(in: .whitespaces)
+        }
+        return value
+    }
+
     private func getMainDisplayInfo(from lines: [String]) -> String {
         var displayName = "Unknown Display"
         var resolution = "Unknown Resolution"
-        var foundFirstDisplay = false
 
-        for line in lines {
+        guard let firstDisplayIndex = lines.firstIndex(where: { line in
             let trimmed = line.trimmingCharacters(in: .whitespaces)
+            return trimmed.hasSuffix(":") && !trimmed.contains(": ")
+        }) else {
+            return "\(displayName) (\(resolution))"
+        }
 
-            // Display names are indented and end with ":"
-            if trimmed.hasSuffix(":") && !foundFirstDisplay {
-                displayName = String(trimmed.dropLast())
-                foundFirstDisplay = true
-            } else if foundFirstDisplay && trimmed.contains("Resolution:") {
-                resolution = trimmed.components(separatedBy: "Resolution:").last?
-                    .components(separatedBy: "(").first?
-                    .trimmingCharacters(in: .whitespaces) ?? resolution
-                break // We have the first display's info
+        displayName = String(lines[firstDisplayIndex].trimmingCharacters(in: .whitespaces).dropLast())
+
+        for i in (firstDisplayIndex + 1) ..< lines.count {
+            let trimmed = lines[i].trimmingCharacters(in: .whitespaces)
+            if trimmed.hasSuffix(":"), !trimmed.contains("Resolution:") {
+                break
+            }
+            if trimmed.contains("Resolution:"), let resRange = trimmed.range(of: "Resolution:") {
+                let resValue = extractDimensions(from: String(trimmed[resRange.upperBound...]))
+                var scaledResolution: String?
+                let maxResolutionLookAhead = 6 // The "UI Looks like:" field is expected within 6 lines after "Resolution:" in the same display block.
+                for lookAheadIndex in (i + 1) ..< min(i + maxResolutionLookAhead, lines.count) {
+                    let nextTrimmed = lines[lookAheadIndex].trimmingCharacters(in: .whitespaces)
+                    if (nextTrimmed.contains("Resolution:") || nextTrimmed.hasSuffix(":")),
+                       !nextTrimmed.contains("UI Looks like:")
+                    {
+                        break
+                    }
+                    if nextTrimmed.contains("UI Looks like:"),
+                       let uiRange = nextTrimmed.range(of: "UI Looks like:")
+                    {
+                        let uiValue = extractDimensions(from: String(nextTrimmed[uiRange.upperBound...]))
+                        if !uiValue.isEmpty {
+                            scaledResolution = uiValue
+                        }
+                        break
+                    }
+                }
+                let finalResolution = scaledResolution ?? resValue
+                if !finalResolution.isEmpty {
+                    resolution = finalResolution
+                }
+                break
             }
         }
 

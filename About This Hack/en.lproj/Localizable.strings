@@ -44,6 +44,8 @@
 "settings.logo.success" = "Custom logo applied successfully";
 
 /* Overview tab – spec row labels */
+"cpu.total_cores" = "Total Cores: %d";
+"cpu.total_cores_unknown" = "Total Cores: Unknown";
 "spec.processor" = "Processor";
 "spec.memory" = "Memory";
 "spec.graphics" = "Graphics";

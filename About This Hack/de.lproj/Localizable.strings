@@ -46,6 +46,8 @@
 "settings.logo.success" = "Benutzerdefiniertes Logo erfolgreich angewendet";
 
 /* Overview tab – spec row labels */
+"cpu.total_cores" = "Kerne gesamt: %d";
+"cpu.total_cores_unknown" = "Kerne gesamt: Unbekannt";
 "spec.processor" = "Prozessor";
 "spec.memory" = "Speicher";
 "spec.graphics" = "Grafik";

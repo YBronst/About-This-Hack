@@ -4,17 +4,23 @@ class HCCPU {
     static let shared = HCCPU()
     private init() {}
 
-    private lazy var cpuInfo: (brand: String, details: String, coreCount: Int) = {
+    private lazy var cpuInfo: (brand: String, details: String, coreCount: Int, isAppleSilicon: Bool) = {
         let brand = getSysctlValueByKey(inputKey: "machdep.cpu.brand_string")?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "Unknown CPU"
-        let details = getCPUDetails()
-        let coreCount = getCPUCoreCount()
-        return (brand, details, coreCount)
+        let isAppleSilicon = brand.hasPrefix("Apple")
+        let coreCount = isAppleSilicon ? getAppleSiliconCoreCount() : getCPUCoreCount()
+        let details = getCPUDetails(isAppleSilicon: isAppleSilicon, coreCount: coreCount)
+        return (brand, details, coreCount, isAppleSilicon)
     }()
 
     func getCPU() -> String {
         // Use cached core count from cpuInfo instead of calling getCPUCoreCount() again
         let cpuCoreCount = cpuInfo.coreCount
         let modifiedBrand = cpuInfo.brand.replacingOccurrences(of: "(R)", with: "").replacingOccurrences(of: "(TM)", with: "")
+        let hasValidCoreCount = cpuCoreCount > 0
+
+        if cpuInfo.isAppleSilicon, hasValidCoreCount {
+            return "\(modifiedBrand) (\(cpuCoreCount) cores)"
+        }
 
         if cpuCoreCount >= 2 {
             return "\(cpuCoreCount)x \(modifiedBrand)"
@@ -57,7 +63,20 @@ class HCCPU {
         }
     }
 
-    private func getCPUDetails() -> String {
+    private func getAppleSiliconCoreCount() -> Int {
+        var count: UInt32 = 0
+        var size = MemoryLayout<UInt32>.size
+        if sysctlbyname("machdep.cpu.core_count", &count, &size, nil, 0) == 0 {
+            return Int(count)
+        }
+        return getCPUCoreCount()
+    }
+
+    private func getCPUDetails(isAppleSilicon: Bool, coreCount: Int) -> String {
+        if isAppleSilicon {
+            return coreCount > 0 ? String(format: NSLocalizedString("cpu.total_cores", comment: ""), coreCount) : NSLocalizedString("cpu.total_cores_unknown", comment: "")
+        }
+
         guard let content = HardwareCollector.shared.getCachedFileContent(InitGlobVar.hwFilePath) else {
             print("Error: Unable to read CPU details from \(InitGlobVar.hwFilePath)")
             return "Unable to read CPU details"

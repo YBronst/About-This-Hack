@@ -44,6 +44,8 @@
 "settings.logo.success" = "Logo personalizzato applicato con successo";
 
 /* Scheda Panoramica – etichette delle specifiche */
+"cpu.total_cores" = "Totale core: %d";
+"cpu.total_cores_unknown" = "Totale core: Sconosciuto";
 "spec.processor" = "Processore";
 "spec.memory" = "Memoria";
 "spec.graphics" = "Grafica";

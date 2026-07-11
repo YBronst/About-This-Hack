@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
     func applicationWillTerminate(_: Notification) {
         print("Application terminating")
-        _ = run("rm -rf " + InitGlobVar.athDirectory + " 2>/dev/null")
+        try? FileManager.default.removeItem(atPath: InitGlobVar.athDirectory)
     }
 
     func applicationSupportsSecureRestorableState(_: NSApplication) -> Bool {

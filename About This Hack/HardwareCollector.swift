@@ -121,6 +121,12 @@ class HardwareCollector {
         displayNames = getDisplayNames()
         (storageType, storageData, storagePercent) = getStorageInfo()
 
+        // Pre-warm HCSerialNumber on the background thread.  Its lazy var reads
+        // hwFilePath from the cache; doing this here guarantees that the cache is
+        // already populated and that the lazy var is never initialized from the main
+        // thread where a cache miss would silently result in an empty serial number.
+        _ = HCSerialNumber.shared.getSerialNumber()
+
         // Pre-warm HCBootloader lazy vars here on the background thread so that
         // their internal run() calls never execute on the main thread.  Without
         // this pre-warming, the lazy vars are initialized on first access inside
@@ -282,17 +288,19 @@ class HardwareCollector {
     }
 
     private func getStorageInfo() -> (Bool, String, Double) {
-        guard let content = getCachedFileContent(InitGlobVar.bootvolnameFilePath) else {
-            return (false, "Error reading file", 0)
+        var lines: [String] = []
+        var contentStr = ""
+
+        if let content = getCachedFileContent(InitGlobVar.bootvolnameFilePath) {
+            contentStr = content
+            lines = content.components(separatedBy: .newlines)
+            deviceProtocol = lines.first { $0.contains("Protocol:") }?.components(separatedBy: ":").last?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " fabric$", with: "", options: [.regularExpression, .caseInsensitive]) ?? "Unknown"
+            deviceLocation = lines.first { $0.contains("Device Location:") }?.components(separatedBy: ":").last?.trimmingCharacters(in: .whitespaces) ?? "Unknown"
         }
 
-        let lines = content.components(separatedBy: .newlines)
-        deviceProtocol = lines.first { $0.contains("Protocol:") }?.components(separatedBy: ":").last?.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " fabric$", with: "", options: [.regularExpression, .caseInsensitive]) ?? "Unknown"
-        deviceLocation = lines.first { $0.contains("Device Location:") }?.components(separatedBy: ":").last?.trimmingCharacters(in: .whitespaces) ?? "Unknown"
-
-        let isSSd = content.contains("Solid State: Yes")
+        let isSSd = contentStr.contains("Solid State: Yes")
         let (sizeGB, availableGB) = parseStorageSize(lines)
-        let percent = availableGB / sizeGB
+        let percent = sizeGB > 0 ? availableGB / sizeGB : 0.0
         let percentFree = String(format: "%.2f", percent * 100)
 
         let storageInfo = """
@@ -304,13 +312,43 @@ class HardwareCollector {
     }
 
     private func parseStorageSize(_ lines: [String]) -> (Double, Double) {
-        let sizeLine = lines.first { $0.contains("Total Space:") }?.components(separatedBy: ":").last?.trimmingCharacters(in: .whitespaces) ?? "0 B"
-        let availableLine = lines.first { $0.contains("Free Space:") }?.components(separatedBy: ":").last?.trimmingCharacters(in: .whitespaces) ?? "0 B"
+        // On APFS volumes `diskutil info /` reports "Total Space: N/A" and
+        // "Free Space: N/A" before the real "Container Total Space:" and
+        // "Container Free Space:" lines.  Skip any line whose value is "N/A"
+        // so that we fall through to the Container* fields.
+        let sizeLine = lines.first { $0.contains("Total Space:") && !$0.contains("N/A") }?.components(separatedBy: ":").last?.trimmingCharacters(in: .whitespaces) ?? "0 B"
+        let availableLine = lines.first { $0.contains("Free Space:") && !$0.contains("N/A") }?.components(separatedBy: ":").last?.trimmingCharacters(in: .whitespaces) ?? "0 B"
 
         let (size, sizeUnit) = parseSize(sizeLine)
         let (available, availableUnit) = parseSize(availableLine)
 
-        return (convertToGB(size, unit: sizeUnit), convertToGB(available, unit: availableUnit))
+        let sizeGB = convertToGB(size, unit: sizeUnit)
+        let availableGB = convertToGB(available, unit: availableUnit)
+
+        // Fallback: diskutil info / may fail on some Hackintosh configurations
+        // (e.g. outputting "Could not find disk for /") leaving the parsed values
+        // at zero. In that case, use Foundation URL resource values to read
+        // disk capacity directly — this always works regardless of diskutil output.
+        if sizeGB == 0 {
+            return parseStorageSizeFromURL()
+        }
+
+        return (sizeGB, availableGB)
+    }
+
+    private func parseStorageSizeFromURL() -> (Double, Double) {
+        let bytesPerGB: Double = 1_000_000_000
+        let url = URL(fileURLWithPath: "/")
+        guard let values = try? url.resourceValues(forKeys: [.volumeTotalCapacityKey, .volumeAvailableCapacityKey]),
+              let totalBytes = values.volumeTotalCapacity,
+              totalBytes > 0
+        else {
+            return (0, 0)
+        }
+        let availableBytes = values.volumeAvailableCapacity ?? 0
+        let sizeGB = Double(totalBytes) / bytesPerGB
+        let availableGB = Double(availableBytes) / bytesPerGB
+        return (sizeGB, availableGB)
     }
 
     private func parseSize(_ sizeString: String) -> (Double, String) {
