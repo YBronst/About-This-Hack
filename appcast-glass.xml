@@ -17,7 +17,7 @@
                 url="https://github.com/perez987/About-This-Hack/releases/download/4.4.5/About.This.Hack.4.4.5-glass.dmg"
                 length="14460084"
                 sparkle:edSignature="rJewhhyrhR49CjeW8Beh5MM8E0mFHnPhgFzO4Xkqg573vCTuqVUIETjCQj4vhYbVjDPcvX/8HF4X31Ubb3YECg=="
-                type="application/octet-stream
+                type="application/octet-stream"
             />
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
         </item>
