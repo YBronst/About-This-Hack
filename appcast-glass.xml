@@ -14,9 +14,9 @@
             <sparkle:version>1644</sparkle:version>
             <sparkle:shortVersionString>4.4.4</sparkle:shortVersionString>
             <enclosure
-                url="https://github.com/perez987/About-This-Hack/releases/download/4.4.4/About.This.Hack-4.4.4-glass.zip"
-                length="14126692"
-                sparkle:edSignature="Z3Lg8WWYyofhfVnY/0Y03YYeFospE/0w/wYdGYDUA5zImFhsGjIE/68jMnJmgobHIkjH5lDaGMVfjSAuchWbDw=="
+                url="https://github.com/perez987/About-This-Hack/releases/download/4.4.4/About.This.Hack-4.4.4-glass.dmg"
+                length="14457220"
+                sparkle:edSignature="RUiI9Mdx1MOHLHNbQZKVHkgF3sAqqtpoQq5kWGDWONe2nDzw/AqNPVrxSiOPDKnekvxqoezhQmn92GeoT5ASCQ=="
                 type="application/octet-stream"
             />
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
