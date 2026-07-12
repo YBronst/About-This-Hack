@@ -15,8 +15,8 @@
             <sparkle:shortVersionString>4.4.6</sparkle:shortVersionString>
             <enclosure
                 url="https://github.com/perez987/About-This-Hack/releases/download/4.4.6/About.This.Hack.4.4.6.dmg"
-                length="14460246"
-                sparkle:edSignature="yWu+//R4rsOd6SI9aSObqP6rxw9yFxBNB/uY0Ap4mPDP3PNj4r+VeIUSLRPigVTQHVowoPvTJG5jna/RC1MDBQ=="
+                length="14462986"
+                sparkle:edSignature="jqgHEMSUfnKpIlAC3NAma8FbYdysLVZWEGM16qGyO6sJTZietq6VpFxJuyHFZLQn2zqXbsX4iJV6imyjm9WoAA=="
                 type="application/octet-stream"
             />
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
