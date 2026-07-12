@@ -43,6 +43,8 @@
 "settings.logo.error.not_png" = "Bild muss im PNG-Format vorliegen";
 "settings.logo.error.no_rep" = "Bildabmessungen können nicht gelesen werden";
 "settings.logo.error.wrong_size" = "Bild muss 1024x1024 px groß sein (aktuell %dx%d)";
+"settings.logo.error.save_failed" = "Speicherort konnte nicht ermittelt werden";
+"settings.logo.error.copy_failed" = "Logo konnte nicht gespeichert werden: %@";
 "settings.logo.success" = "Benutzerdefiniertes Logo erfolgreich angewendet";
 
 /* Overview tab – spec row labels */

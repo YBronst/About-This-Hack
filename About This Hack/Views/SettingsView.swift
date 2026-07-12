@@ -153,8 +153,31 @@ class SettingsViewModel: ObservableObject {
                 return
             }
 
-            // Save the path
-            self.defaults.set(path, forKey: CustomLogoConstants.customLogoPathKey)
+            // Copy the image into the app's Application Support folder so it
+            // remains accessible after the app restarts within the sandbox.
+            guard let destinationURL = CustomLogoConstants.savedLogoURL else {
+                self.showError(NSLocalizedString("settings.logo.error.save_failed",
+                                                 comment: "Could not determine storage location"))
+                return
+            }
+            do {
+                let fm = FileManager.default
+                // Create the directory if it doesn't exist yet.
+                try fm.createDirectory(at: destinationURL.deletingLastPathComponent(),
+                                       withIntermediateDirectories: true)
+                if fm.fileExists(atPath: destinationURL.path) {
+                    try fm.removeItem(at: destinationURL)
+                }
+                try fm.copyItem(at: URL(fileURLWithPath: path), to: destinationURL)
+            } catch {
+                self.showError(String(format: NSLocalizedString("settings.logo.error.copy_failed",
+                                                                comment: "Could not save logo: %@"),
+                                      error.localizedDescription))
+                return
+            }
+
+            // Save the path to the copy inside the container.
+            self.defaults.set(destinationURL.path, forKey: CustomLogoConstants.customLogoPathKey)
 
             // Update display
             self.logoImage = image
@@ -167,6 +190,12 @@ class SettingsViewModel: ObservableObject {
     }
 
     func resetToDefault() {
+        // Remove the saved copy from the sandbox container.
+        if let savedURL = CustomLogoConstants.savedLogoURL,
+           FileManager.default.fileExists(atPath: savedURL.path)
+        {
+            try? FileManager.default.removeItem(at: savedURL)
+        }
         defaults.removeObject(forKey: CustomLogoConstants.customLogoPathKey)
         loadCustomLogo()
 

@@ -41,6 +41,8 @@
 "settings.logo.error.not_png" = "L'immagine deve essere in formato PNG";
 "settings.logo.error.no_rep" = "Impossibile leggere le dimensioni dell'immagine";
 "settings.logo.error.wrong_size" = "L'immagine deve essere 1024x1024 px (attuale %dx%d)";
+"settings.logo.error.save_failed" = "Impossibile determinare la posizione di archiviazione";
+"settings.logo.error.copy_failed" = "Impossibile salvare il logo: %@";
 "settings.logo.success" = "Logo personalizzato applicato con successo";
 
 /* Scheda Panoramica – etichette delle specifiche */

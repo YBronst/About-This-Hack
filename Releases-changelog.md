@@ -7,6 +7,7 @@
 - App is sandboxed
 - Bundled as DMG instead of ZIP to avoid Sparkle updates issues
 - Add Sparkle entitlements
+- Fix persistence of custom logo
 - Minor localization changes in Storage label
 
 ## 4.4.4 (1644) - Jul 10, 2026

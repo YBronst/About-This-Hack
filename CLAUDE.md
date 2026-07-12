@@ -195,7 +195,8 @@ Assets are in `Assets.xcassets`. Notable image sets:
 ## Settings (Custom Logo)
 
 - The Settings window (`⌘,`) lets users drag-drop a 1024×1024 PNG to replace the macOS badge in Overview.
-- The path is saved to `UserDefaults` under key `"customLogoPath"` (`CustomLogoConstants.customLogoPathKey`).
+- The dropped image is **copied** into the app's Application Support folder (`customLogo.png`) via `CustomLogoConstants.savedLogoURL`, so it persists across app runs within the sandbox. The path to that copy is saved to `UserDefaults` under key `"customLogoPath"` (`CustomLogoConstants.customLogoPathKey`).
+- On reset, the copy is deleted from Application Support and the `UserDefaults` entry is removed.
 - A `Notification.Name.customLogoDidChange` notification is posted when the logo changes; `OverviewViewModel` listens and reloads.
 
 ## Sparkle Auto-Updater
