@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <channel>
-        <title>About This Hack</title>
-        <description>Most recent changes in the latest update</description>
-        <language>en</language>
-        <link> https://github.com/perez987/About-This-Hack</link>
-        <language>en</language>
-        
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel> 
        <item>
-            <title>Version 4.4.7 Glass</title>
+            <title>Version 4.4.6 Glass</title>
             <description></description>
+            <sparkle:version>1646</sparkle:version>
+            <sparkle:shortVersionString>4.4.6</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
-            <sparkle:version>1647</sparkle:version>
-            <sparkle:shortVersionString>4.4.7</sparkle:shortVersionString>
             <enclosure
-                url="https://github.com/perez987/About-This-Hack/releases/download/4.4.7/About.This.Hack-4.4.7-glass.zip"
-                length="14129366"
-                sparkle:edSignature="9cacRQ9WbU1O5zDZgjlnj+A+w+zaIlQ1Hp02F/h5NQnt4Woyt2OMUXbLfQO5W7XOQa9RewGoLs5LVLMAK0AZAA=="
+                url="https://github.com/perez987/About-This-Hack/releases/download/4.4.6/About.This.Hack.4.4.6-glass.dmg"
+                length="14475614"
+                sparkle:edSignature="JlgWv1ieZoEhS4D0Rd3l3gJlP7f9SgJsckD7J99mAo4tysONvkErA1TcA611Es3CAvyGwAdXOJ9Jlk6xK2tKDg=="
                 type="application/octet-stream"
             />
-            <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
         </item>
         
     </channel>
