@@ -1,5 +1,6 @@
 //
 //  UpdateController.swift
+//  About This Hack
 //
 
 import Sparkle

@@ -1,3 +1,8 @@
+//
+//  HCSerialNumber.swift
+//  About This Hack
+//
+
 import Foundation
 
 class HCSerialNumber {

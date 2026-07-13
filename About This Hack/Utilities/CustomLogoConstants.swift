@@ -1,3 +1,8 @@
+//
+//  CustomLogoConstants.swift
+//  About This Hack
+//
+
 import Foundation
 
 // MARK: - Shared Constants

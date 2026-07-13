@@ -1,3 +1,8 @@
+//
+//  HCBootloader.swift
+//  About This Hack
+//
+
 import Foundation
 
 class HCBootloader {

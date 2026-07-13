@@ -1,3 +1,8 @@
+//
+//  AppDelegate.swift
+//  About This Hack
+//
+
 import Cocoa
 import Foundation
 import Sparkle
@@ -80,7 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
         // MARK: transparent window -----------------------------------------
 
-        // Enable translucent liquid-glass style (Tahoe): the SwiftUI content
+        // Enable transparent liquid-glass style (Tahoe): the SwiftUI content
         // supplies material backgrounds (.regularMaterial / .ultraThinMaterial),
         // so the window itself is kept transparent and non-opaque.
 //        window.isOpaque = false

@@ -1,3 +1,8 @@
+//
+//  HCversion.swift
+//  About This Hack
+//
+
 import Foundation
 import Darwin
 

@@ -1,3 +1,8 @@
+//
+//  Tooltips.swift
+//  About This Hack
+//
+
 import Foundation
 
 /// Tooltips class with lazy computed properties to avoid expensive operations at module load time

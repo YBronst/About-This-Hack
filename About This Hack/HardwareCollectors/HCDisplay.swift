@@ -1,3 +1,8 @@
+//
+//  HCDisplay.swift
+//  About This Hack
+//
+
 import Foundation
 
 class HCDisplay {

@@ -1,3 +1,8 @@
+//
+//  HCCPU.swift
+//  About This Hack
+//
+
 import Foundation
 
 class HCCPU {

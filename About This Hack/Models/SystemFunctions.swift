@@ -1,5 +1,6 @@
 //
 //  SystemFunctions.swift
+//  About This Hack
 //
 
 import AppKit

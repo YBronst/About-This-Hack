@@ -1,3 +1,8 @@
+//
+//  HCRAM.swift
+//  About This Hack
+//
+
 import Foundation
 
 class HCRAM {

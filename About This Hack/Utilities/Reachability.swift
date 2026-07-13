@@ -1,3 +1,8 @@
+//
+//  Reachability.swift
+//  About This Hack
+//
+
 import SystemConfiguration
 
 public enum Reachability {

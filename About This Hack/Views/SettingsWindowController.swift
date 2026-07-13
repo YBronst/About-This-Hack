@@ -1,3 +1,8 @@
+//
+//  SettingsViewController.swift
+//  About This Hack
+//
+
 import Cocoa
 import SwiftUI
 
@@ -28,7 +33,7 @@ class SettingsWindowController: NSWindowController {
 
         // TRANSPARENT WINDOW ------------------------
 
-        // Enable translucent liquid-glass style (Tahoe): the SwiftUI content
+        // Enable transparent liquid-glass style (Tahoe): the SwiftUI content
         // supplies a material background (.regularMaterial), so the window
         // itself is kept transparent and non-opaque.
 //        window.isOpaque = false
