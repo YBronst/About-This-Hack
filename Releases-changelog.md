@@ -1,5 +1,11 @@
 # Releases Changelog
 
+## 4.4.7 (1647) - Jul 13, 2026
+
+**Improve startup disk detection**
+
+- Improve startup disk data detection on Ventura, thanks to [maxpicelli](https://github.com/maxpicelli)
+
 ## 4.4.6 (1646) - Jul 12, 2026
 
 **Sandboxed app**
