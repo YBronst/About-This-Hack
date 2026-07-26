@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
     <channel> 
        <item>
-            <title>Version 4.4.7 Glass</title>
+            <title>Version 4.4.8 Glass</title>
             <description></description>
-            <sparkle:version>1647</sparkle:version>
-            <sparkle:shortVersionString>4.4.7</sparkle:shortVersionString>
+            <sparkle:version>1648</sparkle:version>
+            <sparkle:shortVersionString>4.4.8</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
             <enclosure
-                url="https://github.com/perez987/About-This-Hack/releases/download/4.4.7/About.This.Hack.4.4.7-glass.dmg"
-                length="14465695"
-                sparkle:edSignature="8BCB6UdTw8mVJwcMqySjnBfs8WWclRTQD3szdKxSGfbwxyuhVWWs7/VTLzrPn4YB0V2ESvCcg2d5nHA0+GEcBA=="
+                url="https://github.com/perez987/About-This-Hack/releases/download/4.4.8/About.This.Hack.4.4.8-glass.dmg"
+                length="14145453"
+                sparkle:edSignature="89xABFT0HwIsy5BKZK9e/FlaCPdYK0PUqwfFe+Kp0aOnJ0AjS2AW0R8hw1SaaA/X2ts70m3hJ4pRouLKVpnzBg=="
                 type="application/octet-stream"
             />
         </item>
