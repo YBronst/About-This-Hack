@@ -57,6 +57,7 @@ class HCMacModel {
         "iMac4,2": "iMac 17-Inch \"Core Duo\" 1.83",
         "iMac5,1": "iMac 17-Inch \"Core 2 Duo\" 2.0",
         "iMac5,2": "iMac 17-Inch \"Core 2 Duo\" 1.83",
+        "iMac6,1": "iMac (24-inch, Late 2006)",
         "iMac7,1": "iMac 17-Inch \"Core 2 Duo\" 2.0",
         "iMac8,1": "iMac (Early 2008)",
         "iMac9,1": "iMac (Mid 2009)",
@@ -64,6 +65,7 @@ class HCMacModel {
         "iMac11,2": "iMac (21.5-Inch, Mid 2010)",
         "iMac12,1": "iMac (21.5-Inch, Mid 2011)",
         "iMac13,1": "iMac (21.5-Inch, Mid 2012/Early 2013)",
+        "iMac13,3": "iMac (21.5-inch, Early 2013)",
         "iMac14,1": "iMac (21.5-Inch, Late 2013)",
         "iMac14,3": "iMac (21.5-Inch, Late 2013)",
         "iMac14,4": "iMac (21.5-Inch, Mid 2014)",
@@ -90,14 +92,17 @@ class HCMacModel {
         "Mac15,5": "iMac (24-inch, M3, 2023)",
         "Mac16,2": "iMac (24-inch, M4, 2024)", // two ports
         "Mac16,3": "iMac (24-inch, M4, 2024)", // four ports
-
+        
         // iMac Pros
         "iMacPro1,1": "iMac Pro (2017)",
-
+        
         // Developer Transition Kits
+        "ADP2,1": "Apple Development Platform",
         "ADP3,2": "Developer Transition Kit (ARM)",
-
+        
         // Mac Minis
+        "Macmini1,1": "Mac Mini (Early 2006)",
+        "Macmini2,1": "Mac Mini (Late 2006)",
         "Macmini3,1": "Mac Mini (Early 2009)",
         "Macmini4,1": "Mac Mini (Mid 2010)",
         "Macmini5,1": "Mac Mini (Mid 2011)",
@@ -110,17 +115,20 @@ class HCMacModel {
         "Macmini9,1": "Mac Mini (M1, 2020)",
         "Mac14,3": "Mac Mini (M2, 2023)",
         "Mac14,12": "Mac Mini (M2 Pro, 2023)",
-        "Mac16,10": "Mac Mini (2024)", // not sure which ones m4 vs pro
-        "Mac16,11": "Mac Mini (2024)",
-
+        "Mac16,10": "Mac Mini (M4, 2024)",
+        "Mac16,11": "Mac Mini (M4 Pro, 2024)",
+        
         // Mac Pros
+        "MacPro1,1": "Mac Pro (2006)",
+        "MacPro1,1,Quad": "Mac Pro (2006)",
+        "MacPro2,1": "Mac Pro (2007)",
         "MacPro3,1": "Mac Pro (2008)",
         "MacPro4,1": "Mac Pro (2009)",
         "MacPro5,1": "Mac Pro (2010-2012)",
         "MacPro6,1": "Mac Pro (Late 2013)",
         "MacPro7,1": "Mac Pro (2019)",
         "Mac14,8": "Mac Pro (2023)",
-
+        
         // Mac Studios
         "Mac13,1": "Mac Studio (M1 Max, 2022)",
         "Mac13,2": "Mac Studio (M1 Ultra, 2022)",
@@ -128,8 +136,12 @@ class HCMacModel {
         "Mac14,14": "Mac Studio (M2 Ultra, 2023)",
         "Mac15,14": "Mac Studio (M3 Ultra, 2025)",
         "Mac16,9": "Mac Studio (M4 Max, 2025)",
-
+        
         // MacBooks
+        "MacBook1,1": "MacBook (Early 2006)",
+        "MacBook2,1": "MacBook (Late 2006)",
+        "MacBook3,1": "MacBook (Late 2007)",
+        "MacBook4,1": "MacBook (Early 2008)",
         "MacBook5,1": "MacBook",
         "MacBook5,2": "MacBook (2009)",
         "MacBook6,1": "MacBook (Late 2009)",
@@ -137,7 +149,7 @@ class HCMacModel {
         "MacBook8,1": "MacBook (Early 2015)",
         "MacBook9,1": "MacBook (Early 2016)",
         "MacBook10,1": "MacBook (Mid 2017)",
-
+        
         // MacBook Airs
         "MacBookAir1,1": "MacBook Air (2008)",
         "MacBookAir2,1": "MacBook Air (Mid 2009)",
@@ -161,7 +173,21 @@ class HCMacModel {
         "Mac15,13": "MacBook Air (15-inch, M3, 2024)",
         "Mac16,12": "MacBook Air (13-inch, M4, 2025)",
         "Mac16,13": "MacBook Air (15-inch, M4, 2025)",
-
+        "Mac17,3": "MacBook Air (13-inch, M5, 2026)",
+        "Mac17,4": "MacBook Air (15-inch, M5, 2026)",
+        
+        // Legacy MacBook Pros
+        "MacBookPro1,1": "MacBook Pro (15-inch, Early 2006)",
+        "MacBookPro1,2": "MacBook Pro (17-inch, Late 2006)",
+        "MacBookPro2,1": "MacBook Pro (17-inch, Late 2006)",
+        "MacBookPro2,2": "MacBook Pro (15-inch, Late 2006)",
+        "MacBookPro3,1": "MacBook Pro (Late 2007)",
+        "MacBookPro5,1": "MacBook Pro (15-inch, Late 2008)",
+        "MacBookPro5,2": "MacBook Pro (17-inch, Early/Mid 2009)",
+        "MacBookPro5,3": "MacBook Pro (15-inch, Mid 2009)",
+        "MacBookPro5,4": "MacBook Pro (15-inch, Mid 2009)",
+        "MacBookPro6,1": "MacBook Pro (17-inch, Mid 2010)",
+        
         // MacBook Pros
         // 13-inch
         "MacBookPro5,5": "MacBook Pro (13-inch, 2009)",
@@ -181,7 +207,6 @@ class HCMacModel {
         "MacBookPro16,3": "MacBook Pro (Retina, 13-inch, Mid 2020)",
         "MacBookPro17,1": "MacBook Pro (13-inch, M1, 2020)",
         "Mac14,7": "MacBook Pro (13-inch, M2, 2022)",
-
         // 14-inch
         "MacBookPro18,3": "MacBook Pro (14-inch, 2021)",
         "MacBookPro18,4": "MacBook Pro (14-inch, 2021)",
@@ -194,7 +219,9 @@ class HCMacModel {
         "Mac16,1": "MacBook Pro (14-inch, Nov 2024)", // M4
         "Mac16,6": "MacBook Pro (14-inch, Nov 2024)", // M4 Pro/Max
         "Mac16,8": "MacBook Pro (14-inch, Nov 2024)", // M4 Pro/Max
-
+        "Mac17,2": "MacBook Pro (14-inch, M5, 2025)",
+        "Mac17,7": "MacBook Pro (14-inch, M5 Max, 2026)",
+         "Mac17,9": "MacBook Pro (14-inch, M5 Pro, 2026)",
         // 15-inch
         "MacBookPro4,1": "MacBook Pro (15/17-inch, 2008)",
         "MacBookPro6,2": "MacBook Pro (15-inch, Mid 2010)",
@@ -209,7 +236,6 @@ class HCMacModel {
         "MacBookPro14,3": "MacBook Pro (Retina, 15-inch, Late 2017)",
         "MacBookPro15,1": "MacBook Pro (Retina, 15-inch, 2018/2019)",
         "MacBookPro15,3": "MacBook Pro (Retina, 15-inch, 2018/2019)",
-
         // 16-inch
         "MacBookPro16,1": "MacBook Pro (Retina, 16-inch, Mid 2019)",
         "MacBookPro16,4": "MacBook Pro (Retina, 16-inch, Mid 2019)",
@@ -222,10 +248,12 @@ class HCMacModel {
         "Mac15,11": "MacBook Pro (16-inch, M3 Max, Late 2023)",
         "Mac16,5": "MacBook Pro (16-inch, Nov 2024)",
         "Mac16,7": "MacBook Pro (16-inch, Nov 2024)",
-
+        "Mac17,6": "MacBook Pro (16-inch, M5 Max, 2026)",
+        "Mac17,8": "MacBook Pro (16-inch, M5 Pro, 2026)",
         // 17-inch
         "MacBookPro8,3": "MacBook Pro (17-inch, Late 2011)",
-
+        
+        // Unknown
         // In the rare case that the Mac model is not found
         "Unknown": "Mac (UNKNOWN)",
         "Mac": "Mac",
