@@ -87,12 +87,9 @@ class HCCPU {
             return "Unable to read CPU details"
         }
         
-        // Intel reports "Processor Name:"; Apple Silicon reports "Chip:".
-
         return content.components(separatedBy: .newlines)
-            .drop { line in
-                !line.contains("Processor Name:") && !line.contains("Chip:")
-            }            .prefix { !$0.contains("Memory:") }
+            .drop { !$0.contains("Processor Name:") }
+            .prefix { !$0.contains("Memory:") }
             .joined(separator: "\n")
     }
 }
