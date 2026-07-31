@@ -2,9 +2,11 @@
 
 ## 4.4.8 (1648) - Jul 31, 2026
 
-**Revert sandboxed app**
+**Fix OpenCore info**
 
-- App is not sandboxed, to fix an issue with the bootloader name in the Overview tab
+- Fix an issue with the bootloader name in the Overview tab:
+   - Improve OpenCore detection reliability
+   - Revert app sandbox
 
 ## 4.4.7 (1647) - Jul 13, 2026
 

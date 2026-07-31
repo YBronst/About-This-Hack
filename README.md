@@ -116,17 +116,7 @@ The custom logo image is saved in the path `~/Library/Application Support/com.0x
 1. Download the latest release [here](https://github.com/perez987/About-This-Hack/releases/latest)
 2. Drag the app to your Applications folder
 3. Launch and explore!
-4. If you get this warning when opening the app for the first time:
-<br>`The application is damaged and cannot be opened.`<br>
-Or this one:
-<br>`Could not verify that Download Full Installer does not contain malicious software.`<br>
-With the recommendation in both cases to move the file to the Trash:
-
-   - Go to `System Preferences` → `Security & Privacy`
-   - You'll see a notice saying "About This Hack app is blocked"
-   - Click "Open Anyway".
-
-> 📍More info: You can read about ways to fix Gatekeeper blocking an app in [App is damaged](DOCS/App-damaged.md).
+4. The app is certified by Apple, in the first run you only see the notification that the app was downloaded from the internet. 
 
 ## Compatibility
 
