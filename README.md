@@ -32,7 +32,7 @@ Some will like it, some won't, and many others would have done it differently (p
 - Replace the custom updater system by Sparkle
 - Main version has opaque windows, but there is a version with translucent windows (`About This Hack-glass`)
 - Add audio tab with audio information (work in progress)
-- App is sandboxed and certified by Apple.
+- App is certified by Apple.
 
 You can read about the migration process in [AppKit-XIB to SwiftUI](DOCS/AppKit-XIB-to-SwiftUI.md).
 
@@ -106,6 +106,8 @@ Want to personalize your About This Hack? You can now replace the macOS logo in 
 2. Drag and drop your custom PNG image (must be 1024x1024 pixels)
 3. Your custom logo will instantly appear in the Overview tab
 4. Click "Reset to Default" anytime to restore the original macOS logo
+
+The custom logo image is saved in the path `~/Library/Application Support/com.0xCUBE.About-This-Hack/customLogo.png`.
 
 **Note:** The image must be in PNG format and exactly 1024x1024 pixels in size.
 
