@@ -26,7 +26,7 @@
 
 **Notarized app**
 
-- The app is now notarized, no more needing of `xattr` or any other Gatekeeper impediment but opening a file downloaded from Internet warning
+- The app is now notarized by Apple, no more needing Gatekeeper issues
 
 ## 4.4.0 (1640) - Jul 8, 2026
 
