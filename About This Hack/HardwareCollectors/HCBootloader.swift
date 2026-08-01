@@ -239,7 +239,7 @@ class HCBootloader {
             bootargs = run("\(InitGlobVar.bdmesgExecID) 2>/dev/null | grep ' boot-args=' | tail -1 | awk -F ' boot-args=' '{print $NF}' | tr -d '\n'")
         }
 
-        return bootargs.isEmpty ? "Empty/Unknown" : bootargs
+        return bootargs.isEmpty ? "⎯" : bootargs
     }()
 
     func getBootloader() -> String {
