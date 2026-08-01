@@ -203,7 +203,7 @@ class HCBootloader {
     ///
     /// Detection hierarchy:
     ///  1. Direct IOKit service match: `IOServiceGetMatchingService` for "VirtualSMC"
-    ///  2. Shell fallback: `ioreg -c VirtualSMC` (same non-NVRAM IOKit path, sandboxed subprocess)
+    ///  2. Shell fallback: `ioreg -p IOService -n VirtualSMC -r` (same non-NVRAM IOKit path, sandboxed subprocess)
     ///
     /// Real Macs use AppleSMC; Clover-based Hackintoshes use FakeSMC; OpenCore uses VirtualSMC.
     private func detectOpenCoreViaVirtualSMC() -> Bool {
@@ -214,11 +214,12 @@ class HCBootloader {
             return true
         }
 
-        // Fallback: ioreg subprocess — same IOKit path, but avoids any potential
-        // in-process IOKit API restriction under sandbox. Mirroring how HCAudio
-        // uses `ioreg -c IOHDACodecDevice`, which works under sandbox.
-        let ioregsOutput = run("ioreg -c VirtualSMC -w 0 2>/dev/null")
-        if !ioregsOutput.isEmpty {
+        // Fallback: ioreg subprocess restricted to an actual IOService node named
+         // VirtualSMC. `ioreg -c VirtualSMC` can return class metadata on real Macs
+         // and produce false positives; `-p IOService -n VirtualSMC -r` only returns
+         // a concrete service instance.
+         let ioregsOutput = run("ioreg -p IOService -n VirtualSMC -r -d 1 2>/dev/null")
+         if ioregsOutput.contains("\"VirtualSMC\"") {
             return true
         }
 
