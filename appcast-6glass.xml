@@ -9,9 +9,9 @@
             <sparkle:minimumSystemVersion>15.6</sparkle:minimumSystemVersion>
             <pubDate>Sat, 28 Mar 2026 21:24:31 +0000</pubDate>
             <enclosure
-                url="https://github.com/perez987/About-This-Hack/releases/download/5.0.0/About.This.Hack.5.0.0.dmg"
-                length="14527367"
-                sparkle:edSignature="FL8tIGpcyqCeVQvteyGzOirmKiaOXftl3gkzmeC6RyI+OCW8xgPh+9RL3CX9p4fLXTWOQH6y6AEbBRnopuqRDQ=="
+                url="https://github.com/perez987/About-This-Hack/releases/download/5.0.0/About.This.Hack.5.0.0-glass.dmg"
+                length="14524986"
+                sparkle:edSignature="i9V+WkpdUa9v17NbAqrrIQ0ric4G81gKcAvash1R4GkJ/l5VsxjLkVK/K8/59cKiea7aAZ15XIp5y900upwqCA=="
                 type="application/octet-stream"
             />
         </item>
