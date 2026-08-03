@@ -81,7 +81,7 @@ private struct DisplayCard: View {
                 .frame(maxWidth: 120)
             Text(info.resolution)
                 .font(.system(size: 11))
-                .foregroundColor(.secondary)
+                .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .frame(maxWidth: 120)
@@ -94,6 +94,10 @@ private struct DisplayCard: View {
                     .frame(maxWidth: 120)
             }
         }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14))
+        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 3)
     }
 }
 

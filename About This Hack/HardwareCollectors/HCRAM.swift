@@ -6,7 +6,7 @@
 import Foundation
 
 class HCRAM {
-    static let shared = HCRAM()
+    nonisolated(unsafe) static let shared = HCRAM()
     private init() {}
 
     /// Shared parsed memory lines for efficiency

@@ -13,6 +13,12 @@ import SwiftUI
 struct StorageView: View {
     private let info = StorageViewModel()
 
+    private var tintColor: Color {
+        if info.storagePercent >= 0.9 { return .red }
+        if info.storagePercent >= 0.75 { return .orange }
+        return .accentColor
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
@@ -21,6 +27,7 @@ struct StorageView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 120, height: 120)
+                    .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
                     .help(info.diskImageTooltip)
 
                 Text(info.storageData)
@@ -28,10 +35,21 @@ struct StorageView: View {
                     .multilineTextAlignment(.center)
                     .help(info.storageValueTooltip)
 
-                ProgressView(value: info.storagePercent, total: 1.0)
-                    .progressViewStyle(.linear)
+                VStack(spacing: 4) {
+                    ProgressView(value: info.storagePercent, total: 1.0)
+                        .progressViewStyle(.linear)
+                        .tint(tintColor)
+                        .frame(maxWidth: 260)
+                        .help(info.storageValueTooltip)
+                    HStack {
+                        Spacer()
+                        Text(String(format: "%.0f%%", min(info.storagePercent * 100, 100)))
+                            .font(.system(size: 14, weight: .regular))
+//                            .foregroundColor(tintColor)
+                            .foregroundColor(.primary)
+                    }
                     .frame(maxWidth: 260)
-                    .help(info.storageValueTooltip)
+                }
             }
             .padding(.horizontal, 24)
             Spacer()

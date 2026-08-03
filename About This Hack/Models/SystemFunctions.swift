@@ -7,10 +7,10 @@ import AppKit
 import Cocoa
 import Darwin
 
-var thisApplicationVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+nonisolated(unsafe) var thisApplicationVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
 
 /// Define RTLD_DEFAULT for symbol lookup
-let RTLD_DEFAULT = UnsafeMutableRawPointer(bitPattern: -2)
+nonisolated(unsafe) let RTLD_DEFAULT = UnsafeMutableRawPointer(bitPattern: -2)
 
 func initPortDefault() -> mach_port_t {
     if #available(macOS 12.0, *) {
@@ -29,7 +29,8 @@ func getSysctlValueByKey(inputKey sysctlKey: String) -> String? {
     sysctlbyname(sysctlKey, nil, &oNbrBytes, nil, 0)
     var sysctlValue = [CChar](repeating: 0, count: Int(oNbrBytes))
     sysctlbyname(sysctlKey, &sysctlValue, &oNbrBytes, nil, 0)
-    return String(validatingUTF8: sysctlValue) ?? "unknown"
+    let trimmed = sysctlValue.prefix(while: { $0 != 0 }).map(UInt8.init)
+    return String(validating: trimmed, as: UTF8.self) ?? "unknown"
 }
 
 extension Bundle {

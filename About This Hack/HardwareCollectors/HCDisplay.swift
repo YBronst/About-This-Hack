@@ -5,7 +5,7 @@
 
 import Foundation
 
-class HCDisplay {
+final class HCDisplay: @unchecked Sendable {
     static let shared = HCDisplay()
     private init() {}
 

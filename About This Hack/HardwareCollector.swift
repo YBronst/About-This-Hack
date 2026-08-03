@@ -7,7 +7,7 @@ import AppKit
 import Foundation
 
 class HardwareCollector {
-    static let shared = HardwareCollector()
+    nonisolated(unsafe) static let shared = HardwareCollector()
     private init() {}
 
     // File content cache

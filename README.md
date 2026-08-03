@@ -1,8 +1,8 @@
 # About This Hack: Your Mac's Story, Beautifully Told, now in SwiftUI
 
-![Platform](https://img.shields.io/badge/macOS-13.5+-orange.svg)
-![Swift](https://img.shields.io/badge/Swift-5+-blue.svg)
-![Xcode](https://img.shields.io/badge/Xcode-15-lavender.svg)
+![Platform](https://img.shields.io/badge/macOS-15-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-6-blue.svg)
+![Xcode](https://img.shields.io/badge/Xcode-26-lavender.svg)
 <!-- ![GitHub Downloads](https://img.shields.io/github/downloads/perez987/About-This-Hack/total?style=flat&label=Downloads&color=green) -->
 
 | |
@@ -20,9 +20,9 @@ Some will like it, some won't, and many others would have done it differently (p
 **Main changes**
 
 - Migrate main UI from AppKit-XIB to SwiftUI keeping app functionality
-- Minimum target is macOS 13.5+
-- App bundle size has been reduced from 29 to 11 MB
-- Unchanged SwiftUI Settings window (custom logo)
+- Migrate from Swift 5 to Swift 6 (WIP)
+- Minimum target is macOS 15+
+- App bundle size has been reduced from 29 to 14 MB
 - Replace ATHLogger with print statements (error/warning prints where failures are meaningful for debugging)
 - Replace macOS version icons with liquid glass badges
 - Add language menu and language selector window (en, es, fr, it)
@@ -78,11 +78,10 @@ The Audio tab is displayed in these situations:
 - USB audio
 - HDMI or DisplayPort audio.
 
-| | |
-| --- | --- |
-| ![Overview](Images/Audio-applealc.png) | ![Overview](Images/Audio-usb.png) |
-| ![Overview](Images/Audio-hdmi.png) | ![Overview](Images/Audio-voodoohda.png) |
-| ![Overview](Images/Audio-hdauniversal.png) | ![Overview](Images/Audio-dp.png) |
+| |
+| --- |
+| ![Overview](Images/Audio.png) | 
+
 
 **Note**: `getdump` is a tool available in the VoodooHDA repository. The download link is usually found in the resources section of each VoodooHDA release. The latest version is available at this [link](https://github.com/CloverHackyColor/VoodooHDA/releases/download/Release312/getdump.zip). VoodooHDA users must have `getdump` installed to get the audio tab. Simply copy the tool to `/usr/local/bin` and that's all.
 
@@ -111,6 +110,18 @@ The custom logo image is saved in the path `~/Library/Application Support/com.0x
 
 **Note:** The image must be in PNG format and exactly 1024x1024 pixels in size.
 
+| |
+| --- |
+| ![Overview](Images/Custom-logo.png) | 
+
+## Loading indicator
+
+The spinning loading indicator now has its own transparent window.
+
+| |
+| --- |
+| ![Overview](Images/Loading.png) | 
+
 ## Getting Started
 
 1. Download the latest release [here](https://github.com/perez987/About-This-Hack/releases/latest)
@@ -120,7 +131,7 @@ The custom logo image is saved in the path `~/Library/Application Support/com.0x
 
 ## Compatibility
 
-- Supports macOS 13.5 Ventura and newer
+- Supports macOS 15 Sequoia and newer
 - Not compatible with Linux or Windows.
 
 ## Credits

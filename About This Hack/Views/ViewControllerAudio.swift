@@ -21,6 +21,7 @@ struct AudioView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 120, height: 120)
+                    .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
                     .padding(.bottom, 28)
 
                 if viewModel.hasData {

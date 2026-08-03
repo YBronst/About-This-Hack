@@ -7,7 +7,7 @@ import Foundation
 import Darwin
 
 class HCVersion {
-    static let shared = HCVersion()
+    nonisolated(unsafe) static let shared = HCVersion()
     private init() {}
 
     var osNumber: String = ""
@@ -85,7 +85,8 @@ class HCVersion {
         sysctlbyname("kern.version", nil, &size, nil, 0)
         var kernel = [CChar](repeating: 0, count: size)
         sysctlbyname("kern.version", &kernel, &size, nil, 0)
-        return String(cString: kernel)
+        let trimmed = kernel.prefix(while: { $0 != 0 }).map(UInt8.init)
+        return String(decoding: trimmed, as: UTF8.self)
     }
 
     private func getSIPInfo() -> String {

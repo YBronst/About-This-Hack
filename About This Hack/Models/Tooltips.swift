@@ -7,9 +7,12 @@ import Foundation
 
 /// Tooltips class with lazy computed properties to avoid expensive operations at module load time
 /// All properties are computed on-demand and thread-safe
-class Tooltips {
+final class Tooltips: @unchecked Sendable {
     static let shared = Tooltips()
     private init() {}
+
+    private var _macModeltoolTip: String?
+    private let macModelTooltipLock = NSLock()
 
     var osVersiontoolTip: String {
         HCVersion.shared.getOSBuildInfo()
@@ -19,13 +22,18 @@ class Tooltips {
         osVersiontoolTip
     }
 
-    private lazy var _macModeltoolTip: String = {
-        let pciData = run("system_profiler SPPCIDataType 2>/dev/null | grep \":$\" | sed 's/://g'")
-        return HCMacModel.shared.macName + " - " + HCMacModel.shared.getModelIdentifier() + "\n" + pciData
-    }()
-
     var macModeltoolTip: String {
-        _macModeltoolTip
+        macModelTooltipLock.lock()
+        defer { macModelTooltipLock.unlock() }
+
+        if let cached = _macModeltoolTip {
+            return cached
+        }
+
+        let pciData = run("system_profiler SPPCIDataType 2>/dev/null | grep \":$\" | sed 's/://g'")
+        let computed = HCMacModel.shared.macName + " - " + HCMacModel.shared.getModelIdentifier() + "\n" + pciData
+        _macModeltoolTip = computed
+        return computed
     }
 
     var cputoolTip: String {

@@ -6,7 +6,7 @@
 import Foundation
 
 class HCMacModel {
-    static let shared = HCMacModel()
+    nonisolated(unsafe) static let shared = HCMacModel()
     private init() {}
 
     private(set) var macName: String = "Hackintosh Extreme Plus"

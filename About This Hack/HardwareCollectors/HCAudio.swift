@@ -24,7 +24,7 @@ struct AudioInfo {
 
 // MARK: - HCAudio Collector
 
-class HCAudio {
+final class HCAudio: @unchecked Sendable {
     static let shared = HCAudio()
     private init() {}
 

@@ -1,5 +1,14 @@
 # Releases Changelog
 
+## 5.0.0 (1650) - Aug 2, 2026
+
+**Migrate to Swift 6 (WIP)**
+
+- Major update: migration to Swift 6 → fix errors and warnings, UI enhancements, more robust logic
+- Higher minimum requirements:
+   - macOS 15 Sequoia
+   - Xcode supporting Swift 6
+
 ## 4.4.8 (1648) - Jul 31, 2026
 
 **Fix OpenCore info**

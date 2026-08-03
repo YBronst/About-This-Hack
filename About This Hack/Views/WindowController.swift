@@ -56,7 +56,7 @@ enum AppSection: String, CaseIterable, Identifiable {
 
 /// Shared observable state used by both AppDelegate (menu actions) and ContentView (navigation).
 class AppState: ObservableObject {
-    static let shared = AppState()
+    nonisolated(unsafe) static let shared = AppState()
     private static let hackintoshAudioDrivers: Set<String> = ["AppleALC", "HDAUniversal", "VoodooHDA", "USB", "HDMI", "DisplayPort"]
 
     @Published var selectedSection: AppSection? = .overview
@@ -71,7 +71,7 @@ class AppState: ObservableObject {
         return !info.vendorName.isEmpty || !info.codecName.isEmpty || !info.layoutId.isEmpty
     }
 
-    private static var didPrintRealMac = false
+    nonisolated(unsafe) private static var didPrintRealMac = false
     private static func printRealMacOnce() {
         guard !didPrintRealMac else { return }
         didPrintRealMac = true
@@ -138,8 +138,8 @@ class AppState: ObservableObject {
             forName: CreateDataFiles.dataFilesCreatedNotification,
             object: nil,
             queue: nil
-        ) { [weak self] _ in
-            self?.loadDataAsync()
+        ) { _ in
+            AppState.shared.loadDataAsync()
         }
         // Data files might already be ready if the app was restarted.
         if CreateDataFiles.dataFilesCreated {
@@ -148,7 +148,7 @@ class AppState: ObservableObject {
     }
 
     private func loadDataAsync() {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+        DispatchQueue.global(qos: .userInitiated).async {
             HardwareCollector.shared.getAllData()
             // Pre-warm Tooltips._macModeltoolTip on the background thread.
             // It runs `system_profiler SPPCIDataType` via run(), which would
@@ -158,7 +158,7 @@ class AppState: ObservableObject {
             // trigger a "setting value during update" AttributeGraph assertion.
             _ = Tooltips.shared.macModeltoolTip
             DispatchQueue.main.async {
-                self?.isDataLoaded = true
+                AppState.shared.isDataLoaded = true
             }
         }
     }

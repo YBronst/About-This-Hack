@@ -40,4 +40,3 @@ Custom logo path persists in UserDefaults. Overview tab updates via notification
 ## Default logo screenshots
 
 ![Default logo](../Images/Default-logo.png)
-

@@ -52,6 +52,7 @@ struct OverviewView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 96, height: 96)
                 .cornerRadius(12)
+                .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
 
             VStack(alignment: .leading, spacing: 5) {
                 Text(viewModel.osFullName)
@@ -115,14 +116,16 @@ struct OverviewView: View {
 
     private var footerSection: some View {
         HStack(spacing: 10) {
-            VStack(spacing: 10) {
+            VStack(spacing: 8) {
                 Button(NSLocalizedString("button.system_report", comment: "System Report button")) {
                     viewModel.showSystemReport()
                 }
+                .buttonStyle(.bordered)
                 .help(viewModel.systemReportButtonTooltip)
                 Button(NSLocalizedString("button.software_update", comment: "Software Update button")) {
                     viewModel.showSoftwareUpdate()
                 }
+                .buttonStyle(.bordered)
                 .help(viewModel.softwareUpdateButtonTooltip)
             }
             Spacer()

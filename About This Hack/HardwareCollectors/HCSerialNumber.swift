@@ -6,7 +6,7 @@
 import Foundation
 
 class HCSerialNumber {
-    static let shared = HCSerialNumber()
+    nonisolated(unsafe) static let shared = HCSerialNumber()
     private init() {}
 
     private lazy var HardwareInfo: (serialNumber: String, details: String) = {

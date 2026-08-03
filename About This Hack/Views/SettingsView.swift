@@ -58,7 +58,7 @@ struct SettingsView: View {
                 viewModel.resetToDefault()
             } label: {
                 Text(NSLocalizedString("settings.logo.reset", comment: "Reset to Default"))
-                    .font(.system(size: 12))
+                    .font(.system(size: 12, weight: .semibold))
             }
             .padding(.top, 8)
             .padding(.bottom, 10)
@@ -72,6 +72,7 @@ struct SettingsView: View {
 }
 
 /// ViewModel for SettingsView
+@MainActor
 class SettingsViewModel: ObservableObject {
     @Published var logoImage: NSImage = .init()
     @Published var statusMessage: String = ""
@@ -95,12 +96,12 @@ class SettingsViewModel: ObservableObject {
         {
             logoImage = image
             statusMessage = NSLocalizedString("settings.logo.custom_active", comment: "Custom logo active")
-            statusColor = .green
+            statusColor = .secondary
         } else {
             // Show default OS logo
             logoImage = NSImage(named: HCVersion.shared.getOSImageName()) ?? NSImage()
             statusMessage = NSLocalizedString("settings.logo.default_active", comment: "Default logo active")
-            statusColor = .gray
+            statusColor = .secondary
         }
     }
 
@@ -108,85 +109,83 @@ class SettingsViewModel: ObservableObject {
         guard let provider = providers.first else { return }
 
         provider.loadItem(forTypeIdentifier: "public.file-url", options: nil) { [weak self] urlData, _ in
-            guard let self = self,
-                  let urlData = urlData as? Data,
+            guard let urlData = urlData as? Data,
                   let url = URL(dataRepresentation: urlData, relativeTo: nil)
             else {
-                DispatchQueue.main.async {
+                Task { @MainActor [weak self] in
                     self?.isDragging = false
                 }
                 return
             }
 
-            self.handleDroppedImage(at: url.path)
+            let path = url.path
+            Task { @MainActor [weak self] in
+                self?.handleDroppedImage(at: path)
+            }
         }
     }
 
     func handleDroppedImage(at path: String) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-
-            // Validate image
-            guard let image = NSImage(contentsOfFile: path) else {
-                self.showError(NSLocalizedString("settings.logo.error.invalid", comment: "Invalid image file"))
-                return
-            }
-
-            // Check if it's a PNG
-            guard path.lowercased().hasSuffix(".png") else {
-                self.showError(NSLocalizedString("settings.logo.error.not_png", comment: "Image must be in PNG format"))
-                return
-            }
-
-            // Check dimensions
-            guard let imageRep = image.representations.first else {
-                self.showError(NSLocalizedString("settings.logo.error.no_rep", comment: "Cannot read image dimensions"))
-                return
-            }
-
-            let width = imageRep.pixelsWide
-            let height = imageRep.pixelsHigh
-
-            guard width == 1024, height == 1024 else {
-                self.showError(String(format: NSLocalizedString("settings.logo.error.wrong_size",
-                                                                comment: "Image must be 1024x1024 pixels. Current size: %dx%d"), width, height))
-                return
-            }
-
-            // Copy the image into the app's Application Support folder so it
-            // remains accessible after the app restarts within the sandbox.
-            guard let destinationURL = CustomLogoConstants.savedLogoURL else {
-                self.showError(NSLocalizedString("settings.logo.error.save_failed",
-                                                 comment: "Could not determine storage location"))
-                return
-            }
-            do {
-                let fm = FileManager.default
-                // Create the directory if it doesn't exist yet.
-                try fm.createDirectory(at: destinationURL.deletingLastPathComponent(),
-                                       withIntermediateDirectories: true)
-                if fm.fileExists(atPath: destinationURL.path) {
-                    try fm.removeItem(at: destinationURL)
-                }
-                try fm.copyItem(at: URL(fileURLWithPath: path), to: destinationURL)
-            } catch {
-                self.showError(String(format: NSLocalizedString("settings.logo.error.copy_failed",
-                                                                comment: "Could not save logo: %@"),
-                                      error.localizedDescription))
-                return
-            }
-
-            // Save the path to the copy inside the container.
-            self.defaults.set(destinationURL.path, forKey: CustomLogoConstants.customLogoPathKey)
-
-            // Update display
-            self.logoImage = image
-            self.statusMessage = NSLocalizedString("settings.logo.success", comment: "Custom logo applied successfully")
-            self.statusColor = .green
-
-            // Post notification to update the Overview tab
-            NotificationCenter.default.post(name: .customLogoDidChange, object: nil)
+        // Validate image
+        guard let image = NSImage(contentsOfFile: path) else {
+            showError(NSLocalizedString("settings.logo.error.invalid", comment: "Invalid image file"))
+            return
         }
+
+        // Check if it's a PNG
+        guard path.lowercased().hasSuffix(".png") else {
+            showError(NSLocalizedString("settings.logo.error.not_png", comment: "Image must be in PNG format"))
+            return
+        }
+
+        // Check dimensions
+        guard let imageRep = image.representations.first else {
+            showError(NSLocalizedString("settings.logo.error.no_rep", comment: "Cannot read image dimensions"))
+            return
+        }
+
+        let width = imageRep.pixelsWide
+        let height = imageRep.pixelsHigh
+
+        guard width == 1024, height == 1024 else {
+            showError(String(format: NSLocalizedString("settings.logo.error.wrong_size",
+                                                            comment: "Image must be 1024x1024 pixels. Current size: %dx%d"), width, height))
+            return
+        }
+
+        // Copy the image into the app's Application Support folder so it
+        // remains accessible after the app restarts within the sandbox.
+        guard let destinationURL = CustomLogoConstants.savedLogoURL else {
+            showError(NSLocalizedString("settings.logo.error.save_failed",
+                                             comment: "Could not determine storage location"))
+            return
+        }
+        do {
+            let fm = FileManager.default
+            // Create the directory if it doesn't exist yet.
+            try fm.createDirectory(at: destinationURL.deletingLastPathComponent(),
+                                   withIntermediateDirectories: true)
+            if fm.fileExists(atPath: destinationURL.path) {
+                try fm.removeItem(at: destinationURL)
+            }
+            try fm.copyItem(at: URL(fileURLWithPath: path), to: destinationURL)
+        } catch {
+            showError(String(format: NSLocalizedString("settings.logo.error.copy_failed",
+                                                            comment: "Could not save logo: %@"),
+                                  error.localizedDescription))
+            return
+        }
+
+        // Save the path to the copy inside the container.
+        defaults.set(destinationURL.path, forKey: CustomLogoConstants.customLogoPathKey)
+
+        // Update display
+        logoImage = image
+        statusMessage = NSLocalizedString("settings.logo.success", comment: "Custom logo applied successfully")
+        statusColor = .primary
+
+        // Post notification to update the Overview tab
+        NotificationCenter.default.post(name: .customLogoDidChange, object: nil)
     }
 
     func resetToDefault() {
@@ -203,7 +202,7 @@ class SettingsViewModel: ObservableObject {
         NotificationCenter.default.post(name: .customLogoDidChange, object: nil)
 
         statusMessage = NSLocalizedString("settings.logo.reset_success", comment: "Logo reset to default")
-        statusColor = .green
+        statusColor = .secondary
     }
 
     private func showError(_ message: String) {

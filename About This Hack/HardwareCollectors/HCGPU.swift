@@ -5,7 +5,7 @@
 
 import Foundation
 
-class HCGPU {
+final class HCGPU: @unchecked Sendable {
     static let shared = HCGPU()
     private init() {}
 

@@ -28,6 +28,8 @@ struct ContentView: View {
 // MARK: - Loading View
 
 struct LoadingView: View {
+    @State private var isVisible = false
+
     var body: some View {
         VStack(spacing: 16) {
             ProgressView()
@@ -37,7 +39,21 @@ struct LoadingView: View {
                 .font(.title3)
                 .foregroundColor(.secondary)
         }
+        .padding(32)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+        }
+        .opacity(isVisible ? 1 : 0)
+        .scaleEffect(isVisible ? 1 : 0.95)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.ultraThinMaterial)
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.4)) {
+                isVisible = true
+            }
+        }
     }
 }
 
@@ -62,7 +78,9 @@ private struct FakeSidebarLayout: View {
                             section: section,
                             isSelected: appState.selectedSection == section
                         ) {
-                            appState.selectedSection = section
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                appState.selectedSection = section
+                            }
                         }
                     }
                     Spacer()
@@ -76,12 +94,15 @@ private struct FakeSidebarLayout: View {
                 .transition(.move(edge: .leading))
 
                 Divider()
+                
                     .transition(.opacity)
             }
 
             // ── Detail ─────
             detailView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .id(appState.selectedSection)
+                .transition(.opacity)
         }
         .background(Color(NSColor.controlBackgroundColor)) // opaque window
 //        .background(.ultraThinMaterial) // transparent window
@@ -129,11 +150,13 @@ private struct SidebarRow: View {
     let isSelected: Bool
     let action: () -> Void
 
+    @State private var isHovered = false
+
     var body: some View {
         Button(action: action) {
             Label(section.title, systemImage: section.systemImage)
                 .font(.system(size: 13, weight: isSelected ? .semibold : .regular))
-                .foregroundColor(isSelected ? .primary : .secondary)
+                .foregroundColor(isSelected ? .primary : (isHovered ? Color.primary.opacity(0.85) : .secondary))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical, 5)
                 .padding(.horizontal, 8)
@@ -141,11 +164,25 @@ private struct SidebarRow: View {
                     RoundedRectangle(cornerRadius: 6)
                         .fill(isSelected
                             ? Color.accentColor.opacity(0.18)
-                            : Color.clear)
+                            : (isHovered ? Color.primary.opacity(0.08) : Color.clear))
                 )
+                .overlay(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.accentColor)
+                        .frame(width: 3, height: 18)
+                        .padding(.leading, 2)
+                        .opacity(isSelected ? 1 : 0)
+                        .scaleEffect(x: 1, y: isSelected ? 1 : 0.3, anchor: .center)
+                }
         }
         .buttonStyle(.plain)
-        .contentShape(Rectangle()) // tooltips on sidebar items
+        .contentShape(Rectangle())
         .help(section.tooltip)
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isHovered = hovering
+            }
+        }
+        .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
 }

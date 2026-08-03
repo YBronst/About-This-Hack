@@ -9,6 +9,7 @@ import Sparkle
 import SwiftUI
 
 @main
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     // MARK: - App Entry Point (storyboard-free) -----------------------------------------
 
@@ -109,12 +110,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         NotificationCenter.default.addObserver(
             forName: NSWindow.didMoveNotification, object: window, queue: .main
         ) { [weak window] _ in
-            if let f = window?.frame { AppState.shared.saveWindowFrame(f) }
+            MainActor.assumeIsolated {
+                if let f = window?.frame { AppState.shared.saveWindowFrame(f) }
+            }
         }
         NotificationCenter.default.addObserver(
             forName: NSWindow.didResizeNotification, object: window, queue: .main
         ) { [weak window] _ in
-            if let f = window?.frame { AppState.shared.saveWindowFrame(f) }
+            MainActor.assumeIsolated {
+                if let f = window?.frame { AppState.shared.saveWindowFrame(f) }
+            }
         }
 
         mainWindow = window

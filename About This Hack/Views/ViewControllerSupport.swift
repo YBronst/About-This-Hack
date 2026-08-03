@@ -44,6 +44,8 @@ private struct SupportLinkButton: View {
     let title: String
     let urlString: String
 
+    @State private var isHovered = false
+
     var body: some View {
         Button(action: openURL) {
             HStack {
@@ -51,15 +53,26 @@ private struct SupportLinkButton: View {
                     .font(.system(size: 13))
                 Spacer()
                 Image(systemName: "arrow.right.circle.fill")
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(isHovered ? .accentColor : .secondary)
+                    .scaleEffect(isHovered ? 1.1 : 1.0)
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
-            .background(Color(NSColor.controlBackgroundColor))
-            .cornerRadius(8)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(isHovered
+                        ? Color.accentColor.opacity(0.3)
+//                        : Color(NSColor.controlBackgroundColor))
+                        : Color.primary.opacity(0.05))
+            )
         }
         .buttonStyle(.plain)
         .frame(maxWidth: 360)
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isHovered = hovering
+            }
+        }
     }
 
     private func openURL() {

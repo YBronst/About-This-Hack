@@ -7,6 +7,7 @@
 
 import Cocoa
 
+@MainActor
 class LoadingIndicatorController {
     /// Singleton instance
     static let shared = LoadingIndicatorController()
@@ -19,14 +20,6 @@ class LoadingIndicatorController {
     /// Shows the loading indicator window centered on the parent window if provided, otherwise centered on screen
     /// - Parameter parentWindow: The window to center the loading indicator on
     func show(centeredOn parentWindow: NSWindow? = nil) {
-        // Ensure we're on the main thread
-        guard Thread.isMainThread else {
-            DispatchQueue.main.async { [weak self] in
-                self?.show(centeredOn: parentWindow)
-            }
-            return
-        }
-
         // Don't show if already visible
         guard loadingWindow == nil else { return }
 
@@ -95,14 +88,6 @@ class LoadingIndicatorController {
 
     /// Hides and disposes the loading indicator window
     func hide() {
-        // Ensure we're on the main thread
-        guard Thread.isMainThread else {
-            DispatchQueue.main.async { [weak self] in
-                self?.hide()
-            }
-            return
-        }
-
         guard let window = loadingWindow else { return }
 
         progressIndicator?.stopAnimation(nil)

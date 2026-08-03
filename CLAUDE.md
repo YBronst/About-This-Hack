@@ -4,19 +4,19 @@
 
 **About This Hack** is a macOS app that recreates the classic pre-Ventura "About This Mac" window with modern enhancements. It targets both Hackintosh users (PCs running macOS via OpenCore or Clover bootloaders) and real Mac users. It displays hardware info (CPU, RAM, GPU, displays, storage, audio codec), bootloader version, serial number, and support links.
 
-- macOS 13.5 (Ventura) minimum deployment target
-- Pure SwiftUI UI (migrated from AppKit/XIB)
+- macOS 15 (Sequoia) minimum deployment target
+- Swift 6 + SwiftUI UI (migrated from AppKit/XIB)
 - Storyboard-free (AppDelegate bootstraps everything manually)
 - Auto-updater via Sparkle framework (SPM dependency)
-- Localized into: English (`en`), Spanish (`es`), French (`fr`), Italian (`it`)
-<!-- - Transparent/liquid-glass window style (`.ultraThinMaterial` backgrounds) -->
+- Localized into: English (`en`), Spanish (`es`), German (`de`), French (`fr`), Italian (`it`)
+- Transparent/liquid-glass window style (`.ultraThinMaterial` / `.regularMaterial` backgrounds)
 
 ## Tech Stack
 
 | Area | Technology |
 |---|---|
-| Language | Swift 5 (+ one Objective-C file for SIP reading) |
-| UI framework | SwiftUI (macOS 13.5+) |
+| Language | Swift 6 |
+| UI framework | SwiftUI (macOS 15+) |
 | App lifecycle | AppKit (`NSApplicationDelegate`, no storyboard) |
 | Auto-updater | Sparkle via SPM package (`UpdaterController` wrapping `SPUStandardUpdaterController`) |
 | Shell execution | Custom `run(_ command: String) -> String` via `/bin/zsh` subprocess |
@@ -175,7 +175,7 @@ The Audio tab is only shown on Hackintoshes or Macs with OCLP / OpenCore:
 
 - All user-facing strings use `NSLocalizedString("key", comment: "…")`.
 - String files live at `{lang}.lproj/Localizable.strings`.
-- Supported languages: `en`, `es`, `fr`, `it`, `de`.
+- Supported languages: `en`, `es`, `de`, `fr`, `it`.
 - Language is changed at runtime by writing `[langCode]` to `UserDefaults "AppleLanguages"` and restarting the app. The Language Selector window (`LanguageSelectorView`) handles this.
 - When adding a new string, add it to all five `.strings` files. The key in every file must match exactly.
 
@@ -207,9 +207,9 @@ Assets are in `Assets.xcassets`. Notable image sets:
 
 ## Building
 
-- Open `About This Hack.xcodeproj` in Xcode 15+.
+- Open `About This Hack.xcodeproj` in a current Xcode release with Swift 6 support.
 - Xcode resolves the Sparkle SPM package automatically on first open/build.
-- Target: macOS 13.5+, architecture: universal (Apple Silicon + Intel).
+- Target: macOS 15+, architecture: universal (Apple Silicon + Intel).
 - There are no automated test targets in the project.
 - The app is storyboard-free: `NSPrincipalClass` points to `AppDelegate`, and `AppDelegate.main()` is the entry point (marked `@main`).
 
@@ -249,7 +249,7 @@ Use this checklist when starting a new session:
 - **`Tooltips._macModeltoolTip`** runs `system_profiler SPPCIDataType` and must be pre-warmed on a background thread (done in `AppState.loadDataAsync()`).
 - **Sidebar toggle animation** uses `withAnimation(.easeInOut(duration: 0.25))`. The sidebar and divider use `.transition(.move(edge: .leading))` / `.transition(.opacity)`.
 - **`run()` does not call `waitUntilExit()`** by design (see `Shell.swift` comment). `readDataToEndOfFile()` already provides the necessary blocking; adding `waitUntilExit()` would spin the RunLoop. This is intentional and must not be reverted.
-- **Opaque window (current default)**: SwiftUI backgrounds use `Color(NSColor.controlBackgroundColor)`. The transparent/liquid-glass mode (sets `NSWindow.isOpaque = false`, `backgroundColor = .clear` and uses `.ultraThinMaterial` backgrounds) is available but commented out in `AppDelegate.createAndShowMainWindow()` and `ContentView.swift`.
+- **Transparent window (current default)**: the main window, Settings window, and Language Selector window all use a transparent/liquid-glass setup (`NSWindow.isOpaque = false`, `backgroundColor = .clear`, transparent title bars, and material-backed SwiftUI content). The older opaque-window code paths are still present as comments in some files.
 - **`AppSection.audio`** is filtered out of the sidebar list when `shouldShowAudioTab` is false.
 
 ## Where to Look for Things

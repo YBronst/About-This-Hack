@@ -6,30 +6,41 @@
 import Foundation
 
 class CreateDataFiles {
-    private static var _dataFilesCreated: Bool = false
-    private static let lock = NSLock()
+    private final class DataFilesCreatedState: @unchecked Sendable {
+        private let lock = NSLock()
+        private var value = false
+
+        func get() -> Bool {
+            lock.lock()
+            defer { lock.unlock() }
+            return value
+        }
+
+        func set(_ newValue: Bool) {
+            lock.lock()
+            value = newValue
+            lock.unlock()
+        }
+    }
+
+    private static let dataFilesState = DataFilesCreatedState()
 
     /// Notification name for when data files are created
     static let dataFilesCreatedNotification = Notification.Name("DataFilesCreated")
 
     static var dataFilesCreated: Bool {
-        lock.lock()
-        defer { lock.unlock() }
-        return _dataFilesCreated
+        dataFilesState.get()
     }
 
     /// Asynchronously creates initial data files
     /// - Parameter completion: Called on completion (main thread)
-    static func getInitDataFilesAsync(completion: @escaping () -> Void) {
-        lock.lock()
-        if _dataFilesCreated {
-            lock.unlock()
+    static func getInitDataFilesAsync(completion: @Sendable @escaping () -> Void) {
+        if dataFilesState.get() {
             DispatchQueue.main.async {
                 completion()
             }
             return
         }
-        lock.unlock()
 
         DispatchQueue.global(qos: .userInitiated).async {
             getInitDataFiles()
@@ -42,12 +53,9 @@ class CreateDataFiles {
     }
 
     static func getInitDataFiles() {
-        lock.lock()
-        if _dataFilesCreated {
-            lock.unlock()
+        if dataFilesState.get() {
             return
         }
-        lock.unlock()
 
         let fm = FileManager.default
         let athURL = URL(fileURLWithPath: InitGlobVar.athDirectory, isDirectory: true)
@@ -97,8 +105,6 @@ class CreateDataFiles {
          // ... Add similar lines for other files
          */
 
-        lock.lock()
-        _dataFilesCreated = true
-        lock.unlock()
+        dataFilesState.set(true)
     }
 }

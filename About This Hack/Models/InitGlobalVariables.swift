@@ -19,42 +19,42 @@ class InitGlobVar {
             .appendingPathComponent(".ath", isDirectory: true).path
     }
 
-    static let defaultfileManager = FileManager.default
+    static var defaultfileManager: FileManager { FileManager.default }
 
     // OCLP Dict File (if exists) where Patch Version Commit and DateTime will be extracted
-    static var oclpXmlFilePath = "/System/Library/CoreServices/OpenCore-Legacy-Patcher.plist"
-    static var bdmesgExecID = "/usr/local/bin/bdmesg"
+    static let oclpXmlFilePath = "/System/Library/CoreServices/OpenCore-Legacy-Patcher.plist"
+    static let bdmesgExecID = "/usr/local/bin/bdmesg"
 
     // ioreg Dir perl script and pci ids and names files
-    static var whichLocation = "/usr/bin/which"
-    static var curlLocation: String = run(whichLocation + " curl  | /usr/bin/tr -d '\n'")
+    static let whichLocation = "/usr/bin/which"
+    static let curlLocation: String = run(whichLocation + " curl  | /usr/bin/tr -d '\n'")
 
     // Files with Overview, Displays and Storage detailed Datas
-    static var hwFilePath = athDirectory + "/hw.txt"
-    static var scrFilePath = athDirectory + "/scr.txt"
-    static var scrXmlFilePath = athDirectory + "/scrXml.txt"
-    static var bootvollistFilePath = athDirectory + "/sysbootvollist.txt"
-    static var sysmemFilePath = athDirectory + "/sysmem.txt"
-    static var syssoftdataFilePath = athDirectory + "/syssoftdata.txt"
-    static var bootvolnameFilePath = athDirectory + "/sysvolname.txt"
-    static var storagedataFilePath = athDirectory + "/storagedata.txt"
+    static let hwFilePath = athDirectory + "/hw.txt"
+    static let scrFilePath = athDirectory + "/scr.txt"
+    static let scrXmlFilePath = athDirectory + "/scrXml.txt"
+    static let bootvollistFilePath = athDirectory + "/sysbootvollist.txt"
+    static let sysmemFilePath = athDirectory + "/sysmem.txt"
+    static let syssoftdataFilePath = athDirectory + "/syssoftdata.txt"
+    static let bootvolnameFilePath = athDirectory + "/sysvolname.txt"
+    static let storagedataFilePath = athDirectory + "/storagedata.txt"
 
     // Used by ViewController
-    static var systemReportSP = "/System/Library/SystemProfiler/SPPlatformReporter.spreporter"
-    static var softwareUpdateSP = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane"
-    static var softwareUpdateURL = "x-apple.systempreferences:com.apple.Software-Update-Settings.extension"
+    static let systemReportSP = "/System/Library/SystemProfiler/SPPlatformReporter.spreporter"
+    static let softwareUpdateSP = "/System/Library/PreferencePanes/SoftwareUpdate.prefPane"
+    static let softwareUpdateURL = "x-apple.systempreferences:com.apple.Software-Update-Settings.extension"
 
     /// Used by ViewControllerDisplays
-    static var displayPrefPane = "/System/Library/PreferencePanes/Displays.prefPane"
+    static let displayPrefPane = "/System/Library/PreferencePanes/Displays.prefPane"
 
     // Used by ViewControllerSupport
-    static var macOSUserGuideURL = "https://support.apple.com/guide/mac-help/welcome/mac"
-    static var whatsNewInMacOSURL = "https://www.apple.com/macos/"
-    static var AppleSupportURL = "https://support.apple.com"
-    static var HackintoshInstallURL = "https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/troubleshooting.html#table-of-contents"
-    static var MacBasicsURL = "https://help.apple.com/macos/big-sur/mac-basics/"
-    static var MacUserGuideURL = "https://support.apple.com/manuals"
+    static let macOSUserGuideURL = "https://support.apple.com/guide/mac-help/welcome/mac"
+    static let whatsNewInMacOSURL = "https://www.apple.com/macos/"
+    static let AppleSupportURL = "https://support.apple.com"
+    static let HackintoshInstallURL = "https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/troubleshooting.html#table-of-contents"
+    static let MacBasicsURL = "https://help.apple.com/macos/big-sur/mac-basics/"
+    static let MacUserGuideURL = "https://support.apple.com/manuals"
 
-    static var nvramOpencoreVersion = "4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:opencore-version"
+    static let nvramOpencoreVersion = "4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:opencore-version"
 }
 

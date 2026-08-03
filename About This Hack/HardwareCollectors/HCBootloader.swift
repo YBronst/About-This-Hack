@@ -6,7 +6,7 @@
 import Foundation
 import IOKit
 
-class HCBootloader {
+final class HCBootloader: @unchecked Sendable {
     static let shared = HCBootloader()
     private init() {}
 
@@ -215,11 +215,11 @@ class HCBootloader {
         }
 
         // Fallback: ioreg subprocess restricted to an actual IOService node named
-         // VirtualSMC. `ioreg -c VirtualSMC` can return class metadata on real Macs
-         // and produce false positives; `-p IOService -n VirtualSMC -r` only returns
-         // a concrete service instance.
-         let ioregsOutput = run("ioreg -p IOService -n VirtualSMC -r -d 1 2>/dev/null")
-         if ioregsOutput.contains("\"VirtualSMC\"") {
+        // VirtualSMC. `ioreg -c VirtualSMC` can return class metadata on real Macs
+        // and produce false positives; `-p IOService -n VirtualSMC -r` only returns
+        // a concrete service instance.
+        let ioregsOutput = run("ioreg -p IOService -n VirtualSMC -r -d 1 2>/dev/null")
+        if ioregsOutput.contains("\"VirtualSMC\"") {
             return true
         }
 

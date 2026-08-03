@@ -6,7 +6,7 @@
 import Foundation
 
 class HCStartupDisk {
-    static let shared = HCStartupDisk()
+    nonisolated(unsafe) static let shared = HCStartupDisk()
     private init() {}
 
     private lazy var startupDisk: String = {
