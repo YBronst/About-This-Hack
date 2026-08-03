@@ -59,8 +59,27 @@ class AppState: ObservableObject {
     nonisolated(unsafe) static let shared = AppState()
     private static let hackintoshAudioDrivers: Set<String> = ["AppleALC", "HDAUniversal", "VoodooHDA", "USB", "HDMI", "DisplayPort"]
 
-    @Published var selectedSection: AppSection? = .overview
-    @Published var isDataLoaded = false
+    @Published var selectedSection: AppSection? = .overview {
+        didSet {
+            guard selectedSection != oldValue else { return }
+            let tabName = switch selectedSection {
+            case .overview: "Overview"
+            case .displays: "Displays"
+            case .storage: "Storage"
+            case .audio: "Audio"
+            case .support: "Support"
+            case .none: "Unknown"
+            }
+            print("Switched to tab: \(tabName)")
+        }
+    }
+    @Published var isDataLoaded = false {
+        didSet {
+            if isDataLoaded && !oldValue {
+                print("Hardware data loaded")
+            }
+        }
+    }
     @Published var isSidebarVisible: Bool = true
 
     /// True when audio codec data is available. Evaluated lazily after data loads.
@@ -75,7 +94,7 @@ class AppState: ObservableObject {
     private static func printRealMacOnce() {
         guard !didPrintRealMac else { return }
         didPrintRealMac = true
-        print("This is a Mac, the audio tab has not been created.")
+        print("Mac: no audio tab")
     }
 
     /// True when running on a Hackintosh (OpenCore without OCLP, or Clover).

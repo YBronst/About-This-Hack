@@ -8,7 +8,7 @@
 import Cocoa
 import SwiftUI
 
-class LanguageSelectorWindowController: NSWindowController {
+class LanguageSelectorWindowController: NSWindowController, NSWindowDelegate {
     // MARK: - Constants
 
     private static let windowWidth: CGFloat = 280
@@ -69,6 +69,7 @@ class LanguageSelectorWindowController: NSWindowController {
     private func setupWindowProperties() {
         let contentSize = NSSize(width: Self.windowWidth, height: Self.windowHeight)
         window?.setContentSize(contentSize)
+        window?.delegate = self
         // Use the actual frame size (content area + title bar) for min/max constraints
         // so the window cannot be resized and the constraints match the real frame.
         let frameSize = NSWindow.frameRect(
@@ -82,6 +83,10 @@ class LanguageSelectorWindowController: NSWindowController {
     override func showWindow(_ sender: Any?) {
         centerWindowOnScreen()
         super.showWindow(sender)
+    }
+
+    func windowWillClose(_: Notification) {
+        print("Language selector closed")
     }
 
     // MARK: - Window Management

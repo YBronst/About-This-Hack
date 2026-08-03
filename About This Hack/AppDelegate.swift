@@ -169,6 +169,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         if settingsWindowController == nil {
             settingsWindowController = SettingsWindowController()
         }
+        print("Opening settings window")
         settingsWindowController?.showWindow(nil)
         settingsWindowController?.window?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
@@ -183,6 +184,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             languageSelectorWindowController = LanguageSelectorWindowController()
         }
         languageSelectorWindowController?.parentWindow = mainWindow
+        print("Opening language selector")
         languageSelectorWindowController?.showWindow(nil)
         languageSelectorWindowController?.window?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)

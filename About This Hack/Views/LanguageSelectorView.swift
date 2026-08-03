@@ -107,5 +107,19 @@ struct LanguageSelectorView: View {
 
     private func saveLanguagePreference() {
         UserDefaults.standard.set([selectedLanguage], forKey: "AppleLanguages")
+        switch selectedLanguage {
+        case "en-US", "en":
+            print("Language changed to English (\(selectedLanguage))")
+        case "es-ES", "es":
+            print("Language changed to Spanish (\(selectedLanguage))")
+        case "de-DE", "de":
+            print("Language changed to German (\(selectedLanguage))")
+        case "fr-FR", "fr":
+            print("Language changed to French (\(selectedLanguage))")
+        case "it-IT", "it":
+            print("Language changed to Italian (\(selectedLanguage))")
+        default:
+            print("Language changed to code \(selectedLanguage)")
+        }
     }
 }

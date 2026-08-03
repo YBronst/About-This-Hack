@@ -6,7 +6,7 @@
 import Cocoa
 import SwiftUI
 
-class SettingsWindowController: NSWindowController {
+class SettingsWindowController: NSWindowController, NSWindowDelegate {
     // MARK: - Constants
 
     private static let windowWidth: CGFloat = 422
@@ -72,9 +72,14 @@ class SettingsWindowController: NSWindowController {
     private func setupWindowProperties() {
         // Set window properties
         window?.styleMask.remove(.resizable)
+        window?.delegate = self
 
         // Explicitly set the window size to ensure it's applied correctly
         setWindowSize()
+    }
+
+    func windowWillClose(_: Notification) {
+        print("Settings window closed")
     }
 
     override func windowWillLoad() {
