@@ -199,7 +199,7 @@ private struct SerialRow: View {
 
 class OverviewViewModel: ObservableObject {
     @Published var logoImage: NSImage = .init()
-    @Published var isSerialHidden: Bool = false
+    @Published var isSerialHidden: Bool = true
 
     let osFullName: String
     let systemVersion: String
