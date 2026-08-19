@@ -2,7 +2,7 @@
 //  LanguageSelectorView.swift
 //  About This Hack
 //
-//  Language selector view with flag emojis (English, Spanish, French, Italian).
+//  Language selector view with flag emojis (English, Spanish, French, Italian, Russian).
 //
 
 import SwiftUI
@@ -12,7 +12,7 @@ struct LanguageItem: Identifiable {
     let code: String
     let name: String
     let flag: String
-
+    
     init(code: String, name: String, flag: String) {
         id = code
         self.code = code
@@ -26,20 +26,21 @@ struct LanguageSelectorView: View {
     @State private var selectedLanguage: String
     @State private var showRestartAlert = false
     private let initialLanguage: String
-
+    
     /// Available languages
     private let languages: [LanguageItem] = [
         LanguageItem(code: "en", name: "English", flag: "🇬🇧"),
         LanguageItem(code: "es", name: "Español", flag: "🇪🇸"),
-        LanguageItem(code: "de", name: "Deutsch", flag: "🇩🇪"),
         LanguageItem(code: "fr", name: "Français", flag: "🇫🇷"),
+        LanguageItem(code: "de", name: "Deutsch", flag: "🇩🇪"),
         LanguageItem(code: "it", name: "Italiano", flag: "🇮🇹"),
+        LanguageItem(code: "ru", name: "Russian", flag: "🇷🇺"),
     ]
-
+    
     private var hasLanguageChanged: Bool {
         selectedLanguage != initialLanguage
     }
-
+    
     init(onDismiss: @escaping () -> Void) {
         self.onDismiss = onDismiss
         // Load current language preference from UserDefaults
@@ -50,34 +51,50 @@ struct LanguageSelectorView: View {
         _selectedLanguage = State(initialValue: currentLang)
         initialLanguage = currentLang
     }
-
+    
     var body: some View {
         VStack(spacing: 20) {
             Text(NSLocalizedString("Language selector title", comment: "Language selector title"))
                 .font(.title2)
                 .padding(.top)
-
-            List(languages, selection: $selectedLanguage) { language in
-                HStack {
-                    Text(language.flag)
-                        .font(.title2)
-                    Text(language.name)
-                        .font(.body)
+            
+            // Replaced List with ScrollView + ForEach for functional bindings
+            ScrollView {
+                VStack(spacing: 0) {
+                    ForEach(languages) { language in
+                        HStack {
+                            Text(language.flag)
+                                .font(.title2)
+                            Text(language.name)
+                                .font(.body)
+                            Spacer()
+                            if selectedLanguage == language.code {
+                                //Text("◁                ")
+                                    //.foregroundColor(Color.orange)
+                                Capsule()
+                                    .frame(width: 5, height: 18)
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(selectedLanguage == language.code ? Color.accentColor.opacity(0.03) : Color.clear)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedLanguage = language.code
+                        }
+                    }
                 }
-                .tag(language.code)
-                .padding(.vertical, 4)
             }
-            .scrollContentBackground(.hidden)
-            .background(.ultraThinMaterial)
-            .frame(width: 222, height: 208)
-            .border(Color.gray.opacity(0.3), width: 1)
-
-            HStack(spacing: 12) {
+            .frame(width: 210, height: 210)
+            .border(Color.gray.opacity(0.1), width: 0.1)
+            
+            HStack(spacing: 11) {
                 Button(NSLocalizedString("Cancel", comment: "Cancel button")) {
                     onDismiss()
                 }
                 .keyboardShortcut(.cancelAction)
-
+                
                 Button(NSLocalizedString("OK", comment: "OK button")) {
                     if hasLanguageChanged {
                         saveLanguagePreference()
@@ -91,7 +108,7 @@ struct LanguageSelectorView: View {
             .padding(.bottom)
         }
         .padding()
-        .frame(width: 280)
+        .frame(width: 215)
         .background(.ultraThinMaterial, ignoresSafeAreaEdges: .all)
         .alert(
             NSLocalizedString("Language changed alert title", comment: "Language changed alert title"),
@@ -104,7 +121,7 @@ struct LanguageSelectorView: View {
             Text(NSLocalizedString("Language changed message", comment: "Language changed message"))
         }
     }
-
+    
     private func saveLanguagePreference() {
         UserDefaults.standard.set([selectedLanguage], forKey: "AppleLanguages")
         switch selectedLanguage {
@@ -112,12 +129,14 @@ struct LanguageSelectorView: View {
             print("Language changed to English (\(selectedLanguage))")
         case "es-ES", "es":
             print("Language changed to Spanish (\(selectedLanguage))")
-        case "de-DE", "de":
-            print("Language changed to German (\(selectedLanguage))")
         case "fr-FR", "fr":
             print("Language changed to French (\(selectedLanguage))")
+        case "de-DE", "de":
+            print("Language changed to German (\(selectedLanguage))")
         case "it-IT", "it":
             print("Language changed to Italian (\(selectedLanguage))")
+        case "ru-RU", "ru":
+            print("Language changed to Russian(\(selectedLanguage))")
         default:
             print("Language changed to code \(selectedLanguage)")
         }

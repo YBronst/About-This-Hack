@@ -1,0 +1,134 @@
+/* 
+  Localizable.strings
+  About This Hack
+  
+ Russian localization
+ iTGemini
+*/
+
+/* Tooltips */
+"tooltip.bootloader" = "Загрузчик: %@\nЗагрузочные аргументы: %@";
+"tooltip.sysinfo" = "  Подробные данные об оборудовании, сети, программном обеспечении и т. д.";
+"tooltip.softupd" = "  Найти и установить обновления ОС и безопасности";
+
+/* Segmented Control Titles */
+"segment.title.overview" = "Обзор";
+"segment.title.displays" = "Дисплей";
+"segment.title.storage" = "Загрузочный диск";
+"segment.title.audio" = "Аудиоустройство";
+"segment.title.support" = "Поддержка";
+
+/* Segmented Control Tooltips */
+"segment.tooltip.overview" = "Общее предоставление технических характеристик системы";
+"segment.tooltip.displays" = "Экраны и разрешения";
+"segment.tooltip.storage" = "Загрузочный диск, тип подключения и доступное пространство";
+"segment.tooltip.audio" = "Информация об аудиокодеке";
+"segment.tooltip.support" = "Представление ссылок на поддержку для помощи по вашему хакинтошу или Mac";
+
+/* Storage */
+"storage.available" = "Доступно";
+
+/* Loading Indicator */
+"loading.data.message" = "Загрузка данных...";
+
+/* Settings Window */
+"settings.title" = "Пользовательские настройки логотипа";
+"settings.logo.info" = "Перетащите изображение PNG (1024x1024 пикселей) в\nнастроить логотип macOS на вкладке «Обзор»";
+"settings.logo.reset" = "Сбросить настройки по умолчанию";
+"settings.logo.custom_active" = "Пользовательский логотип активен";
+"settings.logo.default_active" = "Логотип по умолчанию активен";
+"settings.logo.reset_success" = "Сброс логотипа по умолчанию";
+"settings.logo.error.invalid" = "Неверный файл изображения";
+"settings.logo.error.not_png" = "Изображение должно быть в формате PNG";
+"settings.logo.error.no_rep" = "Невозможно прочитать размеры изображения";
+"settings.logo.error.wrong_size" = "Изображение должно быть 1024x1024 пикселей (текущий %dx%d)";
+"settings.logo.error.save_failed" = "Не удалось определить место хранения.";
+"settings.logo.error.copy_failed" = "Не удалось сохранить логотип: %@";
+"settings.logo.success" = "Пользовательский логотип успешно применён.";
+
+/* Overview tab – spec row labels */
+"cpu.total_cores" = "Общее количество ядер: %d";
+"cpu.total_cores_unknown" = "Общее количество ядер: неизвестно";
+"spec.processor" = "Процессор";
+"spec.memory" = "Память";
+"spec.graphics" = "Графика";
+"spec.display" = "Дисплей";
+"spec.startup_disk" = "Загрузочный диск";
+"spec.serial_number" = "Серийный номер";
+"spec.bootloader" = "Загрузчик";
+
+/* Overview tab – action buttons */
+"button.system_report" = "Информация о системе   ";
+"button.software_update" = "Обновление ПО системы";
+
+/* Overview tab – credits */
+"credits.text" = "™ and © 2021-2026\nAlexander Skula et al.\nAll Rights Reserved.";
+
+/* Displays tab */
+"displays.preferences" = "Настройки дисплея ";
+"displays.none" = "Дисплеи не обнаружены";
+
+/* Audio tab */
+"audio.none" = "Информация об аудиокодеке отсутствует";
+"audio.spec.driver" = "Драйвер";
+"audio.spec.codec" = "Кодек";
+"audio.spec.vendor" = "Производитель";
+"audio.spec.device_id" = "Устройство";
+"audio.spec.sub_device_id" = "Подустройство";
+"audio.spec.layout_id" = "Идентификатор макета";
+"audio.spec.transport" = "Класс";
+"audio.spec.product" = "Устройство";
+"audio.spec.graphics_card" = "Видеокарта";
+
+/* Support tab – link titles */
+"support.macos_user_guide" = "Руководство пользователя macOS";
+"support.whats_new" = "Что нового в macOS";
+"support.apple_support" = "Поддержка Apple";
+"support.hackintosh_guide" = "Руководство по Хакинтошу";
+"support.mac_basics" = "Основы Mac";
+"support.mac_user_guide" = "Руководство пользователя Mac";
+"support.credits" = "Made with ❤️ by Alexander Skula, MDNich, and matxpa";
+
+/* Language Menu */
+"Language menu" = "Язык";
+"Select Language menu item" = "Выбрать язык...";
+"Language selector title" = "Язык";
+"Cancel" = "Отмена";
+"OK" = "ОК";
+"Language changed alert title" = "Язык изменен";
+"Language changed message" = "Пожалуйста, перезапустите приложение.\nчтобы применить новый язык.";
+
+/* Main menu - App menu */
+"menu.app.title" = "About This Hack";
+"menu.app.about" = "Об этом This Hack";
+"menu.app.preferences" = "Настройки";
+"menu.app.services" = "Службы";
+"menu.app.hide" = "Скрыть About This Hack";
+"menu.app.hide_others" = "Скрыть всё";
+"menu.app.show_all" = "Показать всё";
+"menu.app.quit" = "Выйти из About This Hack";
+
+/* Main menu - Window menu */
+"menu.window.title" = "Окно";
+"menu.window.minimize" = "Свернуть";
+"menu.window.close" = "Закрыть";
+"menu.window.zoom" = "Масштаб";
+"menu.window.overview" = "Обзор";
+"menu.window.displays" = "Дисплей";
+"menu.window.storage" = "Загрузочный диск";
+"menu.window.audio" = "Аудиоустройство";
+"menu.window.support" = "Поддержка";
+"menu.window.bring_all_to_front" = "Вывести все на передний план";
+
+/* Main menu - Help menu */
+"menu.help.title" = "Справка";
+"menu.help.ath_help" = "Справка About This Hack";
+
+/* Sparkle updater */
+"Check for Updates..." = "Проверить наличие обновлений...";
+
+/* Toolbar */
+"toolbar.toggle_sidebar" = "Переключить боковую панель";
+
+/* About window */
+"about.version" = "Версия %@ (сборка %@)";

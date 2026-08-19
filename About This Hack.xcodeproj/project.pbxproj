@@ -84,6 +84,7 @@
 		D99B370A2F10110C00B71FAE /* CustomLogoConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLogoConstants.swift; sourceTree = "<group>"; };
 		D9BA05872FA7B62F00D73D31 /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		D9E195D92F1184F5009E9F91 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D9F6F27130361DF400E4F561 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC6870452A63334400CAD908 /* HCVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HCVersion.swift; sourceTree = "<group>"; };
 		DC6870472A63336E00CAD908 /* HardwareCollector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwareCollector.swift; sourceTree = "<group>"; };
 		DC6870492A633DDD00CAD908 /* HCMacModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HCMacModel.swift; sourceTree = "<group>"; };
@@ -266,6 +267,7 @@
 				fr,
 				it,
 				de,
+				ru,
 			);
 			mainGroup = 115D920526D6F65500F5DF35;
 			packageReferences = (
@@ -344,6 +346,7 @@
 				LOCFR00000000000000000001 /* fr */,
 				LOCIT00000000000000000001 /* it */,
 				D9423A102FB91655008C2265 /* de */,
+				D9F6F27130361DF400E4F561 /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -490,7 +493,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1652;
+				CURRENT_PROJECT_VERSION = 1653;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = ER43ZD2S4U;
 				ENABLE_APP_SANDBOX = NO;
@@ -507,7 +510,7 @@
 					"$(SDKROOT)/usr/lib/swift",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 5.0.2;
+				MARKETING_VERSION = 5.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.0xCUBE.About-This-Hack";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -527,7 +530,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1652;
+				CURRENT_PROJECT_VERSION = 1653;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = ER43ZD2S4U;
 				ENABLE_APP_SANDBOX = NO;
@@ -544,7 +547,7 @@
 					"$(SDKROOT)/usr/lib/swift",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 5.0.2;
+				MARKETING_VERSION = 5.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.0xCUBE.About-This-Hack";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
