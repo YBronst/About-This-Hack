@@ -1,6 +1,24 @@
 # Releases Changelog
 
-## 5.0.0 (1650) - Aug 2, 2026
+## 5.0.3 - Aug 19, 2026
+
+**Russian language**
+
+- Add Russian language, thanks to [iTGower](https://github.com/iTGower)
+
+## 5.0.2 - Aug 6, 2026
+
+**Hide serial number by default**
+
+- Serial number is hidden when the app starts
+
+## 5.0.1 - Aug 17, 2026
+
+**Update app icon**
+
+- Update app icon, thanks to [anto65](https://github.com/antuneddu)
+
+## 5.0.0 - Aug 2, 2026
 
 **Migrate to Swift 6 (WIP)**
 
@@ -9,7 +27,7 @@
    - macOS 15 Sequoia
    - Xcode supporting Swift 6
 
-## 4.4.8 (1648) - Jul 31, 2026
+## 4.4.8 - Jul 31, 2026
 
 **Fix OpenCore info**
 
@@ -17,13 +35,13 @@
    - Improve OpenCore detection reliability
    - Revert app sandbox
 
-## 4.4.7 (1647) - Jul 13, 2026
+## 4.4.7 - Jul 13, 2026
 
 **Improve startup disk detection**
 
 - Improve startup disk data detection on Ventura, thanks to [maxpicelli](https://github.com/maxpicelli)
 
-## 4.4.6 (1646) - Jul 12, 2026
+## 4.4.6 - Jul 12, 2026
 
 **Sandboxed app**
 
@@ -33,31 +51,31 @@
 - Fix persistence of custom logo
 - Minor localization changes in Storage label
 
-## 4.4.4 (1644) - Jul 10, 2026
+## 4.4.4 - Jul 10, 2026
 
 **Notarized app**
 
 - The app is now notarized by Apple, no more needing Gatekeeper issues
 
-## 4.4.0 (1640) - Jul 8, 2026
+## 4.4.0 - Jul 8, 2026
 
 **Set macOS signing identity**
 
 - Configure the Xcode project to use the `Apple Development` code signing identity
 
-## 4.3.9 (1639) - Jul 5, 2026
+## 4.3.9 - Jul 5, 2026
 
 **Prefer scaled display resolution**
 
 - Update display to use `UI Looks Like` dimensions when present (scaled dimensions), falling back to `Resolution` (maximum resolution supported by the hardware); this improves reported display resolution for scaled modes
 
-## 4.3.8 (1638) - Jun 30, 2026
+## 4.3.8 - Jun 30, 2026
 
 **Add HDAUniversal audio**
 
 - Add HDAUniversal audio: detection of `HDAUniversal.kext` (new audio system for Hackintoshes, made by *Mald0n*)
 
-## 4.3.7 (1637) - Jun 28, 2026
+## 4.3.7 - Jun 28, 2026
 
 **Per-macOS-version artwork for displays**
 
@@ -65,20 +83,20 @@
 - Use per-macOS-version artwork for built-in screens (MacBook assets), generic external monitors and iMac screens (proper iMac icons has been added)
 - Several asset files have been cleaned up and normalized
 
-## 4.3.6 (1636) - Jun 27, 2026
+## 4.3.6 - Jun 27, 2026
 
 **Update Audio imageset**
 
 - Update `Audio` imageset, thanks to [chris1111](https://github.com/chris1111)
 - Adjust sidebar width in `ContentView.swift` to accommodate localized strings
 
-## 4.3.5 (1635) - Jun 26, 2026
+## 4.3.5 - Jun 26, 2026
 
 **Update Unknown imageset**
 
 - Update `Unknown` imageset, used when macOS version is not recognized; thanks to [chris1111](https://github.com/chris1111)
 
-## 4.3.4 (1632) - Jun 24, 2026
+## 4.3.4 - Jun 24, 2026
 
 **Refactor SIP and Mac model**
 
@@ -87,61 +105,61 @@
 - Add Sparkle 2.9.3 by SPM replacing the integrated Sparkle `xcframework`
 - Update to macOS 27 Golden Gate
 
-## 4.3.2 (1627) - May 19, 2026
+## 4.3.2 - May 19, 2026
 
 **Update Sparkle to 2.9.2**
 
 - Update Sparkle integrated framework to 2.9.2
 
-## 4.3.1 (1626) - May 16, 2026
+## 4.3.1 - May 16, 2026
 
 **Add German language**
 
 - Add German language (thanks to [kgp-macPro]( https://github.com/kgp-macPro))
 - Rename `Storage` to `System disk` in locales
 
-## 4.3.0 (1625) - May 15, 2026
+## 4.3.0 - May 15, 2026
 
 **Update Sparkle and glass version**
 
 - Update Sparkle and app digital signatures by applying `codesign` to the compiled bundle
 - Glass version: apply translucent effect to language selector and about dialog 
 
-## 4.2.9 (1621) - Embed Sparkle.xcframework
+## 4.2.9 - Embed Sparkle.xcframework
 
 - Embed Sparkle by adding Sparkle.xcframework to the project
 - Remove the Swift package product dependency for Sparkle
 
-## 4.2.8 (1620) — DisplayPort audio support
+## 4.2.8 - DisplayPort audio support
 
 - Add DisplayPort audio device support to the Audio tab
 
-## 4.2.7 (1617) — Update documentation
+## 4.2.7 - Update documentation
 
 - Update Sparkle documentation
 
-## 4.2.6 (1615) — HDMI audio support
+## 4.2.6 - HDMI audio support
 
 - Add HDMI audio device support to the Audio tab
 
-## 4.2.5 (1613) — USB audio support · Get back Sparkle updater
+## 4.2.5 - USB audio support · Get back Sparkle updater
 
 - Add USB audio device support to the Audio tab
 - Replace the custom GitHub-based update checker with Sparkle
 
-## 4.2.4 (1610) — Native updater replaces Sparkle
+## 4.2.4 - Native updater replaces Sparkle
 
 - Sparkle is replaced by a native, lightweight SwiftUI GitHub-based update checker that uses the GitHub versioning API and requires no third-party dependencies
 - Localize updater messages
 
-## 4.2.2 (1608) — VoodooHDA audio detection
+## 4.2.2 - VoodooHDA audio detection
 
 - Improve audio detection and VoodooHDA support via the `getdump` tool (work in progress)
 - Fix accents in the French `Localizable.strings` file
 - README: Document audio tab behavior, `getdump` requirement for VoodooHDA, and update screenshot references
 - Assets: Renamed Audio screenshot for AppleALC and added a VoodooHDA screenshot
 
-## 4.2.0 (1604) — Display detection · Audio tab
+## 4.2.0 - Display detection · Audio tab
 
 - Add Audio sidebar tab (work in progress):
   - Displays audio codec information
@@ -157,7 +175,7 @@
 - Center content when the sidebar is hidden
 - Conditionally show scroll indicator in Displays tab: hidden for 1–3 monitors, visible for 4 or more monitors
 
-## 4.0.0 (1595) — Migrate to SwiftUI
+## 4.0.0 - Migrate to SwiftUI
 
 - Migrate main UI to SwiftUI keeping app functionality
 - Add language menu and language selector window (en, es, fr, it)
@@ -168,7 +186,7 @@
 - Replace macOS version icons with liquid glass badges, thanks to [chris1111](https://github.com/chris1111)
 - The app bundle size has been reduced from 29 to 11 MB
 
-## 3.0.0 (1580) — Faster startup and custom logo
+## 3.0.0 - Faster startup and custom logo
 
 - Shorter app startup time
 - Introduces a new Preferences window for customizing the macOS logo in the Overview tab
