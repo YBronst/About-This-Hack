@@ -2,7 +2,7 @@
 //  ViewControllerDisplays.swift
 //  About This Hack
 //
-//  SwiftUI Displays tab: shows connected displays with icons, names and resolutions, DisplayConnectionType.
+//  SwiftUI Displays tab: shows connected displays with icons, names, resolutions and display connection type
 //
 
 import AppKit
