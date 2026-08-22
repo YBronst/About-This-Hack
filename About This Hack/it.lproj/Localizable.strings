@@ -3,7 +3,6 @@
   About This Hack
   
   Italian localization
- https://github.com/antuneddu
 */
 
 /* Tooltips */
@@ -67,9 +66,6 @@
 /* Scheda Display */
 "displays.preferences" = "Preferenze display…";
 "displays.none" = "Nessun display rilevato";
-"displays.connection.builtIn" = "Display integrato";
-"displays.connection.virtual" = "Display virtuale";
-"displays.connection.unknown" = "Tipo sconosciuto";
 
 /* Scheda Audio */
 "audio.none" = "Nessuna informazione sul codec audio disponibile";

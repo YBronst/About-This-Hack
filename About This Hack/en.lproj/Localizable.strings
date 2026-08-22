@@ -66,9 +66,6 @@
 /* Displays tab */
 "displays.preferences" = "Display Preferences…";
 "displays.none" = "No displays detected";
-"displays.connection.builtIn" = "Built-In display";
-"displays.connection.virtual" = "Virtual display";
-"displays.connection.unknown" = "Unknown type";
 
 /* Audio tab */
 "audio.none" = "No audio codec information available";

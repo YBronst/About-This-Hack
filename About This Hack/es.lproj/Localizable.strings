@@ -66,9 +66,6 @@
 /* Pestaña Pantallas */
 "displays.preferences" = "Preferencias de pantallas…";
 "displays.none" = "No se detectaron pantallas";
-"displays.connection.builtIn" = "Pantalla integrada";
-"displays.connection.virtual" = "Pantalla virtual";
-"displays.connection.unknown" = "Tipo desconocido";
 
 /* Pestaña Audio */
 "audio.none" = "No hay información disponible de codec de audio";
