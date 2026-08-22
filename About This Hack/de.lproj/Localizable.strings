@@ -3,7 +3,6 @@
   About This Hack
   
   German localization
-  
   https://github.com/kgp-macPro
 */
 
@@ -68,6 +67,9 @@
 /* Displays tab */
 "displays.preferences" = "Monitoreinstellungen…";
 "displays.none" = "Keine Monitore erkannt";
+"displays.connection.builtIn" = "Integrierter Monitor";
+"displays.connection.virtual" = "Virtueller Monitor";
+"displays.connection.unknown" = "Unbekannter Typ";
 
 /* Audio tab */
 "audio.none" = "Keine Audio-Codec-Informationen verfügbar";

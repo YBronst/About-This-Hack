@@ -2,7 +2,7 @@
 //  ViewControllerDisplays.swift
 //  About This Hack
 //
-//  SwiftUI Displays tab: shows connected displays with icons, names and resolutions.
+//  SwiftUI Displays tab: shows connected displays with icons, names and resolutions, DisplayConnectionType.
 //
 
 import AppKit
@@ -18,7 +18,7 @@ struct DisplaysView: View {
             Spacer()
             displayRow
                 .padding(.bottom, 12)
-            Divider()
+           // Divider()
             HStack {
                 Spacer()
                 Button(NSLocalizedString("displays.preferences", comment: "Display Preferences button")) {
@@ -41,15 +41,29 @@ struct DisplaysView: View {
                 .foregroundColor(.secondary)
         } else {
             GeometryReader { geometry in
-                ScrollView(.horizontal, showsIndicators: displays.count >= 4) {
-                    HStack(alignment: .top, spacing: 32) {
-                        ForEach(displays) { info in
-                            DisplayCard(info: info)
+                if displays.count >= 2 {
+                    HorizontalScrollViewRepresentable(minWidth: geometry.size.width) {
+                        HStack(alignment: .top, spacing: 32) {
+                            ForEach(displays) { info in
+                                DisplayCard(info: info)
+                            }
                         }
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 38)
+                        .frame(minWidth: geometry.size.width, alignment: .center)
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 38)
-                    .frame(minWidth: geometry.size.width, alignment: .center)
+                } else {
+                    ScrollView(.horizontal) {
+                        HStack(alignment: .top, spacing: 32) {
+                            ForEach(displays) { info in
+                                DisplayCard(info: info)
+                            }
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 38)
+                        .frame(minWidth: geometry.size.width, alignment: .center)
+                    }
+                    .scrollIndicators(.hidden)
                 }
             }
             .frame(height: 310)
@@ -59,6 +73,40 @@ struct DisplaysView: View {
     private func openDisplayPreferences() {
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.displays") {
             NSWorkspace.shared.open(url)
+        }
+    }
+}
+
+// MARK: - Horizontal Scroll View (NSScrollView wrapper for always-visible scrollbar)
+
+private struct HorizontalScrollViewRepresentable<Content: View>: NSViewRepresentable {
+    let minWidth: CGFloat
+    @ViewBuilder let content: () -> Content
+
+    func makeNSView(context: Context) -> NSScrollView {
+        let scrollView = NSScrollView()
+        scrollView.hasHorizontalScroller = true
+        scrollView.hasVerticalScroller = false
+        scrollView.autohidesScrollers = false
+        scrollView.scrollerStyle = .legacy
+//        scrollView.drawsBackground = false // Glass effect
+//        scrollView.borderType = .noBorder // Glass effect
+
+        let hostingView = NSHostingView(rootView: AnyView(content()))
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+
+        scrollView.documentView = hostingView
+
+        NSLayoutConstraint.activate([
+            hostingView.heightAnchor.constraint(equalTo: scrollView.contentView.heightAnchor)
+        ])
+
+        return scrollView
+    }
+
+    func updateNSView(_ nsView: NSScrollView, context: Context) {
+        if let hostingView = nsView.documentView as? NSHostingView<AnyView> {
+            hostingView.rootView = AnyView(content())
         }
     }
 }
@@ -74,17 +122,28 @@ private struct DisplayCard: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 200)
+            
             Text(info.name)
                 .font(.system(size: 13, weight: .medium))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .frame(maxWidth: 120)
+            
+            // Displaying the connection type from an Enum
+            Text(info.connectionType.description)
+                .font(.system(size: 10))
+                .foregroundColor(.primary)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(.tertiary, in: Capsule())
+            
             Text(info.resolution)
                 .font(.system(size: 11))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .frame(maxWidth: 120)
+            
             if !info.refreshRate.isEmpty {
                 Text(info.refreshRate)
                     .font(.system(size: 11))
@@ -104,71 +163,331 @@ private struct DisplayCard: View {
 // MARK: - Display Info Model
 
 struct DisplayInfo: Identifiable {
-    let id: Int
+    let id: UUID
     let name: String
     let resolution: String
     let refreshRate: String
+    let connectionType: DisplayConnectionType
     let image: NSImage
+
+    init(
+        id: UUID = UUID(),
+        name: String,
+        resolution: String,
+        refreshRate: String,
+        connectionType: DisplayConnectionType,
+        image: NSImage
+    ) {
+        self.id = id
+        self.name = name
+        self.resolution = resolution
+        self.refreshRate = refreshRate
+        self.connectionType = connectionType
+        self.image = image
+    }
 }
 
 // MARK: - View Model
 
 enum DisplaysViewModel {
+    
     static func buildDisplayList() -> [DisplayInfo] {
         let collector = HardwareCollector.shared
         let count = collector.numberOfDisplays
         guard count > 0 else { return [] }
 
+        let activeIDs = fetchActiveDisplayIDs()
         var result: [DisplayInfo] = []
+        
         for i in 0 ..< count {
-            let rawName = i < collector.displayNames.count ? collector.displayNames[i] : "Display \(i + 1)"
-            let rawRes = i < collector.displayRes.count ? collector.displayRes[i] : ""
-            let rawRefreshRate = i < collector.displayRefreshRates.count ? collector.displayRefreshRates[i] : ""
+            let rawName = collector.displayNames.indices.contains(i) ? collector.displayNames[i] : "Display \(i + 1)"
+            let rawRes = collector.displayRes.indices.contains(i) ? collector.displayRes[i] : ""
+            let rawRefreshRate = collector.displayRefreshRates.indices.contains(i) ? collector.displayRefreshRates[i] : ""
+            
             let trimName = trimDisplayName(rawName)
             let trimRes = removeParentheses(rawRes)
+            
+            var rawConnection = "Unknown"
+            if activeIDs.indices.contains(i) {
+                let displayID = activeIDs[i]
+                rawConnection = fetchConnectionType(for: displayID)
+            }
+            
+            let lowerName = trimName.lowercased()
+            
+            // Completely eliminate the "Unknown" status for external screens
+            if rawConnection == "Unknown" {
+                if lowerName.contains("tv") {
+                    rawConnection = "HDMI"
+                } else if lowerName.contains("sidecar") {
+                    rawConnection = "Sidecar"
+                } else if lowerName.contains("airplay") {
+                    rawConnection = "AirPlay"
+                } else {
+                    // We extract the hertz (for example, "60.00 Hz" -> 60.0)
+                    let cleanRefresh = rawRefreshRate.replacingOccurrences(of: "[^0-9.]", with: "", options: .regularExpression)
+                    let hzValue = Double(cleanRefresh) ?? 60.0
+                    
+                    if hzValue > 61.0 {
+                        rawConnection = "DisplayPort"
+                    } else if lowerName.contains("dell") {
+                        // Specific hardcoded for the SE/E series from Dell without a DP port
+                        rawConnection = "HDMI"
+                    } else {
+                        // Universal fallback for other standard 60Hz monitors
+                        rawConnection = "HDMI / DisplayPort"
+                    }
+                }
+            }
+            
+            let connectionType = DisplayConnectionType(rawString: rawConnection)
             let image = displayImage(for: trimName, index: i, hasBuiltIn: collector.hasBuiltInDisplay)
-            result.append(DisplayInfo(id: i, name: trimName, resolution: trimRes, refreshRate: rawRefreshRate, image: image))
+            
+            let display = DisplayInfo(
+                name: trimName,
+                resolution: trimRes,
+                refreshRate: rawRefreshRate,
+                connectionType: connectionType,
+                image: image
+            )
+            result.append(display)
         }
         return result
+    }
+    
+    private static func fetchActiveDisplayIDs() -> [CGDirectDisplayID] {
+        let maxDisplays: UInt32 = 16
+        var activeDisplays = [CGDirectDisplayID](repeating: 0, count: Int(maxDisplays))
+        var displayCount: UInt32 = 0
+        
+        let result = CGGetActiveDisplayList(maxDisplays, &activeDisplays, &displayCount)
+        if result == .success {
+            return Array(activeDisplays[0..<Int(displayCount)])
+        }
+        return []
+    }
+    
+    private static func fetchConnectionType(for displayID: CGDirectDisplayID) -> String {
+        if CGDisplayIsBuiltin(displayID) == 1 {
+            return "LVDS / eDP (Built-in display"
+        }
+        
+        let vendorID = CGDisplayVendorNumber(displayID)
+        let modelID = CGDisplayModelNumber(displayID)
+        let serialNum = CGDisplaySerialNumber(displayID)
+        
+        let matching = IOServiceMatching("IOFramebuffer")
+        var iterator: io_iterator_t = 0
+        
+        guard IOServiceGetMatchingServices(0, matching, &iterator) == KERN_SUCCESS else {
+            return "Unknown"
+        }
+        
+        var connectionType = "Unknown"
+        var service = IOIteratorNext(iterator)
+        
+        while service != 0 {
+            var info: Unmanaged<CFMutableDictionary>?
+            
+            if IORegistryEntryCreateCFProperties(service, &info, kCFAllocatorDefault, 0) == KERN_SUCCESS,
+               let dict = info?.takeRetainedValue() as? [String: Any] {
+                
+                if let displayAttributes = dict["IODisplayAttributes"] as? [String: Any] {
+                    let serviceVendor = displayAttributes["DisplayVendorID"] as? UInt32 ?? 0
+                    let serviceModel = displayAttributes["DisplayProductID"] as? UInt32 ?? 0
+                    let serviceSerial = displayAttributes["DisplaySerialNumber"] as? UInt32 ?? 0
+                    
+                    if serviceVendor == vendorID && serviceModel == modelID && serviceSerial == serialNum {
+                        if let connectorType = dict["IOConnectorType"] as? Int {
+                            connectionType = parseConnectorType(UInt32(connectorType))
+                            IOObjectRelease(service)
+                            break
+                        }
+                    }
+                }
+            }
+            
+            IOObjectRelease(service)
+            service = IOIteratorNext(iterator)
+        }
+        
+        IOObjectRelease(iterator)
+        return connectionType
+    }
+    
+    private static func parseConnectorType(_ type: UInt32) -> String {
+        if (type & 0x00000400) != 0 { return "DisplayPort" }
+        if (type & 0x00000800) != 0 { return "HDMI" }
+        if (type & 0x00000002) != 0 { return "LVDS / eDP (Built-in display)" }
+        
+        switch type {
+        case 0x00000001: return "Dummy (Disabled)"
+        case 0x00000004: return "S-Video"
+        case 0x00000008: return "VGA"
+        case 0x00000010: return "Dual-Link DVI"
+        case 0x00000100: return "Composite"
+        case 0x00000200: return "Single-Link DVI (DVI-D / DVI-I)"
+        case 0x00002000: return "Apple Display Connector (ADC)"
+        default: return "Unknown"
+        }
+    }
+}
+
+
+// MARK: - Connection Type Enum
+
+enum DisplayConnectionType: String {
+    case builtIn = "Built-In display"
+    case hdmi = "HDMI"
+    case displayPort = "DisplayPort"
+    case thunderbolt = "Thunderbolt"
+    case usbC = "USB-C"
+    case airPlay = "AirPlay"
+    case sidecar = "Sidecar"
+    case vga = "VGA"
+    case dvi = "DVI"
+    case virtual = "Virtual display"
+    case unknown = "Unknown type"
+    
+    var description: String {
+        switch self {
+        case .builtIn:
+            return NSLocalizedString("displays.connection.builtIn", comment: "Built-in/integrated display connection type")
+        case .virtual:
+            return NSLocalizedString("displays.connection.virtual", comment: "Virtual display connection type")
+        case .unknown:
+            return NSLocalizedString("displays.connection.unknown", comment: "Unknown display connection type")
+        default:
+            return self.rawValue
+        }
+    }
+    
+    init(rawString: String) {
+            let lower = rawString.lowercased()
+            
+            // Quick check for an empty string
+            if lower.isEmpty {
+                self = .unknown
+                return
+            }
+            
+            // Apple Silicon Embedded Displays
+            if lower.contains("built") ||
+               lower.contains("internal") ||
+               lower.contains("lcd") ||
+               lower.contains("apple-display") ||
+               lower.contains("wswm") {
+                self = .builtIn
+                return
+            }
+            
+            // Thunderbolt & Type-C (Higher priority as DP/HDMI can go over them)
+            if lower.contains("thunderbolt") || lower.contains("tbt") {
+                self = .thunderbolt
+                return
+            }
+            
+            if lower.contains("usb") || lower.contains("type-c") || lower.contains("typec") {
+                self = .usbC
+                return
+            }
+            
+            // Standard digital interfaces
+            if lower.contains("hdmi") {
+                self = .hdmi
+                return
+            }
+            
+            if lower.contains("displayport") || lower.contains("dp") {
+                self = .displayPort
+                return
+            }
+            
+            // Apple Continuity (Ecosystem)
+            if lower.contains("airplay") {
+                self = .airPlay
+                return
+            }
+            
+            if lower.contains("sidecar") || lower.contains("ipad") {
+                self = .sidecar
+                return
+            }
+            
+            // Virtual displays and software layers
+            if lower.contains("virtual") ||
+               lower.contains("splashtop") ||
+               lower.contains("duet") ||
+               lower.contains("displaylink") ||
+               lower.contains("null") ||
+               lower.contains("mirror") {
+                self = .virtual
+                return
+            }
+            
+            // Legacy analog interfaces (for older docking stations)
+            if lower.contains("vga") {
+                self = .vga
+                return
+            }
+            
+            if lower.contains("dvi") {
+                self = .dvi
+                return
+            }
+            
+            // 8. Fallback case
+            self = .unknown
+        }
     }
 
     // MARK: - Helpers
 
+extension DisplaysViewModel {
+    
     private static func trimDisplayName(_ name: String) -> String {
-        let withoutParens = removeParentheses(name)
-        if let range = withoutParens.range(of: "display", options: .caseInsensitive) {
-            return String(withoutParens[..<range.upperBound])
-                .trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanName = removeParentheses(name)
+        
+        // Removed .anchored to search for a word in any part of the string
+        if let range = cleanName.range(of: "display", options: [.caseInsensitive]) {
+            // A substring from the beginning to the end of the word "display" inclusive
+            let substring = cleanName[..<range.upperBound]
+            return String(substring).trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        return withoutParens.trimmingCharacters(in: .whitespacesAndNewlines)
+        return cleanName
     }
 
     private static func removeParentheses(_ text: String) -> String {
-        text.replacingOccurrences(of: "\\([^)]+\\)", with: "", options: .regularExpression)
+        // Regular expressions in ReplacingOccurrences are recompiled for each call.
+        // For a couple of screens this is not critical, but for optimization it is better to clear the spaces at the end.
+        return text.replacingOccurrences(of: "\\([^)]+\\)", with: "", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private static func displayImage(for name: String, index: Int, hasBuiltIn: Bool) -> NSImage {
-        // First display that's a built-in: use iMac or MacBook icon
+        let lowerName = name.lowercased()
+        
+        // System icon in case the asset is not found in the bundle
+        let fallbackImage = NSImage(systemSymbolName: "display", accessibilityDescription: nil) ?? NSImage()
+        
+        // The first display is built-in: iMac or MacBook
         if index == 0 && hasBuiltIn {
-            if name.contains("imac") {
-                return NSImage(named: genericImacImageNameForCurrentOS()) ?? NSImage()
-            } else {
-                return NSImage(named: genericMacBookImageNameForCurrentOS()) ?? NSImage()
-            }
-        } else {
-            // Display that's not a built-in: use LCD monitor or iPad icon
-            let lower = name.lowercased()
-            let named: String
-            switch lower {
-            case let n where n.contains("sidecar"):
-                named = "iPad"
-            default:
-                named = genericLCDImageNameForCurrentOS()
-            }
-            return NSImage(named: named) ?? NSImage()
+            let imageName = lowerName.contains("imac")
+                ? genericImacImageNameForCurrentOS()
+                : genericMacBookImageNameForCurrentOS()
+            
+            return NSImage(named: imageName) ?? fallbackImage
         }
+        
+        // External displays or Sidecar (iPad)
+        if lowerName.contains("sidecar") {
+            return NSImage(named: "iPad") ?? fallbackImage
+        }
+        
+        return NSImage(named: genericLCDImageNameForCurrentOS()) ?? fallbackImage
     }
+    
+    // MARK: - OS Version Mapping
     
     private static func genericImacImageNameForCurrentOS() -> String {
         switch HCVersion.shared.osVersion {
@@ -232,5 +551,4 @@ enum DisplaysViewModel {
             return "genericMacBook"
         }
     }
-    
 }

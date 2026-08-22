@@ -66,6 +66,9 @@
 /* Onglet Écrans */
 "displays.preferences" = "Préférences des écrans…";
 "displays.none" = "Aucun écran détecté";
+"displays.connection.builtIn" = "Écran intégré";
+"displays.connection.virtual" = "Écran virtuel";
+"displays.connection.unknown" = "Type inconnu";
 
 /* Onglet Audio */
 "audio.none" = "Aucune information sur le codec audio disponible";
