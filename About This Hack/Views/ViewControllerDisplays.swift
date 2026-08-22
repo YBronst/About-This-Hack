@@ -89,8 +89,8 @@ private struct HorizontalScrollViewRepresentable<Content: View>: NSViewRepresent
         scrollView.hasVerticalScroller = false
         scrollView.autohidesScrollers = false
         scrollView.scrollerStyle = .legacy
-//        scrollView.drawsBackground = false // Glass effect
-//        scrollView.borderType = .noBorder // Glass effect
+        scrollView.drawsBackground = false // Glass effect
+        scrollView.borderType = .noBorder // Glass effect
 
         let hostingView = NSHostingView(rootView: AnyView(content()))
         hostingView.translatesAutoresizingMaskIntoConstraints = false
@@ -197,6 +197,7 @@ enum DisplaysViewModel {
         guard count > 0 else { return [] }
 
         let activeIDs = fetchActiveDisplayIDs()
+        let profilerConnectionTypes = fetchProfilerConnectionTypes()
         var result: [DisplayInfo] = []
         
         for i in 0 ..< count {
@@ -207,10 +208,13 @@ enum DisplaysViewModel {
             let trimName = trimDisplayName(rawName)
             let trimRes = removeParentheses(rawRes)
             
-            var rawConnection = "Unknown"
-            if activeIDs.indices.contains(i) {
+            var rawConnection = profilerConnectionTypes.indices.contains(i) ? profilerConnectionTypes[i] : ""
+            if rawConnection.isEmpty, activeIDs.indices.contains(i) {
                 let displayID = activeIDs[i]
                 rawConnection = fetchConnectionType(for: displayID)
+            }
+            if rawConnection.isEmpty {
+                rawConnection = "Unknown"
             }
             
             let lowerName = trimName.lowercased()
@@ -266,6 +270,61 @@ enum DisplaysViewModel {
         }
         return []
     }
+
+    private static func fetchProfilerConnectionTypes() -> [String] {
+        guard let content = HardwareCollector.shared.getCachedFileContent(InitGlobVar.scrFilePath) else {
+            return []
+        }
+
+        let lines = content.components(separatedBy: .newlines)
+        var inDisplaysSection = false
+        var foundDisplayBlock = false
+        var currentConnection = ""
+        var results: [String] = []
+
+        func finishCurrentDisplay() {
+            guard foundDisplayBlock else { return }
+            results.append(currentConnection)
+            foundDisplayBlock = false
+            currentConnection = ""
+        }
+
+        for line in lines {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+
+            if trimmed == "Displays:" {
+                finishCurrentDisplay()
+                inDisplaysSection = true
+                continue
+            }
+
+            if inDisplaysSection, !trimmed.isEmpty,
+               !line.hasPrefix("        "), !line.hasPrefix("\t")
+            {
+                finishCurrentDisplay()
+                inDisplaysSection = false
+            }
+
+            guard inDisplaysSection, !trimmed.isEmpty else { continue }
+
+            if trimmed.hasSuffix(":"), !trimmed.contains(": ") {
+                finishCurrentDisplay()
+                foundDisplayBlock = true
+                continue
+            }
+
+            guard foundDisplayBlock, currentConnection.isEmpty else { continue }
+
+            if let connection = fieldValue(after: "Connection Type:", in: trimmed), !connection.isEmpty {
+                currentConnection = connection
+            } else if let displayType = fieldValue(after: "Display Type:", in: trimmed), !displayType.isEmpty {
+                currentConnection = displayType
+            }
+        }
+
+        finishCurrentDisplay()
+        return results
+    }
     
     private static func fetchConnectionType(for displayID: CGDirectDisplayID) -> String {
         if CGDisplayIsBuiltin(displayID) == 1 {
@@ -298,8 +357,8 @@ enum DisplaysViewModel {
                     let serviceSerial = displayAttributes["DisplaySerialNumber"] as? UInt32 ?? 0
                     
                     if serviceVendor == vendorID && serviceModel == modelID && serviceSerial == serialNum {
-                        if let connectorType = dict["IOConnectorType"] as? Int {
-                            connectionType = parseConnectorType(UInt32(connectorType))
+                        if let connectorType = extractConnectorType(from: dict) {
+                            connectionType = parseConnectorType(connectorType)
                             IOObjectRelease(service)
                             break
                         }
@@ -313,6 +372,72 @@ enum DisplaysViewModel {
         
         IOObjectRelease(iterator)
         return connectionType
+    }
+
+    private static func extractConnectorType(from dict: [String: Any]) -> UInt32? {
+        for key in ["IOConnectorType", "connector-type"] {
+            guard let rawValue = dict[key] else { continue }
+            if let connectorType = parseConnectorTypeValue(rawValue) {
+                return connectorType
+            }
+        }
+        return nil
+    }
+
+    private static func parseConnectorTypeValue(_ value: Any) -> UInt32? {
+        switch value {
+        case let connectorType as UInt32:
+            return connectorType
+        case let connectorType as Int:
+            return UInt32(truncatingIfNeeded: connectorType)
+        case let connectorType as NSNumber:
+            return connectorType.uint32Value
+        case let connectorType as Data:
+            return parseConnectorTypeData(connectorType)
+        case let connectorType as NSData:
+            return parseConnectorTypeData(connectorType as Data)
+        case let connectorType as String:
+            let trimmed = connectorType.trimmingCharacters(in: .whitespacesAndNewlines)
+            if let value = UInt32(trimmed, radix: 10) {
+                return value
+            }
+            let hex = trimmed.replacingOccurrences(of: "0x", with: "")
+            return UInt32(hex, radix: 16)
+        default:
+            return nil
+        }
+    }
+
+    private static func parseConnectorTypeData(_ data: Data) -> UInt32? {
+        guard data.count >= 4 else { return nil }
+
+        let bytes = Array(data.prefix(4))
+        let littleEndian =
+            UInt32(bytes[0]) |
+            (UInt32(bytes[1]) << 8) |
+            (UInt32(bytes[2]) << 16) |
+            (UInt32(bytes[3]) << 24)
+
+        if parseConnectorType(littleEndian) != "Unknown" {
+            return littleEndian
+        }
+
+        let bigEndian =
+            UInt32(bytes[3]) |
+            (UInt32(bytes[2]) << 8) |
+            (UInt32(bytes[1]) << 16) |
+            (UInt32(bytes[0]) << 24)
+
+        if parseConnectorType(bigEndian) != "Unknown" {
+            return bigEndian
+        }
+
+        return littleEndian
+    }
+
+    private static func fieldValue(after label: String, in line: String) -> String? {
+        guard let range = line.range(of: label) else { return nil }
+        return String(line[range.upperBound...]).trimmingCharacters(in: .whitespaces)
     }
     
     private static func parseConnectorType(_ type: UInt32) -> String {
@@ -363,85 +488,100 @@ enum DisplayConnectionType: String {
     }
     
     init(rawString: String) {
-            let lower = rawString.lowercased()
-            
-            // Quick check for an empty string
-            if lower.isEmpty {
+        let lower = rawString.lowercased()
+
+        // Quick check for an empty string
+        if lower.isEmpty {
+            self = .unknown
+            return
+        }
+
+        if lower.contains("/") {
+            let matchedTypes = [
+                lower.contains("hdmi"),
+                lower.contains("displayport"),
+                lower.contains("dvi"),
+                lower.contains("thunderbolt"),
+                lower.contains("usb-c") || lower.contains("type-c") || lower.contains("typec")
+            ].filter { $0 }.count
+
+            if matchedTypes > 1 {
                 self = .unknown
                 return
             }
-            
-            // Apple Silicon Embedded Displays
-            if lower.contains("built") ||
-               lower.contains("internal") ||
-               lower.contains("lcd") ||
-               lower.contains("apple-display") ||
-               lower.contains("wswm") {
-                self = .builtIn
-                return
-            }
-            
-            // Thunderbolt & Type-C (Higher priority as DP/HDMI can go over them)
-            if lower.contains("thunderbolt") || lower.contains("tbt") {
-                self = .thunderbolt
-                return
-            }
-            
-            if lower.contains("usb") || lower.contains("type-c") || lower.contains("typec") {
-                self = .usbC
-                return
-            }
-            
-            // Standard digital interfaces
-            if lower.contains("hdmi") {
-                self = .hdmi
-                return
-            }
-            
-            if lower.contains("displayport") || lower.contains("dp") {
-                self = .displayPort
-                return
-            }
-            
-            // Apple Continuity (Ecosystem)
-            if lower.contains("airplay") {
-                self = .airPlay
-                return
-            }
-            
-            if lower.contains("sidecar") || lower.contains("ipad") {
-                self = .sidecar
-                return
-            }
-            
-            // Virtual displays and software layers
-            if lower.contains("virtual") ||
-               lower.contains("splashtop") ||
-               lower.contains("duet") ||
-               lower.contains("displaylink") ||
-               lower.contains("null") ||
-               lower.contains("mirror") {
-                self = .virtual
-                return
-            }
-            
-            // Legacy analog interfaces (for older docking stations)
-            if lower.contains("vga") {
-                self = .vga
-                return
-            }
-            
-            if lower.contains("dvi") {
-                self = .dvi
-                return
-            }
-            
-            // 8. Fallback case
-            self = .unknown
         }
-    }
 
-    // MARK: - Helpers
+        // Apple Silicon Embedded Displays
+        if lower.contains("built") ||
+           lower.contains("internal") ||
+           lower.contains("lcd") ||
+           lower.contains("apple-display") ||
+           lower.contains("wswm") {
+            self = .builtIn
+            return
+        }
+
+        // Thunderbolt & Type-C (Higher priority as DP/HDMI can go over them)
+        if lower.contains("thunderbolt") || lower.contains("tbt") {
+            self = .thunderbolt
+            return
+        }
+
+        if lower.contains("usb") || lower.contains("type-c") || lower.contains("typec") {
+            self = .usbC
+            return
+        }
+
+        // Standard digital interfaces
+        if lower.contains("hdmi") {
+            self = .hdmi
+            return
+        }
+
+        if lower.contains("displayport") || lower.contains("dp") {
+            self = .displayPort
+            return
+        }
+
+        // Apple Continuity (Ecosystem)
+        if lower.contains("airplay") {
+            self = .airPlay
+            return
+        }
+
+        if lower.contains("sidecar") || lower.contains("ipad") {
+            self = .sidecar
+            return
+        }
+
+        // Virtual displays and software layers
+        if lower.contains("virtual") ||
+           lower.contains("splashtop") ||
+           lower.contains("duet") ||
+           lower.contains("displaylink") ||
+           lower.contains("null") ||
+           lower.contains("mirror") {
+            self = .virtual
+            return
+        }
+
+        // Legacy analog interfaces (for older docking stations)
+        if lower.contains("vga") {
+            self = .vga
+            return
+        }
+
+        if lower.contains("dvi") {
+            self = .dvi
+            return
+        }
+
+        // 8. Fallback case
+        self = .unknown
+    }
+}
+
+// MARK: - Helpers
 
 extension DisplaysViewModel {
     
