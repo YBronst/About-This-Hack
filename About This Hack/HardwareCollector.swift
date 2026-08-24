@@ -10,6 +10,12 @@ class HardwareCollector {
     nonisolated(unsafe) static let shared = HardwareCollector()
     private init() {}
 
+    private struct DisplaySnapshot {
+        let name: String
+        let resolution: String
+        let refreshRate: String
+    }
+
     // File content cache
     private var fileContentCache: [String: String] = [:]
     private let cacheLock = NSLock()
@@ -119,6 +125,12 @@ class HardwareCollector {
         displayRes = getDisplayRes()
         displayRefreshRates = getDisplayRefreshRates()
         displayNames = getDisplayNames()
+        // Use whichever source reports more displays.  system_profiler is preferred
+        // because it includes AirPlay / Sidecar displays that were not always present
+        // in NSScreen.screens on older macOS releases, but on macOS 15+ NSScreen also
+        // lists them.  Taking the max ensures neither source causes a display to be
+        // silently dropped.
+        numberOfDisplays = max(displayNames.isEmpty ? 0 : displayNames.count, NSScreen.screens.count)
         (storageType, storageData, storagePercent) = getStorageInfo()
 
         // Pre-warm HCSerialNumber on the background thread.  Its lazy var reads
@@ -144,6 +156,21 @@ class HardwareCollector {
         dataHasBeenSet = true
     }
 
+    func refreshDisplayData() {
+        let scrContent = run("system_profiler SPDisplaysDataType 2>/dev/null")
+        guard !scrContent.isEmpty else { return }
+
+        storeCachedFileContent(InitGlobVar.scrFilePath, content: scrContent)
+        HCDisplay.shared.reset()
+        HCGPU.shared.reset()
+
+        hasBuiltInDisplay = checkForBuiltInDisplay()
+        displayNames = getDisplayNames()
+        displayRes = getDisplayRes()
+        displayRefreshRates = getDisplayRefreshRates()
+        numberOfDisplays = max(displayNames.isEmpty ? 0 : displayNames.count, NSScreen.screens.count)
+    }
+
     /// Extracts the pixel-dimensions portion from a resolution field value string,
     /// stripping any trailing "(…)" parenthesised annotations and "@ XX Hz" refresh-rate suffix.
     private func extractDimensions(from fieldValue: String) -> String {
@@ -157,128 +184,15 @@ class HardwareCollector {
     }
 
     private func getDisplayRes() -> [String] {
-        guard let content = getCachedFileContent(InitGlobVar.scrFilePath) else { return [] }
-        let lines = content.components(separatedBy: .newlines)
-        var result: [String] = []
-
-        for (i, line) in lines.enumerated() {
-            guard line.contains("Resolution:"),
-                  let resRange = line.range(of: "Resolution:") else { continue }
-
-            // Extract the Resolution value as fallback
-            let resValue = extractDimensions(from: String(line[resRange.upperBound...]))
-
-            // Look ahead for "UI Looks like:" within the same display block.
-            // If found, use its dimensions as the effective (scaled) resolution.
-            var scaledResolution: String? = nil
-            for j in (i + 1) ..< min(i + 6, lines.count) {
-                let next = lines[j]
-                // Another Resolution: line means a new display — stop looking
-                if next.contains("Resolution:") { break }
-                if next.contains("UI Looks like:"),
-                   let uiRange = next.range(of: "UI Looks like:")
-                {
-                    let uiValue = extractDimensions(from: String(next[uiRange.upperBound...]))
-                    if !uiValue.isEmpty {
-                        scaledResolution = uiValue
-                    }
-                    break
-                }
-            }
-
-            let finalRes = scaledResolution ?? resValue
-            if !finalRes.isEmpty {
-                result.append(finalRes)
-            }
-        }
-        return result
+        getDisplaySnapshots().map(\.resolution)
     }
 
     private func getDisplayRefreshRates() -> [String] {
-        guard let content = getCachedFileContent(InitGlobVar.scrFilePath) else { return [] }
-        let lines = content.components(separatedBy: .newlines)
-        var result: [String] = []
-
-        for (i, line) in lines.enumerated() {
-            guard line.contains("Resolution:"),
-                  let resRange = line.range(of: "Resolution:") else { continue }
-
-            let resValue = String(line[resRange.upperBound...]).trimmingCharacters(in: .whitespaces)
-
-            // First try the Resolution line itself (e.g. "2560 x 1440 @ 60 Hz")
-            if let match = resValue.range(of: #"@\s*[\d.]+ ?Hz"#, options: .regularExpression) {
-                result.append(String(resValue[match])
-                    .replacingOccurrences(of: "@", with: "")
-                    .trimmingCharacters(in: .whitespaces)
-                    .replacingOccurrences(of: #"(\d)Hz"#, with: "$1 Hz", options: .regularExpression))
-                continue
-            }
-
-            // Fallback: look for "UI Looks like:" within the next few lines of the
-            // same display block (Retina / HiDPI displays report Hz there, not on
-            // the Resolution line).  Stop early if we reach another display property
-            // that signals we have moved past the relevant block.
-            var rate = ""
-            for j in (i + 1) ..< min(i + 6, lines.count) {
-                let next = lines[j]
-                let nextTrimmed = next.trimmingCharacters(in: .whitespaces)
-                // Another Resolution: line means a new display — stop looking
-                if next.contains("Resolution:") { break }
-                if next.contains("UI Looks like:"),
-                   let uiRange = next.range(of: "UI Looks like:")
-                {
-                    let uiValue = String(next[uiRange.upperBound...]).trimmingCharacters(in: .whitespaces)
-                    if let match = uiValue.range(of: #"@\s*[\d.]+ ?Hz"#, options: .regularExpression) {
-                        rate = String(uiValue[match])
-                            .replacingOccurrences(of: "@", with: "")
-                            .trimmingCharacters(in: .whitespaces)
-                            .replacingOccurrences(of: #"(\d)Hz"#, with: "$1 Hz", options: .regularExpression)
-                    }
-                    break
-                }
-                // A display-name line (ends with ":" and has no spaces in the trimmed form, or
-                // is just a section header) means we left the current display block — stop.
-                if !nextTrimmed.isEmpty, nextTrimmed.hasSuffix(":"), !nextTrimmed.contains(" ") {
-                    break
-                }
-            }
-            result.append(rate)
-        }
-        return result
+        getDisplaySnapshots().map(\.refreshRate)
     }
 
     private func getDisplayNames() -> [String] {
-        guard let content = getCachedFileContent(InitGlobVar.scrFilePath) else { return [] }
-
-        var displayNames: [String] = []
-        var inDisplaysSection = false
-
-        let lines = content.components(separatedBy: .newlines)
-        for line in lines {
-            let trimmed = line.trimmingCharacters(in: .whitespaces)
-
-            if trimmed == "Displays:" {
-                inDisplaysSection = true
-                continue
-            }
-
-            // A non-empty line at shallower indentation (< 8 spaces) means we have
-            // left the current Displays: block (e.g., another GPU section header).
-            // Reset so we don't capture GPU names as display names.
-            if inDisplaysSection, !trimmed.isEmpty,
-               !line.hasPrefix("        "), !line.hasPrefix("\t")
-            {
-                inDisplaysSection = false
-            }
-
-            if inDisplaysSection, trimmed.hasSuffix(":") {
-                // This is a display name (e.g., "G27Q:")
-                let name = String(trimmed.dropLast())
-                displayNames.append(name)
-            }
-        }
-
-        return displayNames
+        getDisplaySnapshots().map(\.name)
     }
 
     private func checkForBuiltInDisplay() -> Bool {
@@ -287,6 +201,120 @@ class HardwareCollector {
         return lower.contains("connection type: internal") || lower.contains("display type: built-in")
     }
 
+    private func getDisplaySnapshots() -> [DisplaySnapshot] {
+        guard let content = getCachedFileContent(InitGlobVar.scrFilePath) else { return [] }
+
+        let lines = content.components(separatedBy: .newlines)
+        var snapshots: [DisplaySnapshot] = []
+        var i = 0
+
+        while i < lines.count {
+            let line = lines[i]
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+
+            guard trimmed == "Displays:" else {
+                i += 1
+                continue
+            }
+
+            let displaysIndent = line.prefix(while: { $0 == " " || $0 == "\t" }).count
+            i += 1
+
+            while i < lines.count {
+                let displayLine = lines[i]
+                let displayTrimmed = displayLine.trimmingCharacters(in: .whitespaces)
+
+                if displayTrimmed.isEmpty {
+                    i += 1
+                    continue
+                }
+
+                let displayIndent = displayLine.prefix(while: { $0 == " " || $0 == "\t" }).count
+                if displayIndent <= displaysIndent {
+                    break
+                }
+
+                if displayTrimmed.hasSuffix(":"), !displayTrimmed.contains(": ") {
+                    let displayName = String(displayTrimmed.dropLast())
+                    let blockIndent = displayIndent
+                    var blockLines: [String] = []
+                    i += 1
+
+                    while i < lines.count {
+                        let blockLine = lines[i]
+                        let blockTrimmed = blockLine.trimmingCharacters(in: .whitespaces)
+
+                        if blockTrimmed.isEmpty {
+                            i += 1
+                            continue
+                        }
+
+                        let indent = blockLine.prefix(while: { $0 == " " || $0 == "\t" }).count
+                        if indent <= blockIndent {
+                            break
+                        }
+
+                        blockLines.append(blockLine)
+                        i += 1
+                    }
+
+                    snapshots.append(DisplaySnapshot(
+                        name: displayName,
+                        resolution: displayResolution(from: blockLines),
+                        refreshRate: displayRefreshRate(from: blockLines)
+                    ))
+                    continue
+                }
+
+                i += 1
+            }
+        }
+
+        return snapshots
+    }
+
+    private func displayResolution(from lines: [String]) -> String {
+        var resolutionValue = ""
+        var scaledResolution = ""
+
+        for line in lines {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+
+            if resolutionValue.isEmpty,
+               let resRange = trimmed.range(of: "Resolution:")
+            {
+                resolutionValue = extractDimensions(from: String(trimmed[resRange.upperBound...]))
+                continue
+            }
+
+            if scaledResolution.isEmpty,
+               let uiRange = trimmed.range(of: "UI Looks like:")
+            {
+                scaledResolution = extractDimensions(from: String(trimmed[uiRange.upperBound...]))
+            }
+        }
+
+        return scaledResolution.isEmpty ? resolutionValue : scaledResolution
+    }
+
+    private func displayRefreshRate(from lines: [String]) -> String {
+        for line in lines {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+
+            for label in ["Resolution:", "UI Looks like:"] {
+                guard let range = trimmed.range(of: label) else { continue }
+                let value = String(trimmed[range.upperBound...]).trimmingCharacters(in: .whitespaces)
+                if let match = value.range(of: #"@\s*[\d.]+ ?Hz"#, options: .regularExpression) {
+                    return String(value[match])
+                        .replacingOccurrences(of: "@", with: "")
+                        .trimmingCharacters(in: .whitespaces)
+                        .replacingOccurrences(of: #"(\d)Hz"#, with: "$1 Hz", options: .regularExpression)
+                }
+            }
+        }
+
+        return ""
+    }
     private func getStorageInfo() -> (Bool, String, Double) {
         var lines: [String] = []
         var contentStr = ""

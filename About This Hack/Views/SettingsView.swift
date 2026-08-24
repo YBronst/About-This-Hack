@@ -209,8 +209,6 @@ class SettingsViewModel: ObservableObject {
         statusMessage = message
         statusColor = .red
 
-        // Play beep sound for errors
-//        NSSound.beep()
     }
 }
 

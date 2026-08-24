@@ -114,6 +114,14 @@ The custom logo image is saved in the path `~/Library/Application Support/com.0x
 | --- |
 | ![Overview](Images/Custom-logo.png) | 
 
+## Loading indicator
+
+The spinning loading indicator now has its own transparent window.
+
+| |
+| --- |
+| ![Overview](Images/Loading.png) | 
+
 ## Languages
 
 - Language system: English (`en`), Spanish (`es`), German (`de`), French (`fr`), Italian (`it`)

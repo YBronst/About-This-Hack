@@ -40,41 +40,63 @@ final class HCDisplay: @unchecked Sendable {
 
         let lines = content.components(separatedBy: .newlines)
 
-        // Find the Displays: subsection anywhere in the output
-        guard let displaysIndex = lines.firstIndex(where: { line in
-            let trimmed = line.trimmingCharacters(in: .whitespaces)
-            return trimmed == "Displays:"
-        }) else {
-            print("Error: Displays section not found in cached data")
-            return ("Unknown Display", "No display information available")
-        }
+        // Collect display lines from ALL "Displays:" sections so that AirPlay and
+        // Sidecar entries (which appear under their own virtual-GPU section in
+        // system_profiler output) are included alongside the built-in display.
+        var allDisplayLines: [String] = []
+        var firstDisplayLines: [String] = []
+        var firstSectionDone = false
+        var i = 0
 
-        // Collect display lines - they are indented after "Displays:"
-        // Skip blank lines (modern system_profiler output has blank lines between sections).
-        // Stop only when a non-empty line returns to a shallower indentation level.
-        var displayLines: [String] = []
-        var i = displaysIndex + 1
         while i < lines.count {
             let line = lines[i]
             let trimmed = line.trimmingCharacters(in: .whitespaces)
 
-            if trimmed.isEmpty {
+            if trimmed == "Displays:" {
+                // Record the indentation of this "Displays:" line so we know where
+                // the block ends, regardless of how deeply it is nested.
+                let displaysIndent = line.prefix(while: { $0 == " " || $0 == "\t" }).count
                 i += 1
+
+                var sectionLines: [String] = []
+                while i < lines.count {
+                    let inner = lines[i]
+                    let innerTrimmed = inner.trimmingCharacters(in: .whitespaces)
+
+                    if innerTrimmed.isEmpty {
+                        i += 1
+                        continue
+                    }
+
+                    let indent = inner.prefix(while: { $0 == " " || $0 == "\t" }).count
+                    if indent <= displaysIndent {
+                        break
+                    }
+
+                    sectionLines.append(inner)
+                    i += 1
+                }
+
+                if !sectionLines.isEmpty {
+                    allDisplayLines.append(contentsOf: sectionLines)
+                    if !firstSectionDone {
+                        firstDisplayLines = sectionLines
+                        firstSectionDone = true
+                    }
+                }
                 continue
             }
 
-            // Stop when indentation decreases to root level (no longer inside Displays:)
-            if !line.hasPrefix("        "), !line.hasPrefix("\t") {
-                break
-            }
-
-            displayLines.append(line)
             i += 1
         }
 
-        let mainDisplay = getMainDisplayInfo(from: displayLines)
-        // For a full list, include the same block
-        let allDisplays = getAllDisplaysInfo(from: displayLines)
+        guard !firstDisplayLines.isEmpty else {
+            print("Error: Displays section not found in cached data")
+            return ("Unknown Display", "No display information available")
+        }
+
+        let mainDisplay = getMainDisplayInfo(from: firstDisplayLines)
+        let allDisplays = getAllDisplaysInfo(from: allDisplayLines)
 
         return (mainDisplay, allDisplays)
     }

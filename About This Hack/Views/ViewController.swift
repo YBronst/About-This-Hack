@@ -23,18 +23,18 @@ struct OverviewView: View {
                 .padding(.bottom, 16)
                 .frame(maxWidth: .infinity, alignment: sidebarVisible ? .leading : .center)
 
-            Divider()
+//            Divider()
 
             specsSection
                 .padding(.horizontal, 24)
                 .padding(.vertical, 14)
                 .frame(maxWidth: .infinity, alignment: sidebarVisible ? .leading : .center)
 
-            Divider()
+//            Divider()
 
             footerSection
                 .padding(.horizontal, 24)
-                .padding(.vertical, 12)
+                .padding(.vertical, 32)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .onReceive(NotificationCenter.default.publisher(for: .customLogoDidChange)) { _ in

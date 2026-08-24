@@ -69,8 +69,8 @@ struct LanguageSelectorView: View {
                                 .font(.body)
                             Spacer()
                             if selectedLanguage == language.code {
-                                //Text("◁                ")
-                                    //.foregroundColor(Color.orange)
+                                Text("◁                ")
+                                    .foregroundColor(Color.orange)
                                 Capsule()
                                     .frame(width: 5, height: 18)
                                     .foregroundColor(.accentColor)
@@ -86,7 +86,7 @@ struct LanguageSelectorView: View {
                     }
                 }
             }
-            .frame(width: 210, height: 210)
+            .frame(width: 210, height: 192)
             .border(Color.gray.opacity(0.1), width: 0.1)
             
             HStack(spacing: 11) {
@@ -105,10 +105,11 @@ struct LanguageSelectorView: View {
                 }
                 .keyboardShortcut(.defaultAction)
             }
-            .padding(.bottom)
+            Spacer()
+//            .padding(.bottom)
         }
         .padding()
-        .frame(width: 215)
+        .frame(width: 240, height: 320)
         .background(.ultraThinMaterial, ignoresSafeAreaEdges: .all)
         .alert(
             NSLocalizedString("Language changed alert title", comment: "Language changed alert title"),
