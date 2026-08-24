@@ -27,12 +27,20 @@
 
 ## 5.0.0 - Aug 2, 2026
 
-**Migrate to Swift 6 (WIP)**
+**Migrate to Swift 6**
 
 - Major update: migration to Swift 6 → fix errors and warnings, UI enhancements, more robust logic
 - Higher minimum requirements:
    - macOS 15 Sequoia
    - Xcode supporting Swift 6
+
+## 4.4.9 - Aug 10, 2026
+
+**Enhance Displays tab**
+
+- Fix horizontal scrollbar when there are 2 or more connected displays
+- AirPlay/Sidecar display fixes in Displays tab
+- Normalize display refresh rates to whole numbers
 
 ## 4.4.8 - Jul 31, 2026
 
