@@ -1,6 +1,6 @@
 # Releases Changelog
 
-5.0.4 - Aug 24, 2026
+## 5.0.4 - Aug 24, 2026
 
 **Scroll bar in displays tab**
 
