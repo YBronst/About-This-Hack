@@ -78,11 +78,6 @@ The Audio tab is displayed in these situations:
 - USB audio
 - HDMI or DisplayPort audio.
 
-| |
-| --- |
-| ![Overview](Images/Audio.png) | 
-
-
 **Note**: `getdump` is a tool available in the VoodooHDA repository. The download link is usually found in the resources section of each VoodooHDA release. The latest version is available at this [link](https://github.com/CloverHackyColor/VoodooHDA/releases/download/Release312/getdump.zip). VoodooHDA users must have `getdump` installed to get the audio tab. Simply copy the tool to `/usr/local/bin` and that's all.
 
 ## Support
@@ -113,14 +108,6 @@ The custom logo image is saved in the path `~/Library/Application Support/com.0x
 | |
 | --- |
 | ![Overview](Images/Custom-logo.png) | 
-
-## Loading indicator
-
-The spinning loading indicator now has its own transparent window.
-
-| |
-| --- |
-| ![Overview](Images/Loading.png) | 
 
 ## Languages
 
