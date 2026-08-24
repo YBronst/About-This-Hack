@@ -5,6 +5,7 @@
 **Scroll bar in displays tab**
 
 - Improved the horizontal scroll bar when 2 or more screens are connected
+- Improve detection of Sidecar and AirPlay screens 
 
 ## 5.0.3 - Aug 19, 2026
 
