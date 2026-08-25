@@ -1,10 +1,10 @@
 //
-//  HCversion.swift
+//  HCVersion.swift
 //  About This Hack
 //
 
-import Foundation
 import Darwin
+import Foundation
 
 class HCVersion {
     nonisolated(unsafe) static let shared = HCVersion()
@@ -40,7 +40,7 @@ class HCVersion {
     }
 
     private func getOSBuild() -> String {
-        return run("sw_vers -buildVersion").trimmingCharacters(in: .whitespacesAndNewlines)
+        run("sw_vers -buildVersion").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func setOSVersion(osNumber: String) {
@@ -59,14 +59,14 @@ class HCVersion {
 
     private func macOSVersionToString() -> String {
         switch osVersion {
-        case .bigSur: return "Big Sur"
-        case .monterey: return "Monterey"
-        case .ventura: return "Ventura"
-        case .sonoma: return "Sonoma"
-        case .sequoia: return "Sequoia"
-        case .tahoe: return "Tahoe"
-        case .goldengate: return "Golden Gate"
-        case .unknown: return ""
+        case .bigSur: "Big Sur"
+        case .monterey: "Monterey"
+        case .ventura: "Ventura"
+        case .sonoma: "Sonoma"
+        case .sequoia: "Sequoia"
+        case .tahoe: "Tahoe"
+        case .goldengate: "Golden Gate"
+        case .unknown: ""
         }
     }
 
@@ -120,14 +120,14 @@ class HCVersion {
 
     func getOSImageName() -> String {
         switch osVersion {
-        case .bigSur: return "Big Sur"
-        case .monterey: return "Monterey"
-        case .ventura: return "Ventura"
-        case .sonoma: return "Sonoma"
-        case .sequoia: return "Sequoia"
-        case .tahoe: return "Tahoe"
-        case .goldengate: return "Golden Gate"
-        case .unknown: return "Unknown"
+        case .bigSur: "Big Sur"
+        case .monterey: "Monterey"
+        case .ventura: "Ventura"
+        case .sonoma: "Sonoma"
+        case .sequoia: "Sequoia"
+        case .tahoe: "Tahoe"
+        case .goldengate: "Golden Gate"
+        case .unknown: "Unknown"
         }
     }
 

@@ -33,7 +33,7 @@ class HCMacModel {
         let name = macModels[infoString] ?? "Mac"
 
         // if not in macModels, use plist just in case
-        if name == "Mac" && infoString != "MacPro7,1" {
+        if name == "Mac", infoString != "MacPro7,1" {
             let baseCommand = "defaults read"
             let plistPath = "~/Library/Preferences/com.apple.SystemProfiler.plist"
             let key = "\"CPU Names\""
@@ -92,14 +92,14 @@ class HCMacModel {
         "Mac15,5": "iMac (24-inch, M3, 2023)",
         "Mac16,2": "iMac (24-inch, M4, 2024)", // two ports
         "Mac16,3": "iMac (24-inch, M4, 2024)", // four ports
-        
+
         // iMac Pros
         "iMacPro1,1": "iMac Pro (2017)",
-        
+
         // Developer Transition Kits
         "ADP2,1": "Apple Development Platform",
         "ADP3,2": "Developer Transition Kit (ARM)",
-        
+
         // Mac Minis
         "Macmini1,1": "Mac Mini (Early 2006)",
         "Macmini2,1": "Mac Mini (Late 2006)",
@@ -117,7 +117,7 @@ class HCMacModel {
         "Mac14,12": "Mac Mini (M2 Pro, 2023)",
         "Mac16,10": "Mac Mini (M4, 2024)",
         "Mac16,11": "Mac Mini (M4 Pro, 2024)",
-        
+
         // Mac Pros
         "MacPro1,1": "Mac Pro (2006)",
         "MacPro1,1,Quad": "Mac Pro (2006)",
@@ -128,7 +128,7 @@ class HCMacModel {
         "MacPro6,1": "Mac Pro (Late 2013)",
         "MacPro7,1": "Mac Pro (2019)",
         "Mac14,8": "Mac Pro (2023)",
-        
+
         // Mac Studios
         "Mac13,1": "Mac Studio (M1 Max, 2022)",
         "Mac13,2": "Mac Studio (M1 Ultra, 2022)",
@@ -136,7 +136,7 @@ class HCMacModel {
         "Mac14,14": "Mac Studio (M2 Ultra, 2023)",
         "Mac15,14": "Mac Studio (M3 Ultra, 2025)",
         "Mac16,9": "Mac Studio (M4 Max, 2025)",
-        
+
         // MacBooks
         "MacBook1,1": "MacBook (Early 2006)",
         "MacBook2,1": "MacBook (Late 2006)",
@@ -149,7 +149,7 @@ class HCMacModel {
         "MacBook8,1": "MacBook (Early 2015)",
         "MacBook9,1": "MacBook (Early 2016)",
         "MacBook10,1": "MacBook (Mid 2017)",
-        
+
         // MacBook Airs
         "MacBookAir1,1": "MacBook Air (2008)",
         "MacBookAir2,1": "MacBook Air (Mid 2009)",
@@ -175,7 +175,7 @@ class HCMacModel {
         "Mac16,13": "MacBook Air (15-inch, M4, 2025)",
         "Mac17,3": "MacBook Air (13-inch, M5, 2026)",
         "Mac17,4": "MacBook Air (15-inch, M5, 2026)",
-        
+
         // Legacy MacBook Pros
         "MacBookPro1,1": "MacBook Pro (15-inch, Early 2006)",
         "MacBookPro1,2": "MacBook Pro (17-inch, Late 2006)",
@@ -187,7 +187,7 @@ class HCMacModel {
         "MacBookPro5,3": "MacBook Pro (15-inch, Mid 2009)",
         "MacBookPro5,4": "MacBook Pro (15-inch, Mid 2009)",
         "MacBookPro6,1": "MacBook Pro (17-inch, Mid 2010)",
-        
+
         // MacBook Pros
         // 13-inch
         "MacBookPro5,5": "MacBook Pro (13-inch, 2009)",
@@ -221,7 +221,7 @@ class HCMacModel {
         "Mac16,8": "MacBook Pro (14-inch, Nov 2024)", // M4 Pro/Max
         "Mac17,2": "MacBook Pro (14-inch, M5, 2025)",
         "Mac17,7": "MacBook Pro (14-inch, M5 Max, 2026)",
-         "Mac17,9": "MacBook Pro (14-inch, M5 Pro, 2026)",
+        "Mac17,9": "MacBook Pro (14-inch, M5 Pro, 2026)",
         // 15-inch
         "MacBookPro4,1": "MacBook Pro (15/17-inch, 2008)",
         "MacBookPro6,2": "MacBook Pro (15-inch, Mid 2010)",
@@ -252,7 +252,7 @@ class HCMacModel {
         "Mac17,8": "MacBook Pro (16-inch, M5 Pro, 2026)",
         // 17-inch
         "MacBookPro8,3": "MacBook Pro (17-inch, Late 2011)",
-        
+
         // Unknown
         // In the rare case that the Mac model is not found
         "Unknown": "Mac (UNKNOWN)",

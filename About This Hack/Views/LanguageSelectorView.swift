@@ -12,7 +12,7 @@ struct LanguageItem: Identifiable {
     let code: String
     let name: String
     let flag: String
-    
+
     init(code: String, name: String, flag: String) {
         id = code
         self.code = code
@@ -26,7 +26,7 @@ struct LanguageSelectorView: View {
     @State private var selectedLanguage: String
     @State private var showRestartAlert = false
     private let initialLanguage: String
-    
+
     /// Available languages
     private let languages: [LanguageItem] = [
         LanguageItem(code: "en", name: "English", flag: "🇬🇧"),
@@ -36,11 +36,11 @@ struct LanguageSelectorView: View {
         LanguageItem(code: "it", name: "Italiano", flag: "🇮🇹"),
         LanguageItem(code: "ru", name: "Russian", flag: "🇷🇺"),
     ]
-    
+
     private var hasLanguageChanged: Bool {
         selectedLanguage != initialLanguage
     }
-    
+
     init(onDismiss: @escaping () -> Void) {
         self.onDismiss = onDismiss
         // Load current language preference from UserDefaults
@@ -51,13 +51,13 @@ struct LanguageSelectorView: View {
         _selectedLanguage = State(initialValue: currentLang)
         initialLanguage = currentLang
     }
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Text(NSLocalizedString("Language selector title", comment: "Language selector title"))
                 .font(.title2)
                 .padding(.top)
-            
+
             // Replaced List with ScrollView + ForEach for functional bindings
             ScrollView {
                 VStack(spacing: 0) {
@@ -88,13 +88,13 @@ struct LanguageSelectorView: View {
             }
             .frame(width: 210, height: 192)
             .border(Color.gray.opacity(0.1), width: 0.1)
-            
+
             HStack(spacing: 11) {
                 Button(NSLocalizedString("Cancel", comment: "Cancel button")) {
                     onDismiss()
                 }
                 .keyboardShortcut(.cancelAction)
-                
+
                 Button(NSLocalizedString("OK", comment: "OK button")) {
                     if hasLanguageChanged {
                         saveLanguagePreference()
@@ -122,7 +122,7 @@ struct LanguageSelectorView: View {
             Text(NSLocalizedString("Language changed message", comment: "Language changed message"))
         }
     }
-    
+
     private func saveLanguagePreference() {
         UserDefaults.standard.set([selectedLanguage], forKey: "AppleLanguages")
         switch selectedLanguage {

@@ -18,7 +18,7 @@ struct DisplaysView: View {
             Spacer()
             displayRow
                 .padding(.bottom, 12)
-           // Divider()
+            // Divider()
             HStack {
                 Spacer()
                 Button(NSLocalizedString("displays.preferences", comment: "Display Preferences button")) {
@@ -93,7 +93,7 @@ private struct HorizontalScrollViewRepresentable<Content: View>: NSViewRepresent
     let minWidth: CGFloat
     @ViewBuilder let content: () -> Content
 
-    func makeNSView(context: Context) -> NSScrollView {
+    func makeNSView(context _: Context) -> NSScrollView {
         let scrollView = NSScrollView()
         scrollView.hasHorizontalScroller = true
         scrollView.hasVerticalScroller = false
@@ -108,13 +108,13 @@ private struct HorizontalScrollViewRepresentable<Content: View>: NSViewRepresent
         scrollView.documentView = hostingView
 
         NSLayoutConstraint.activate([
-            hostingView.heightAnchor.constraint(equalTo: scrollView.contentView.heightAnchor)
+            hostingView.heightAnchor.constraint(equalTo: scrollView.contentView.heightAnchor),
         ])
 
         return scrollView
     }
 
-    func updateNSView(_ nsView: NSScrollView, context: Context) {
+    func updateNSView(_ nsView: NSScrollView, context _: Context) {
         if let hostingView = nsView.documentView as? NSHostingView<AnyView> {
             hostingView.rootView = AnyView(content())
         }
@@ -132,7 +132,7 @@ private struct DisplayCard: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 200)
-            
+
             Text(info.name)
                 .font(.system(size: 13, weight: .medium))
                 .multilineTextAlignment(.center)
@@ -144,7 +144,7 @@ private struct DisplayCard: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .frame(maxWidth: 120)
-            
+
             if !info.refreshRate.isEmpty {
                 Text(info.refreshRate)
                     .font(.system(size: 11))
@@ -188,7 +188,6 @@ struct DisplayInfo: Identifiable {
 // MARK: - View Model
 
 enum DisplaysViewModel {
-    
     static func buildDisplayList() -> [DisplayInfo] {
         let collector = HardwareCollector.shared
         let screens = NSScreen.screens
@@ -203,20 +202,19 @@ enum DisplaysViewModel {
         )
         guard count > 0 else { return [] }
         var result: [DisplayInfo] = []
-        
+
         for i in 0 ..< count {
             // Prefer system_profiler data; fall back to NSScreen for displays that
             // appear in NSScreen but were not reported by system_profiler (e.g., when
             // the AirPlay/Sidecar section uses shallower indentation than expected and
             // the parser couldn't pick it up, or on future macOS versions that change
             // the output format).
-            let rawName: String
-            if collector.displayNames.indices.contains(i) {
-                rawName = collector.displayNames[i]
+            let rawName: String = if collector.displayNames.indices.contains(i) {
+                collector.displayNames[i]
             } else if screens.indices.contains(i) {
-                rawName = screens[i].localizedName
+                screens[i].localizedName
             } else {
-                rawName = "Display \(i + 1)"
+                "Display \(i + 1)"
             }
 
             let rawRes: String
@@ -238,11 +236,11 @@ enum DisplaysViewModel {
             } else {
                 rawRefreshRate = ""
             }
-            
+
             let trimName = trimDisplayName(rawName)
             let trimRes = removeParentheses(rawRes)
             let image = displayImage(for: trimName, rawName: rawName, index: i, hasBuiltIn: collector.hasBuiltInDisplay)
-            
+
             let display = DisplayInfo(
                 name: trimName,
                 resolution: trimRes,
@@ -268,10 +266,9 @@ enum DisplaysViewModel {
 // MARK: - Helpers
 
 extension DisplaysViewModel {
-    
     private static func trimDisplayName(_ name: String) -> String {
         let cleanName = removeParentheses(name)
-        
+
         // Removed .anchored to search for a word in any part of the string
         if let range = cleanName.range(of: "display", options: [.caseInsensitive]) {
             // A substring from the beginning to the end of the word "display" inclusive
@@ -284,42 +281,42 @@ extension DisplaysViewModel {
     private static func removeParentheses(_ text: String) -> String {
         // Regular expressions in ReplacingOccurrences are recompiled for each call.
         // For a couple of screens this is not critical, but for optimization it is better to clear the spaces at the end.
-        return text.replacingOccurrences(of: "\\([^)]+\\)", with: "", options: .regularExpression)
+        text.replacingOccurrences(of: "\\([^)]+\\)", with: "", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private static func displayImage(for name: String, rawName: String, index: Int, hasBuiltIn: Bool) -> NSImage {
         let lowerName = name.lowercased()
         let lowerRawName = rawName.lowercased()
-        
+
         // System icon in case the asset is not found in the bundle
         let fallbackImage = NSImage(systemSymbolName: "display", accessibilityDescription: nil) ?? NSImage()
-        
+
         // The first display is built-in: iMac or MacBook
         if index == 0 && hasBuiltIn {
             let imageName = lowerName.contains("imac")
                 ? genericImacImageNameForCurrentOS()
                 : genericMacBookImageNameForCurrentOS()
-            
+
             return NSImage(named: imageName) ?? fallbackImage
         }
-        
+
         // External displays or Sidecar/AirPlay (iPad) — check both trimmed and raw name
         // because "AirPlay" / "Sidecar" may appear only inside parentheses in the raw name
         // and removeParentheses() strips them before displayImage receives the trimmed name.
         if lowerName.contains("sidecar") || lowerRawName.contains("sidecar") {
             return NSImage(named: "iPad") ?? fallbackImage
         }
-        
+
         if lowerName.contains("airplay") || lowerRawName.contains("airplay") {
             return NSImage(named: "iPad") ?? fallbackImage
         }
-        
+
         return NSImage(named: genericLCDImageNameForCurrentOS()) ?? fallbackImage
     }
-    
+
     // MARK: - OS Version Mapping
-    
+
     private static func genericImacImageNameForCurrentOS() -> String {
 //        switch HCVersion.shared.osVersion {
 //        case .bigSur:
@@ -339,7 +336,7 @@ extension DisplaysViewModel {
 //        case .unknown:
 //            return "genericImac"
 //        }
-        return "genericImac"
+        "genericImac"
     }
 
     private static func genericLCDImageNameForCurrentOS() -> String {
@@ -361,9 +358,9 @@ extension DisplaysViewModel {
 //        case .unknown:
 //            return "genericLCD"
 //        }
-        return "genericLCD"
+        "genericLCD"
     }
-    
+
     private static func genericMacBookImageNameForCurrentOS() -> String {
 //        switch HCVersion.shared.osVersion {
 //        case .bigSur:
@@ -383,6 +380,6 @@ extension DisplaysViewModel {
 //        case .unknown:
 //            return "genericMacBook"
 //        }
-        return "genericMacBook"
+        "genericMacBook"
     }
 }

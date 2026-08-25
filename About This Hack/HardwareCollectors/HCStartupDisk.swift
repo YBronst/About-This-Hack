@@ -12,18 +12,20 @@ class HCStartupDisk {
     private lazy var startupDisk: String = {
         if let content = HardwareCollector.shared.getCachedFileContent(InitGlobVar.bootvolnameFilePath),
            let name = content.components(separatedBy: "\n")
-               .first(where: { $0.contains("Volume Name") })?
-               .components(separatedBy: ":")
-               .last?
-               .trimmingCharacters(in: .whitespacesAndNewlines),
-           !name.isEmpty {
+           .first(where: { $0.contains("Volume Name") })?
+           .components(separatedBy: ":")
+           .last?
+           .trimmingCharacters(in: .whitespacesAndNewlines),
+           !name.isEmpty
+        {
             return name
         }
         // Fallback: diskutil info / may fail on some Ventura/Hackintosh configurations
         // (e.g. file is empty or command outputs an error). Use Foundation URL resource
         // values to read the volume name directly — this always works.
         if let values = try? URL(fileURLWithPath: "/").resourceValues(forKeys: [.volumeNameKey]),
-           let name = values.volumeName, !name.isEmpty {
+           let name = values.volumeName, !name.isEmpty
+        {
             print("HCStartupDisk: diskutil fallback — using Foundation volume name: \(name)")
             return name
         }
@@ -32,7 +34,7 @@ class HCStartupDisk {
     }()
 
     func getStartupDisk() -> String {
-        return startupDisk
+        startupDisk
     }
 
     func getStartupDiskInfo() -> String {

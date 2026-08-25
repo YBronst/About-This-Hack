@@ -315,6 +315,7 @@ class HardwareCollector {
 
         return ""
     }
+
     private func getStorageInfo() -> (Bool, String, Double) {
         var lines: [String] = []
         var contentStr = ""
@@ -387,12 +388,12 @@ class HardwareCollector {
 
     private func convertToGB(_ size: Double, unit: String) -> Double {
         switch unit.uppercased() {
-        case "B": return size / 1_000_000_000
-        case "KB": return size / 1_000_000
-        case "MB": return size / 1000
-        case "GB": return size
-        case "TB": return size * 1000
-        default: return size
+        case "B": size / 1_000_000_000
+        case "KB": size / 1_000_000
+        case "MB": size / 1000
+        case "GB": size
+        case "TB": size * 1000
+        default: size
         }
     }
 }

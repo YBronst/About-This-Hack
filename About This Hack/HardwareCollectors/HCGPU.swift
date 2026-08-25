@@ -105,7 +105,7 @@ final class HCGPU: @unchecked Sendable {
     }
 
     func getGPU() -> String {
-        return gpuInfo
+        gpuInfo
     }
 
     func getGPUInfo() -> String {

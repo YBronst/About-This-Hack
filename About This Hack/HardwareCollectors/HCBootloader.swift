@@ -22,7 +22,8 @@ final class HCBootloader: @unchecked Sendable {
         let ocKey = InitGlobVar.nvramOpencoreVersion
 
         if let nvramValue = readNVRAMString(key: ocKey),
-           let parsed = parseOpenCoreVersion(nvramValue) {
+           let parsed = parseOpenCoreVersion(nvramValue)
+        {
             return parsed
         }
 
@@ -123,11 +124,10 @@ final class HCBootloader: @unchecked Sendable {
             .replacingOccurrences(of: " ", with: ".")
             .trimmingCharacters(in: CharacterSet(charactersIn: "."))
 
-        let formattedBuildType: String
-        switch buildType {
-        case "REL": formattedBuildType = "(Release)"
-        case "DEB": formattedBuildType = "(Debug)"
-        default: formattedBuildType = buildType.isEmpty ? "" : "(\(buildType))"
+        let formattedBuildType: String = switch buildType {
+        case "REL": "(Release)"
+        case "DEB": "(Debug)"
+        default: buildType.isEmpty ? "" : "(\(buildType))"
         }
 
         return "OpenCore \(version) \(formattedBuildType)".trimmingCharacters(in: .whitespaces)
@@ -152,16 +152,16 @@ final class HCBootloader: @unchecked Sendable {
         // Try to extract version from opencore-version if present under any key form.
         for key in props.allKeys {
             guard let keyStr = key as? String, keyStr.contains("opencore-version") else { continue }
-            let raw: String?
-            if let str = props[key] as? String {
-                raw = str
+            let raw: String? = if let str = props[key] as? String {
+                str
             } else if let data = props[key] as? Data {
-                raw = String(data: data, encoding: .utf8)
+                String(data: data, encoding: .utf8)
             } else {
-                raw = nil
+                nil
             }
             if let v = raw?.replacingOccurrences(of: "\0", with: "").trimmingCharacters(in: .whitespacesAndNewlines),
-               let parsed = parseOpenCoreVersion(v) {
+               let parsed = parseOpenCoreVersion(v)
+            {
                 return parsed
             }
         }
@@ -243,12 +243,12 @@ final class HCBootloader: @unchecked Sendable {
     }()
 
     func getBootloader() -> String {
-        return bootloaderInfo.components(separatedBy: .whitespaces)
+        bootloaderInfo.components(separatedBy: .whitespaces)
             .filter { !$0.isEmpty }
             .joined(separator: " ")
     }
 
     func getBootargs() -> String {
-        return bootargsInfo
+        bootargsInfo
     }
 }

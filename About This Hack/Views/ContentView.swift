@@ -92,10 +92,8 @@ private struct FakeSidebarLayout: View {
                 .background(Color(NSColor.controlBackgroundColor)) // opaque window
 //                .background(.ultraThinMaterial) // transparent window
                 .transition(.move(edge: .leading))
-
 //                Divider()
-                
-                    .transition(.opacity)
+                .transition(.opacity)
             }
 
             // ── Detail ─────

@@ -55,10 +55,10 @@ class HCSerialNumber {
     }()
 
     func getSerialNumber() -> String {
-        return HardwareInfo.serialNumber
+        HardwareInfo.serialNumber
     }
 
     func getHardwareInfo() -> String {
-        return HardwareInfo.details
+        HardwareInfo.details
     }
 }

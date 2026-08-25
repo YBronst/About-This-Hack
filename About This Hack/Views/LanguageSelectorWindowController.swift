@@ -42,6 +42,7 @@ class LanguageSelectorWindowController: NSWindowController, NSWindowDelegate {
         window.isReleasedWhenClosed = false
 
         // MARK: transparent window
+
 //        window.isOpaque = false
 //        window.backgroundColor = .clear
 //        window.titlebarAppearsTransparent = true
@@ -106,7 +107,7 @@ class LanguageSelectorWindowController: NSWindowController, NSWindowDelegate {
             styleMask: [.titled, .closable]
         ).size
 
-        if let target = target {
+        if let target {
             let mainFrame = target.frame
             let origin = NSPoint(
                 x: mainFrame.midX - frameSize.width / 2,

@@ -35,7 +35,7 @@ extension String {
     }
 
     var isNumber: Bool {
-        allSatisfy { $0.isNumber }
+        allSatisfy(\.isNumber)
     }
 
     func removedRegexMatches(pattern: String, replaceWith: String = "") -> String {

@@ -149,7 +149,7 @@ class SettingsViewModel: ObservableObject {
 
         guard width == 1024, height == 1024 else {
             showError(String(format: NSLocalizedString("settings.logo.error.wrong_size",
-                                                            comment: "Image must be 1024x1024 pixels. Current size: %dx%d"), width, height))
+                                                       comment: "Image must be 1024x1024 pixels. Current size: %dx%d"), width, height))
             return
         }
 
@@ -157,7 +157,7 @@ class SettingsViewModel: ObservableObject {
         // remains accessible after the app restarts within the sandbox.
         guard let destinationURL = CustomLogoConstants.savedLogoURL else {
             showError(NSLocalizedString("settings.logo.error.save_failed",
-                                             comment: "Could not determine storage location"))
+                                        comment: "Could not determine storage location"))
             return
         }
         do {
@@ -171,8 +171,8 @@ class SettingsViewModel: ObservableObject {
             try fm.copyItem(at: URL(fileURLWithPath: path), to: destinationURL)
         } catch {
             showError(String(format: NSLocalizedString("settings.logo.error.copy_failed",
-                                                            comment: "Could not save logo: %@"),
-                                  error.localizedDescription))
+                                                       comment: "Could not save logo: %@"),
+                             error.localizedDescription))
             return
         }
 
@@ -208,7 +208,6 @@ class SettingsViewModel: ObservableObject {
     private func showError(_ message: String) {
         statusMessage = message
         statusColor = .red
-
     }
 }
 

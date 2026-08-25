@@ -1,5 +1,5 @@
 //
-//  SettingsViewController.swift
+//  SettingsWindowController.swift
 //  About This Hack
 //
 
@@ -119,7 +119,7 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
                 window.title == "About This Hack"
         }
 
-        guard let mainWindow = mainWindow else {
+        guard let mainWindow else {
             // Fallback: center the settings window if main window not found
             settingsWindow.center()
             return

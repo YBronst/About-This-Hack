@@ -6,7 +6,9 @@
 import Network
 
 public enum Reachability {
-    private final class Box<T>: @unchecked Sendable { var value: T; init(_ v: T) { value = v } }
+    private final class Box<T>: @unchecked Sendable { var value: T; init(_ v: T) {
+        value = v
+    } }
 
     static func isConnectedToNetwork() -> Bool {
         let monitor = NWPathMonitor()

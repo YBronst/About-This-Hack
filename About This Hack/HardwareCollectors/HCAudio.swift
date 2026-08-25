@@ -32,7 +32,7 @@ final class HCAudio: @unchecked Sendable {
     private lazy var _audioInfo: AudioInfo = computeAudioInfo()
 
     func getAudioInfo() -> AudioInfo {
-        return _audioInfo
+        _audioInfo
     }
 
     // MARK: - Compute
@@ -86,7 +86,7 @@ final class HCAudio: @unchecked Sendable {
 
             // Fall back to system_profiler only when all fields are empty
             // (unlikely with AppleALC, but covers edge cases).
-            if codecName.isEmpty && vendorName.isEmpty && layoutId.isEmpty && deviceName.isEmpty {
+            if codecName.isEmpty, vendorName.isEmpty, layoutId.isEmpty, deviceName.isEmpty {
                 return computeAudioInfoFromSystemProfiler()
             }
             return AudioInfo(
@@ -122,7 +122,8 @@ final class HCAudio: @unchecked Sendable {
                 if hdaCodecName == "HDAUniversal", let keyRange = trimmed.range(of: shortNameKey) {
                     let prefix = trimmed[..<keyRange.lowerBound]
                     if prefix.allSatisfy({ $0 == "|" || $0 == "+" || $0 == "-" || $0 == "o" || $0 == " " || $0 == "\t" }),
-                       let eqRange = trimmed.range(of: "=") {
+                       let eqRange = trimmed.range(of: "=")
+                    {
                         let trimSet = CharacterSet.whitespaces.union(CharacterSet(charactersIn: "\""))
                         let value = trimmed[eqRange.upperBound...].trimmingCharacters(in: trimSet)
                         if !value.isEmpty { hdaCodecName = value }
@@ -131,11 +132,10 @@ final class HCAudio: @unchecked Sendable {
                 if trimmed.contains(codecIdKey), let eqRange = trimmed.range(of: "=") {
                     let valueStr = trimmed[eqRange.upperBound...].trimmingCharacters(in: .whitespaces)
                     // Value is a decimal integer; also accept 0x-prefixed hex just in case.
-                    let codecId: UInt32?
-                    if valueStr.lowercased().hasPrefix("0x") {
-                        codecId = UInt32(valueStr.dropFirst(2), radix: 16)
+                    let codecId: UInt32? = if valueStr.lowercased().hasPrefix("0x") {
+                        UInt32(valueStr.dropFirst(2), radix: 16)
                     } else {
-                        codecId = UInt32(valueStr)
+                        UInt32(valueStr)
                     }
                     if let id = codecId, id > 0 {
                         let vendorCode = (id >> 16) & 0xFFFF
@@ -190,7 +190,7 @@ final class HCAudio: @unchecked Sendable {
         // 7. No AppleALC, HDAUniversal, or VoodooHDA. Fall back to system_profiler for real Macs
         //    whose audio hardware is not exposed via standard IOHDACodecDevice nodes
         //    (e.g. Intel Smart Sound Technology + CS8409).
-        if layoutId.isEmpty && deviceName.isEmpty {
+        if layoutId.isEmpty, deviceName.isEmpty {
             return computeAudioInfoFromSystemProfiler()
         }
 
@@ -557,68 +557,66 @@ final class HCAudio: @unchecked Sendable {
         let hex = String(format: "0x%04X:0x%04X", vendorId, deviceId)
 
         // Build device description for known HDA controllers
-        let deviceDesc: String?
-        switch (vendorId, deviceId) {
+        let deviceDesc: String? = switch (vendorId, deviceId) {
         // Intel – sorted by generation
-        case (0x8086, 0x27D8): deviceDesc = "NM10/ICH7 HD Audio"
-        case (0x8086, 0x284B): deviceDesc = "82801H (ICH8) HD Audio"
-        case (0x8086, 0x293E): deviceDesc = "82801I (ICH9) HD Audio"
-        case (0x8086, 0x293F): deviceDesc = "82801I (ICH9) HD Audio"
-        case (0x8086, 0x3B56): deviceDesc = "5 Series/3400 Series PCH HD Audio"
-        case (0x8086, 0x3B57): deviceDesc = "5 Series/3400 Series PCH HD Audio"
-        case (0x8086, 0x1C20): deviceDesc = "6 Series/C200 Series PCH HD Audio"
-        case (0x8086, 0x1D20): deviceDesc = "C600/X79 Series PCH HD Audio"
-        case (0x8086, 0x1E20): deviceDesc = "7 Series/C210 Series PCH HD Audio"
-        case (0x8086, 0x8C20): deviceDesc = "8 Series/C220 Series PCH HD Audio"
-        case (0x8086, 0x8C21): deviceDesc = "8 Series/C220 Series PCH HD Audio"
-        case (0x8086, 0x8CA0): deviceDesc = "9 Series PCH HD Audio"
-        case (0x8086, 0x8D20): deviceDesc = "C610/X99 Series PCH HD Audio"
-        case (0x8086, 0x9C20): deviceDesc = "8 Series HD Audio"
-        case (0x8086, 0x9C21): deviceDesc = "8 Series HD Audio"
-        case (0x8086, 0x9CA0): deviceDesc = "Wildcat Point-LP HD Audio"
-        case (0x8086, 0x9D70): deviceDesc = "Sunrise Point HD Audio"
-        case (0x8086, 0x9D71): deviceDesc = "Sunrise Point-LP HD Audio"
-        case (0x8086, 0xA170): deviceDesc = "100 Series/C230 Series PCH HD Audio"
-        case (0x8086, 0xA171): deviceDesc = "CM238 PCH HD Audio"
-        case (0x8086, 0xA1F0): deviceDesc = "Lewisburg PCH HD Audio"
-        case (0x8086, 0xA2F0): deviceDesc = "200 Series PCH HD Audio"
-        case (0x8086, 0xA348): deviceDesc = "Cannon Lake PCH cAVS"
-        case (0x8086, 0x9DC8): deviceDesc = "Cannon Point-LP HD Audio"
-        case (0x8086, 0x02C8): deviceDesc = "Comet Lake PCH-LP cAVS"
-        case (0x8086, 0x06C8): deviceDesc = "Comet Lake PCH cAVS"
-        case (0x8086, 0x0043): deviceDesc = "Comet Lake-H PCH cAVS"
-        case (0x8086, 0x34C8): deviceDesc = "Ice Lake-LP HD Audio"
-        case (0x8086, 0xA0C8): deviceDesc = "Tiger Lake-LP Smart Sound Technology"
-        case (0x8086, 0x43C8): deviceDesc = "Tiger Lake-H HD Audio"
-        case (0x8086, 0x4B55): deviceDesc = "Elkhart Lake HD Audio"
-        case (0x8086, 0x4DC8): deviceDesc = "Jasper Lake HD Audio"
-        case (0x8086, 0x51C8): deviceDesc = "Alder Lake PCH-H HD Audio"
-        case (0x8086, 0x51C9): deviceDesc = "Alder Lake-N PCH HD Audio"
-        case (0x8086, 0x54C8): deviceDesc = "Alder Lake-P/M HD Audio"
-        case (0x8086, 0x7A50): deviceDesc = "Raptor Lake-S/HX cAVS"
-        case (0x8086, 0x51CA): deviceDesc = "Raptor Lake-P HD Audio"
-        case (0x8086, 0x7AD0): deviceDesc = "Alder Lake PCH-P HD Audio"
-        case (0x8086, 0x7E28): deviceDesc = "Meteor Lake-P HD Audio"
-        case (0x8086, 0xF0C8): deviceDesc = "500 Series PCH High Definition"
+        case (0x8086, 0x27D8): "NM10/ICH7 HD Audio"
+        case (0x8086, 0x284B): "82801H (ICH8) HD Audio"
+        case (0x8086, 0x293E): "82801I (ICH9) HD Audio"
+        case (0x8086, 0x293F): "82801I (ICH9) HD Audio"
+        case (0x8086, 0x3B56): "5 Series/3400 Series PCH HD Audio"
+        case (0x8086, 0x3B57): "5 Series/3400 Series PCH HD Audio"
+        case (0x8086, 0x1C20): "6 Series/C200 Series PCH HD Audio"
+        case (0x8086, 0x1D20): "C600/X79 Series PCH HD Audio"
+        case (0x8086, 0x1E20): "7 Series/C210 Series PCH HD Audio"
+        case (0x8086, 0x8C20): "8 Series/C220 Series PCH HD Audio"
+        case (0x8086, 0x8C21): "8 Series/C220 Series PCH HD Audio"
+        case (0x8086, 0x8CA0): "9 Series PCH HD Audio"
+        case (0x8086, 0x8D20): "C610/X99 Series PCH HD Audio"
+        case (0x8086, 0x9C20): "8 Series HD Audio"
+        case (0x8086, 0x9C21): "8 Series HD Audio"
+        case (0x8086, 0x9CA0): "Wildcat Point-LP HD Audio"
+        case (0x8086, 0x9D70): "Sunrise Point HD Audio"
+        case (0x8086, 0x9D71): "Sunrise Point-LP HD Audio"
+        case (0x8086, 0xA170): "100 Series/C230 Series PCH HD Audio"
+        case (0x8086, 0xA171): "CM238 PCH HD Audio"
+        case (0x8086, 0xA1F0): "Lewisburg PCH HD Audio"
+        case (0x8086, 0xA2F0): "200 Series PCH HD Audio"
+        case (0x8086, 0xA348): "Cannon Lake PCH cAVS"
+        case (0x8086, 0x9DC8): "Cannon Point-LP HD Audio"
+        case (0x8086, 0x02C8): "Comet Lake PCH-LP cAVS"
+        case (0x8086, 0x06C8): "Comet Lake PCH cAVS"
+        case (0x8086, 0x0043): "Comet Lake-H PCH cAVS"
+        case (0x8086, 0x34C8): "Ice Lake-LP HD Audio"
+        case (0x8086, 0xA0C8): "Tiger Lake-LP Smart Sound Technology"
+        case (0x8086, 0x43C8): "Tiger Lake-H HD Audio"
+        case (0x8086, 0x4B55): "Elkhart Lake HD Audio"
+        case (0x8086, 0x4DC8): "Jasper Lake HD Audio"
+        case (0x8086, 0x51C8): "Alder Lake PCH-H HD Audio"
+        case (0x8086, 0x51C9): "Alder Lake-N PCH HD Audio"
+        case (0x8086, 0x54C8): "Alder Lake-P/M HD Audio"
+        case (0x8086, 0x7A50): "Raptor Lake-S/HX cAVS"
+        case (0x8086, 0x51CA): "Raptor Lake-P HD Audio"
+        case (0x8086, 0x7AD0): "Alder Lake PCH-P HD Audio"
+        case (0x8086, 0x7E28): "Meteor Lake-P HD Audio"
+        case (0x8086, 0xF0C8): "500 Series PCH High Definition"
         // NVIDIA – GeForce/Quadro HDMI audio controllers
-        case (0x10DE, _) where deviceId >= 0x0BE2 && deviceId <= 0x0BEF: deviceDesc = "GT 2xx HDMI Audio"
-        case (0x10DE, _): deviceDesc = "HD Audio Controller"
+        case (0x10DE, _) where deviceId >= 0x0BE2 && deviceId <= 0x0BEF: "GT 2xx HDMI Audio"
+        case (0x10DE, _): "HD Audio Controller"
         // AMD
-        case (0x1002, 0x1308): deviceDesc = "FCH HD Audio"
-        case (0x1002, 0x157A): deviceDesc = "Bristol Ridge HD Audio"
-        case (0x1002, 0x15DE): deviceDesc = "Raven/Raven2 HD Audio"
-        case (0x1002, 0x1637): deviceDesc = "Renoir Radeon HD Audio"
-        case (0x1002, 0x1638): deviceDesc = "Cezanne Radeon HD Audio"
-        case (0x1002, _): deviceDesc = "HD Audio Controller"
-        default: deviceDesc = nil
+        case (0x1002, 0x1308): "FCH HD Audio"
+        case (0x1002, 0x157A): "Bristol Ridge HD Audio"
+        case (0x1002, 0x15DE): "Raven/Raven2 HD Audio"
+        case (0x1002, 0x1637): "Renoir Radeon HD Audio"
+        case (0x1002, 0x1638): "Cezanne Radeon HD Audio"
+        case (0x1002, _): "HD Audio Controller"
+        default: nil
         }
 
-        let vendorName: String
-        switch vendorId {
-        case 0x8086: vendorName = "Intel"
-        case 0x10DE: vendorName = "NVIDIA"
-        case 0x1002: vendorName = "AMD"
-        default: vendorName = String(format: "0x%04X", vendorId)
+        let vendorName = switch vendorId {
+        case 0x8086: "Intel"
+        case 0x10DE: "NVIDIA"
+        case 0x1002: "AMD"
+        default: String(format: "0x%04X", vendorId)
         }
 
         if let desc = deviceDesc {

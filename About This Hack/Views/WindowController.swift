@@ -23,31 +23,31 @@ enum AppSection: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .overview: return NSLocalizedString("segment.title.overview", comment: "Overview")
-        case .displays: return NSLocalizedString("segment.title.displays", comment: "Displays")
-        case .storage: return NSLocalizedString("segment.title.storage", comment: "Storage")
-        case .audio: return NSLocalizedString("segment.title.audio", comment: "Audio")
-        case .support: return NSLocalizedString("segment.title.support", comment: "Support")
+        case .overview: NSLocalizedString("segment.title.overview", comment: "Overview")
+        case .displays: NSLocalizedString("segment.title.displays", comment: "Displays")
+        case .storage: NSLocalizedString("segment.title.storage", comment: "Storage")
+        case .audio: NSLocalizedString("segment.title.audio", comment: "Audio")
+        case .support: NSLocalizedString("segment.title.support", comment: "Support")
         }
     }
 
     var systemImage: String {
         switch self {
-        case .overview: return "info.circle"
-        case .displays: return "display"
-        case .storage: return "internaldrive"
-        case .audio: return "waveform.circle"
-        case .support: return "questionmark.circle"
+        case .overview: "info.circle"
+        case .displays: "display"
+        case .storage: "internaldrive"
+        case .audio: "waveform.circle"
+        case .support: "questionmark.circle"
         }
     }
 
     var tooltip: String {
         switch self {
-        case .overview: return NSLocalizedString("segment.tooltip.overview", comment: "Overview tooltip")
-        case .displays: return NSLocalizedString("segment.tooltip.displays", comment: "Displays tooltip")
-        case .storage: return NSLocalizedString("segment.tooltip.storage", comment: "Storage tooltip")
-        case .audio: return NSLocalizedString("segment.tooltip.audio", comment: "Audio tooltip")
-        case .support: return NSLocalizedString("segment.tooltip.support", comment: "Support tooltip")
+        case .overview: NSLocalizedString("segment.tooltip.overview", comment: "Overview tooltip")
+        case .displays: NSLocalizedString("segment.tooltip.displays", comment: "Displays tooltip")
+        case .storage: NSLocalizedString("segment.tooltip.storage", comment: "Storage tooltip")
+        case .audio: NSLocalizedString("segment.tooltip.audio", comment: "Audio tooltip")
+        case .support: NSLocalizedString("segment.tooltip.support", comment: "Support tooltip")
         }
     }
 }
@@ -73,13 +73,15 @@ class AppState: ObservableObject {
             print("Switched to tab: \(tabName)")
         }
     }
+
     @Published var isDataLoaded = false {
         didSet {
-            if isDataLoaded && !oldValue {
+            if isDataLoaded, !oldValue {
                 print("Hardware data loaded")
             }
         }
     }
+
     @Published var isSidebarVisible: Bool = true
 
     /// True when audio codec data is available. Evaluated lazily after data loads.
@@ -90,7 +92,7 @@ class AppState: ObservableObject {
         return !info.vendorName.isEmpty || !info.codecName.isEmpty || !info.layoutId.isEmpty
     }
 
-    nonisolated(unsafe) private static var didPrintRealMac = false
+    private nonisolated(unsafe) static var didPrintRealMac = false
     private static func printRealMacOnce() {
         guard !didPrintRealMac else { return }
         didPrintRealMac = true

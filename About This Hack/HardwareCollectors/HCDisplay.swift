@@ -102,11 +102,11 @@ final class HCDisplay: @unchecked Sendable {
     }
 
     func getDisp() -> String {
-        return displayInfo.mainDisplay
+        displayInfo.mainDisplay
     }
 
     func getDispInfo() -> String {
-        return displayInfo.allDisplays
+        displayInfo.allDisplays
     }
 
     private func cleanLine(_ line: String) -> String {
@@ -147,7 +147,7 @@ final class HCDisplay: @unchecked Sendable {
                 let maxResolutionLookAhead = 6 // The "UI Looks like:" field is expected within 6 lines after "Resolution:" in the same display block.
                 for lookAheadIndex in (i + 1) ..< min(i + maxResolutionLookAhead, lines.count) {
                     let nextTrimmed = lines[lookAheadIndex].trimmingCharacters(in: .whitespaces)
-                    if (nextTrimmed.contains("Resolution:") || nextTrimmed.hasSuffix(":")),
+                    if nextTrimmed.contains("Resolution:") || nextTrimmed.hasSuffix(":"),
                        !nextTrimmed.contains("UI Looks like:")
                     {
                         break

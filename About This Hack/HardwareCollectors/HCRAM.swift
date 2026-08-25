@@ -33,7 +33,7 @@ class HCRAM {
 
     func getMemDesc() -> String {
         // Use shared parsed lines instead of re-parsing
-        return parsedMemoryLines
+        parsedMemoryLines
             .filter { line in
                 ["ECC:", "BANK", "Size:", "Type:", "Speed:", "Manufacturer:", "Part Number:"]
                     .contains { line.contains($0) }

@@ -19,7 +19,9 @@ class InitGlobVar {
             .appendingPathComponent(".ath", isDirectory: true).path
     }
 
-    static var defaultfileManager: FileManager { FileManager.default }
+    static var defaultfileManager: FileManager {
+        FileManager.default
+    }
 
     // OCLP Dict File (if exists) where Patch Version Commit and DateTime will be extracted
     static let oclpXmlFilePath = "/System/Library/CoreServices/OpenCore-Legacy-Patcher.plist"
@@ -57,4 +59,3 @@ class InitGlobVar {
 
     static let nvramOpencoreVersion = "4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:opencore-version"
 }
-

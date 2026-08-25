@@ -59,11 +59,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     }
 
     func applicationSupportsSecureRestorableState(_: NSApplication) -> Bool {
-        return true
+        true
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_: NSApplication) -> Bool {
-        return true
+        true
     }
 
     // END: - Application Lifecycle -----------------------------------------

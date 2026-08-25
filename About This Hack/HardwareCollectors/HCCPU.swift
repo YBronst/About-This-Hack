@@ -35,7 +35,7 @@ final class HCCPU: @unchecked Sendable {
     }
 
     func getCPUInfo() -> String {
-        return cpuInfo.details
+        cpuInfo.details
     }
 
     func getCPUCoreCount() -> Int {
@@ -86,13 +86,13 @@ final class HCCPU: @unchecked Sendable {
             print("Error: Unable to read CPU details from \(InitGlobVar.hwFilePath)")
             return "Unable to read CPU details"
         }
-        
+
         // Intel reports "Processor Name:"; Apple Silicon reports "Chip:".
 
         return content.components(separatedBy: .newlines)
             .drop { line in
                 !line.contains("Processor Name:") && !line.contains("Chip:")
-            }            .prefix { !$0.contains("Memory:") }
+            }.prefix { !$0.contains("Memory:") }
             .joined(separator: "\n")
     }
 }
