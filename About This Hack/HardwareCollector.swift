@@ -305,15 +305,28 @@ class HardwareCollector {
                 guard let range = trimmed.range(of: label) else { continue }
                 let value = String(trimmed[range.upperBound...]).trimmingCharacters(in: .whitespaces)
                 if let match = value.range(of: #"@\s*[\d.]+ ?Hz"#, options: .regularExpression) {
-                    return String(value[match])
+                    let refreshRate = String(value[match])
                         .replacingOccurrences(of: "@", with: "")
                         .trimmingCharacters(in: .whitespaces)
                         .replacingOccurrences(of: #"(\d)Hz"#, with: "$1 Hz", options: .regularExpression)
+                    return normalizeRefreshRate(refreshRate)
                 }
             }
         }
 
         return ""
+    }
+
+    private func normalizeRefreshRate(_ refreshRate: String) -> String {
+        let numeric = refreshRate
+            .replacingOccurrences(of: "Hz", with: "")
+            .trimmingCharacters(in: .whitespaces)
+
+        guard let hz = Double(numeric), hz > 0 else {
+            return refreshRate
+        }
+
+        return "\(Int(hz.rounded())) Hz"
     }
 
     private func getStorageInfo() -> (Bool, String, Double) {
