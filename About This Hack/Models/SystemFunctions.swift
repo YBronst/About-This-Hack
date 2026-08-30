@@ -38,8 +38,9 @@ func getSysctlValueByKey(inputKey sysctlKey: String) -> String? {
     var sysctlValue = [CChar](repeating: 0, count: oNbrBytes)
     sysctlbyname(sysctlKey, &sysctlValue, &oNbrBytes, nil, 0)
     
-    // 3. Safely convert [CChar] to String
-    return String(cString: sysctlValue)
+    // 3. We trim off the null terminator and decode via an explicit Array(CUnsignedChar)
+    let cleanBytes = sysctlValue.prefix(while: { $0 != 0 })
+    return String(decoding: cleanBytes.map(UInt8.init), as: UTF8.self)
 }
 
 extension Bundle {
