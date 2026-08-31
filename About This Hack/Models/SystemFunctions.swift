@@ -24,13 +24,23 @@ func initPortDefault() -> mach_port_t {
     }
 }
 
+import Foundation
+
 func getSysctlValueByKey(inputKey sysctlKey: String) -> String? {
     var oNbrBytes = 0
+    // 1. Getting the buffer size
     sysctlbyname(sysctlKey, nil, &oNbrBytes, nil, 0)
-    var sysctlValue = [CChar](repeating: 0, count: Int(oNbrBytes))
+    
+    // Protection in case the key is not found
+    guard oNbrBytes > 0 else { return nil }
+    
+    // 2. Allocate a buffer for the C-string
+    var sysctlValue = [CChar](repeating: 0, count: oNbrBytes)
     sysctlbyname(sysctlKey, &sysctlValue, &oNbrBytes, nil, 0)
-    let trimmed = sysctlValue.prefix(while: { $0 != 0 }).map(UInt8.init)
-    return String(validating: trimmed, as: UTF8.self) ?? "unknown"
+    
+    // 3. We trim off the null terminator and decode via an explicit Array(CUnsignedChar)
+    let cleanBytes = sysctlValue.prefix(while: { $0 != 0 })
+    return String(decoding: cleanBytes.map(UInt8.init), as: UTF8.self)
 }
 
 extension Bundle {
