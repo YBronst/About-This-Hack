@@ -2,6 +2,8 @@
 //  SystemFunctions.swift
 //  About This Hack
 //
+// Update by YBronst https://github.com/YBronst
+//
 
 import AppKit
 import Cocoa
